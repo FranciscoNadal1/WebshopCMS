@@ -9,25 +9,30 @@ use Symfony\Component\HttpFoundation\Response;
 
 $app = new Silex\Application();
 
-$errorHandlers = 'web/errorHandlers/public';
-$publicRoute = 'web/views/public/';
+$errorHandlers = '/errorHandlers';
+$publicRoute = '/views';
 
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
-        'twig.path' => __DIR__. '/' . $publicRoute,
-        'twig.path' => __DIR__. '/' . $errorHandlers,
+
+        'twig.path' => 
+            [
+            __DIR__. '/web' . $publicRoute . '/public', 
+            __DIR__. '/web' . $publicRoute . '/common',
+            __DIR__. '/web' . $errorHandlers . '/public',
+            __DIR__. '/web' . $errorHandlers . '/common',
+            ],
     ));
     
-
-
  
 $app->error(function (Exception $e, $code) use($app, $errorHandlers){
    
     switch($code){
         case 404:
-  //          include($errorHandlers . '/public/404.html');
-       return $app['twig']->render('404.html', array(
+            
+            return $app['twig']->render('404.html', array(
             'name' => $name,
-        ));            
+            ));    
+            
             break;
         default:
             $message = 'tampoco va';
@@ -47,21 +52,13 @@ $app->get('/hello', function () {
     
 });
 
-
- //   $app->get('twig.loader')->addPath($publicRoute);
- 
-    
     
 $app->get('/test', function () use($app, $publicRoute, $errorHandlers) {
     
        return $app['twig']->render('index.html', array(
             'name' => $name,
         ));
-        
-        
-          //  include($errorHandlers  . '404.twig');
-          //  include($publicRoute    . 'index.html');
-            
+   
 });
 
 
