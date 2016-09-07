@@ -9,7 +9,9 @@ RewriteBase /
 	Order Deny,Allow
 	Deny From All
 </Files>
- 
+
+
+
 # Protect application and system files from being viewed
 RewriteRule ^(?:application|modules|system)\b.* ./routing.php/$0 [L]
  
@@ -19,3 +21,4 @@ RewriteCond %{REQUEST_FILENAME} !-d
  
 # Rewrite all other URLs to index.php/URL
 RewriteRule .* ./routing.php/$0 [PT]
+RewriteCond %{HTTP_HOST} ./routing.php [NC]

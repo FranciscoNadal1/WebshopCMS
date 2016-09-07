@@ -2,7 +2,9 @@
 <html>
     <head>
         {% block head %}
-            <link rel="stylesheet" href="style.css" />
+        
+            {% include 'libraries.html' %}
+            
             <title>{% block title %}{% endblock %} - My Webpage</title>
         {% endblock %}
     </head>

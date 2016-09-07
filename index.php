@@ -23,6 +23,7 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
             ],
     ));
     
+$app['debug'] = true;
  
 $app->error(function (Exception $e, $code) use($app, $errorHandlers){
    
@@ -45,7 +46,17 @@ $app->error(function (Exception $e, $code) use($app, $errorHandlers){
 }
 );
 
+$app->get('/', function () use ($app){
+ return $app['twig']->render('index.html', array(
+            'name' => $name,
+        ));
+    
+});
 
+$app->get('/foo', function () {
+    return 'Hello!';
+    
+});
 
 $app->get('/hello', function () {
     return 'Hello!';
