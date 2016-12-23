@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Error 404{% endblock %}
+{% block head %}
+    {{ parent() }}
+    <style type="text/css">
+        .important { color: #336699; }
+    </style>
+{% endblock %}
+
+
+{% block content %}
+
+    <div id="errorContainer" class="jumbotron text-center">
+    <div id="header">
+            <h1>
+              Error 404          
+            </h1>
+          </div>
+    <div id="text" class="well .col-sm-8">{{ errorText }}</div>
+    </div>
+{% endblock %}

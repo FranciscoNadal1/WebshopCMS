@@ -1,0 +1,58 @@
+    .producto{
+        width:32%; 
+    /*    border:1px solid black;*/
+        margin:20px;
+        padding:10px;
+        background-color:white !important;
+        -webkit-box-shadow: 0px 4px 2px 5px rgba(0,0,0,0.09);
+        -moz-box-shadow: 0px 4px 2px 5px rgba(0,0,0,0.09);
+        box-shadow: 0px 4px 2px 5px rgba(0,0,0,0.09);
+    }
+    
+     .nombreProducto{
+      /*  font-size: 1.0em !important;*/
+      font-size: 1vw;
+        text-align:center;
+        padding:10px;
+        height:75px;
+    }
+    
+    .producto .precioProducto{
+        border-top:1px solid black;
+        text-align:center;
+        font-size: 1.4em;
+    }
+    
+    #ProductContainer{
+        height:100%;
+        display:inline-block;
+        margin-left:auto;
+        margin-right:auto;
+        max-width:90%;
+        float:right;
+    }
+    
+    #CategoryHeader{
+     
+     padding: 10px;
+     background-color:white;
+     border:1px solid black;
+     margin:10px;
+     text-align:center;
+     font-size:20px;
+        -webkit-box-shadow: 0px 4px 2px 5px rgba(0,0,0,0.09);
+        -moz-box-shadow: 0px 4px 2px 5px rgba(0,0,0,0.09);
+        box-shadow: 0px 4px 2px 5px rgba(0,0,0,0.09);
+    }
+    
+    #container{
+        
+     margin-top:30px;
+    }
+    
+    
+    
+    .producto .imagenProducto{
+        text-align:center;
+    }
+    

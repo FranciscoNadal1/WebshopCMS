@@ -1,0 +1,22 @@
+.navbar{
+    margin-bottom: 0px !important; 
+    position: fixed !important;
+     z-index: 1000;
+}
+.container{
+    width:100% !important;
+}
+
+.navbar-default {
+    background-color: #181818 !important;
+    border-color:black !important;
+}
+body{
+        background-color:#A1DBFF !important;
+        padding-top:100px;
+        
+        background-image:url('http://electroaita.com/images_texturas/amarillo.jpg');
+        background-position: 0% 0%;
+        	background-attachment: fixed;
+}
+
