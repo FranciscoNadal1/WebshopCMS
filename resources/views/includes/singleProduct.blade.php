@@ -1,17 +1,26 @@
-  <?php
-use Providers\infortisa\infortisaApi as infortisaApi;
-?>
-          <div class="producto col-xs-9 col-md-3 col-lg-3 article-block">
+
+          <div class="productWrapper col-xs-4 col-md-3 col-lg-3 article-block">
+              <div class="product">
                 <div class="imagenProducto">
-                    <img width="85%" src=https://www.infortisa.com/images/product/large/{{ $resu->CODIGOINTERNO }}_1.jpg />
+                    <img width="75%" src=https://www.infortisa.com/images/product/large/{{ $resu->CODIGOINTERNO }}_1.jpg />
                 </div>
-                <div class="nombreProducto"><a href="/producto/{{ $resu->TITULO }}"> {{ $resu->TITULO }}</a></div>
+                <?php
+                $nombreEnlace = $resu->TITULO;
+                 $nombreEnlace = str_replace(" ", "-", $nombreEnlace);
+                            $nombreEnlace = str_replace("á", "a", $nombreEnlace);
+                            $nombreEnlace = str_replace("é", "e", $nombreEnlace);
+                            $nombreEnlace = str_replace("í", "i", $nombreEnlace);
+                            $nombreEnlace = str_replace("ó", "o", $nombreEnlace);
+                            $nombreEnlace = str_replace("ú", "u", $nombreEnlace);
+                            
+                            $nombreEnlace = str_replace("/", "-", $nombreEnlace);
+                   
+                                   ?>
+                <div class="nombreProducto"><a href="/producto/{{ $nombreEnlace }}"> {{ $resu->TITULO }}</a></div>
                 <div class="precioProducto"> {{ $resu->PRECIO }} &euro;</div>
                 <div class="stockProducto"> {{ $resu->STOCK }}</div>
                 
                 
-                <?php 
-                //    echo infortisaApi::get_tecnica($resu->CODIGOINTERNO); 
-                ?>
-                
+
+                </div>
             </div>

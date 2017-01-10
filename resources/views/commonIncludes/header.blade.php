@@ -4,12 +4,21 @@
 
 <div class="header">
     <div class="container"> 
-        <a class="logo">
-            <img width="250" height="100" src="{{ GetAsset::GetIMG("logo.png") }}">
-        </a> 
-       <div id="buscador">
+        <div id="logoContainer">
+            <a class="logo">
+                <img width="250" height="100" src="{{ GetAsset::GetIMG("logo.png") }}">
+            </a> 
+        </div>
+        <div id="searchAnduser">
+           <div id="searchArea"  class=".col-sm-6">
+                
+            buscador
+            </div>
             
-        buscador
+            <div id="userLoginBox" class=".col-sm-6">
+                
+            user
+        </div>
         </div>
         
     </div>

@@ -1,12 +1,26 @@
-    .producto{
+    .productWrapper{
         width:32%; 
     /*    border:1px solid black;*/
+    /*
         margin:20px;
         padding:10px;
-        background-color:white !important;
+        */
+      margin-bottom: 5px;
+      margin-top: 5px;
+       
+    }
+    .product{
+        margin:0px;
+               background-color:white !important;
+        
+        
         -webkit-box-shadow: 0px 4px 2px 5px rgba(0,0,0,0.09);
         -moz-box-shadow: 0px 4px 2px 5px rgba(0,0,0,0.09);
         box-shadow: 0px 4px 2px 5px rgba(0,0,0,0.09);
+        
+        
+       // border:1px solid  black;
+        margin-bottom: 10px;
     }
     
      .nombreProducto{
@@ -17,19 +31,16 @@
         height:75px;
     }
     
-    .producto .precioProducto{
+    .productWrapper .precioProducto{
         border-top:1px solid black;
         text-align:center;
         font-size: 1.4em;
     }
     
     #ProductContainer{
-        height:100%;
-        display:inline-block;
-        margin-left:auto;
-        margin-right:auto;
-        max-width:90%;
-        float:right;
+       /* 
+        margin:0 auto;
+        */
     }
     
     #CategoryHeader{
@@ -46,13 +57,30 @@
     }
     
     #container{
-        
+        /*
+     margin:0 auto;   
      margin-top:30px;
+     display:table;
+     clear:both;
+        
+     background-color:grey;
+     
+     */
+     
+     margin:0 auto;
+     width:85%;
     }
     
     
     
-    .producto .imagenProducto{
+    .productWrapper .imagenProducto{
         text-align:center;
+    }
+    
+    
+    #ProductContainer{
+   /*     background-color:red; */
+       display:table;
+       margin:0 auto;
     }
     

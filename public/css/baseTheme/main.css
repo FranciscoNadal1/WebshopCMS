@@ -18,5 +18,7 @@ body{
         background-image:url('http://electroaita.com/images_texturas/amarillo.jpg');
         background-position: 0% 0%;
         	background-attachment: fixed;
+background-size:     cover;    
+    
 }
 

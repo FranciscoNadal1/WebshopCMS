@@ -15,7 +15,7 @@ $app->get('/', function () use ($app) {
     //echo "asdf";
    // return $app->version();
     // return $app->make('view')->make('master');
-    return view('master', ['name' => 'index']
+    return view('routes/productBrowser', ['name' => 'index']
     
     );
 });
@@ -25,7 +25,7 @@ $app->get('/categoria', function () use ($app) {
     //echo "asdf";
    // return $app->version();
     // return $app->make('view')->make('master');
-    return view('master', ['name' => 'index']
+    return view('routes/productBrowser', ['name' => 'index']
     
     );
 });
@@ -71,6 +71,26 @@ $app->get('categorias/{id}', function ($id) use ($app) {
 
 
 $app->get('/producto/{id}', function ($id) use ($app) {
-    return view('routes/productDescription', ['name' => '$id']);
+    
+            $onlyconsonants = str_replace("-", "_", $id);
+        $onlyconsonants = str_replace("/", "_", $onlyconsonants);
+        $onlyconsonants = str_replace("-", "_", $onlyconsonants);
+        
+        
+        $onlyconsonants = str_replace("a", "_", $onlyconsonants);
+        $onlyconsonants = str_replace("e", "_", $onlyconsonants);
+        $onlyconsonants = str_replace("i", "_", $onlyconsonants);
+        $onlyconsonants = str_replace("o", "_", $onlyconsonants);
+        $onlyconsonants = str_replace("u", "_", $onlyconsonants);
+                
+                
+     //   echo $onlyconsonants;
+        
+    $results = DB::select("SELECT * FROM csv where TITULO like \"$onlyconsonants\" limit 1");
+    return view('routes/productDescription', [
+        'results' => $results,
+        'name' => "$id"
+        
+        ]);
 });
 

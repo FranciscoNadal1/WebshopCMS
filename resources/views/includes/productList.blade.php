@@ -8,11 +8,11 @@
             }
             
             ?>
-<div id="container">
+<div id="container"  class="">
     
     <div id="CategoryHeader" >{{ $results[0]->TITULOSUBFAMILIA }}</div>
         
-    <div id="ProductContainer" class="col-sm-10">
+    <div id="ProductContainer" class="container">
         
             
         @foreach ($results as $resul)
