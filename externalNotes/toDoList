@@ -1,0 +1,29 @@
+Minor : 
+    Stock bar
+    cart/login buttons
+    Cart implementation
+    Login implementation
+    Redo Descriptions
+    Description downloader
+    number of api calls
+    
+
+Major :
+
+    DATABASE CONNECTION MODEL
+    Admin dashboard
+    
+    Chooser on admin : 
+        Pagination : infinite scroll or normal pagination
+        Auto-update : yes / no
+        product rating : yes / no
+        product comments : yes / no
+        product list: grid / list
+            
+        Maintainance mode : activated / no
+        Menu builder
+        
+        
+Just when all is done:
+    
+    ¿Twitter linked?

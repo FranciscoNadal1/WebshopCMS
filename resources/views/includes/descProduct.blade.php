@@ -1,6 +1,4 @@
-  <?php
-use Providers\infortisa\infortisaApi as infortisaApi;
-?>
+
 
 <div id="container"  class="">
     

@@ -73,6 +73,19 @@ $app = new Laravel\Lumen\Application(
 );
 
  $app->withFacades();
+ 
+/*
+|--------------------------------------------------------------------------
+| Register Model Alias
+|--------------------------------------------------------------------------
+|
+| Now we will register a few alias for the used models
+|
+*/
+
+class_alias('Assets\AssetManager', 'GetAsset');
+class_alias('Providers\infortisa\infortisaApi', 'infortisaApi');
+class_alias('DBQuerys\DBData', 'DBData');
 
 // $app->withEloquent();
 
@@ -87,6 +100,7 @@ $app = new Laravel\Lumen\Application(
 |
 */
 
+
 $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
     App\Exceptions\Handler::class
@@ -96,6 +110,12 @@ $app->singleton(
     
     Illuminate\Contracts\Console\Kernel::class,
     App\Console\Kernel::class
+);
+
+$app->singleton(
+    
+    Assets\AssetManager::class,
+    GetAsset::class
 );
 
 /*

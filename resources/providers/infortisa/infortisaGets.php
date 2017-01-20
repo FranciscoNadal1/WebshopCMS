@@ -1,7 +1,6 @@
 <?php
 
 namespace Providers\infortisa;
-use Providers\infortisa\infortisaGets as infortisaGets;
 
 class infortisaGets{
     

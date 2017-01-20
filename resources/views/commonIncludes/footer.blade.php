@@ -1,6 +1,3 @@
-<!DOCTYPE html>
-
-
 
 		<footer class="footer-distributed container-fluid">
 

@@ -1,5 +1,5 @@
-
-          <div class="productWrapper col-xs-4 col-md-3 col-lg-3 article-block">
+<div class="typeList">
+          <div class="typeList productWrapper col-xs-12 col-md-12 col-lg-12 ">imma list
               <div class="product">
                 <div class="imagenProducto">
                     <img width="75%" src=https://www.infortisa.com/images/product/large/{{ $resu->CODIGOINTERNO }}_1.jpg />
@@ -24,3 +24,4 @@
 
                 </div>
             </div>
+</div>

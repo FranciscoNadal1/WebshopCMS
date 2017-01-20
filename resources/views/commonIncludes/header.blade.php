@@ -12,12 +12,17 @@
         <div id="searchAnduser">
            <div id="searchArea"  class=".col-sm-6">
                 
-            buscador
+        @section('search')
+            @include('commonIncludes/searchBar')
+        @show
+        
             </div>
             
             <div id="userLoginBox" class=".col-sm-6">
                 
-            user
+        @section('userCart')
+            @include('commonIncludes/userCart')
+        @show
         </div>
         </div>
         

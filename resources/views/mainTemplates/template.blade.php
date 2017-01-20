@@ -1,7 +1,5 @@
         <?php   
-            use Assets\AssetManager as GetAsset; 
-            use Providers\infortisa\infortisaApi as infortisaApi;
-            
+
             $activeTheme = "baseTheme";
           //  $activeTheme = "electroaita";
         ?>
@@ -41,13 +39,13 @@
       
         
                
-   
-   </div>     
-
         @section('footer')
             @include('commonIncludes/footer')
-        @show
+        @show  
+
         
-        
+   </div>     
+
+
     </body>
 </html>

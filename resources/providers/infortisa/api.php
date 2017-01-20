@@ -18,6 +18,7 @@ $seleccion;
 $insertintro = mysql_query("Insert into consultas (fecha,numero) values('$fecha_actual',0)");
 mysql_query("UPDATE consultas SET numero=numero+1 where fecha='$fecha_actual' ")or die($insertintro);
 
+self::calledApi();
 }
 
 
@@ -133,6 +134,8 @@ $stock = $ia;
 
 $numero = $numero + 1;
 }
+
+self::calledApi();
 return $stock;
 }
 
@@ -230,6 +233,8 @@ file_put_contents("./productos/$cod_prod/images/$i.jpg", $image);
   }
 	$i++;  
   }
+  
+self::calledApi();
   }
   
   
@@ -252,6 +257,8 @@ $contenido = curl_exec($ch);
 //echo $contenido;
 curl_close($ch);
 
+
+self::calledApi();
 return $contenido;
 }
 
@@ -276,6 +283,9 @@ $contenido = curl_exec($ch);
 //echo $contenido;
 curl_close($ch);
 
+
+
+self::calledApi();
 return $contenido;
 
 
@@ -472,6 +482,7 @@ echo "<div  itemprop='description' id='desc'>";
 	
 echo $content; 
 
+self::calledApi();
 
 echo "</div>";
 }
@@ -540,6 +551,8 @@ ob_clean();
 echo $image; 
 imagedestroy($image);
 
+self::calledApi();
+
 }
 //////////////////////////////////////////////////////////////////////////////////////////////
 static function get_stock($cod_prod){
@@ -568,6 +581,8 @@ curl_close($c);
 $obj = json_decode($contentResult);
 
 $stock = $obj->Stock;
+
+self::calledApi();
 return $stock;
 
 }
@@ -597,11 +612,16 @@ curl_close($c);
 $obj = json_decode($contentResult);
 
 $stock = $obj->Stock;
+self::calledApi();
 return $stock;
 
 }
 
+static function calledApi(){
+    
+    echo "someone called, sayed hi. Hi!";
 
+    }
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
