@@ -13,12 +13,12 @@
                  <div>Categor&iacute;as</div>
              </div>
              
-            {{--*/ $results = DBData::getAllCategoryTitles() /*--}}
+            {{--*/ $results = DBData::getAllCategories() /*--}}
              
 
             
             @foreach ($results as $resu)
-                <li><a href={{ "/categoria/" . DBData::desAccentify($resu->TITULOSUBFAMILIA) . "/" }}> {{ $resu->TITULOSUBFAMILIA }}</a></li>
+                <li><a href={{ "/categoria/" . DBData::desAccentify($resu->name) . "/" }}> {{ $resu->name }}</a></li>
             @endforeach
             
             

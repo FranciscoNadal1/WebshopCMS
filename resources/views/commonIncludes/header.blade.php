@@ -5,7 +5,7 @@
 <div class="header">
     <div class="container"> 
         <div id="logoContainer">
-            <a class="logo">
+            <a class="logo" href="/">
                 <img width="250" height="100" src="{{ GetAsset::GetIMG("logo.png") }}">
             </a> 
         </div>

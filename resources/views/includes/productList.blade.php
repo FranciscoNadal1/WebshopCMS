@@ -5,7 +5,7 @@
             if(!isset($categoria)){
                     $categoria = "AMD socket FM2+";
                     
-                    $results =  DBData::getAllWhereTituloFamilia($categoria);  
+                    $results =  \DBData::getAllWhereTituloFamilia($categoria);  
                 
             }
             

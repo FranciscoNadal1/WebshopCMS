@@ -30,20 +30,11 @@
  
         
     <div id="wrapper">
-        @section('sidebar')
-            @include('commonIncludes/sideMenu')
-        @show
+
         
-        
-          @include('commonIncludes/dropDown')
-          
        @yield('content')
       
-        
-               
-        @section('footer')
-            @include('commonIncludes/footer')
-        @show  
+
 
         
    </div>     

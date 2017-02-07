@@ -18,8 +18,13 @@ $app->get('/', function () use ($app) {
 });
 
 
-$app->get('/categoria', function () use ($app) {
-    return view('routes/productBrowser', ['name' => 'index']
+$app->get('/listado/{id}', function ($id) use ($app) {
+    
+     $results =  DBData::getAllWhereTituloFamilia($id);  
+     
+    return view('routes/productBrowser', ['name' => 'index', 
+    'categoria' => $id,
+    'results' => $results]
     
     );
 });
@@ -31,7 +36,7 @@ $app->get('/categoria/{id}', function ($id) use ($app) {
 
      $results =  DBData::getAllWhereTituloFamilia($id);  
    
-    return view('routes/productBrowser', [
+    return view('routes/categoryBrowser', [
         'name' => 'index',
         'categoria' => $id,
         'results' => $results,
@@ -46,7 +51,7 @@ $app->get('/categoria/{id}', function ($id) use ($app) {
 $app->get('/producto/{id}', function ($id) use ($app) {
     
 
-    $results =  DBData::getProductDBInfo($id);  
+     $results =  DBData::getProductDBInfo($id);  
      
     return view('routes/productDescription', [
         'results' => $results,
@@ -54,4 +59,22 @@ $app->get('/producto/{id}', function ($id) use ($app) {
         
         ]);
 });
+$app->get('/test', function () use ($app) {
+    return view('routes/testChamber', ['name' => 'testts']
+    
+    );
+});
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// MUST ADD PERMISSION THINGS //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+$app->post('/admin', function () use ($app) {
+    return view('admin/adminDashboard', ['name' => 'adminDashboard']
+    );
+});
+$app->get('/admin', function () use ($app) {
+    return view('admin/adminDashboard', ['name' => 'adminDashboard']
+    );
+});
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

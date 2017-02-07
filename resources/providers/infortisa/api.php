@@ -619,8 +619,16 @@ return $stock;
 
 static function calledApi(){
     
-    echo "someone called, sayed hi. Hi!";
+   // echo "someone called, sayed hi. Hi!";
+    
+     \ApiCount::plusOneApi();
+     
+    
+    //echo $results[0]->Number;
+    //echo $results;
 
+    //  echo $resultys[0]->Number ;
+    
     }
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

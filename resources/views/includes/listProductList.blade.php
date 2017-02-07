@@ -6,7 +6,7 @@
                 </div>
                 <?php
                 $nombreEnlace = $resu->TITULO;
-                 $nombreEnlace = str_replace(" ", "-", $nombreEnlace);
+                $nombreEnlace = str_replace(" ", "-", $nombreEnlace);
                             $nombreEnlace = str_replace("á", "a", $nombreEnlace);
                             $nombreEnlace = str_replace("é", "e", $nombreEnlace);
                             $nombreEnlace = str_replace("í", "i", $nombreEnlace);

@@ -5,12 +5,12 @@ Minor :
     Login implementation
     Redo Descriptions
     Description downloader
-    number of api calls
+Pd - err -     number of api calls
     
 
 Major :
 
-    DATABASE CONNECTION MODEL
+PD  -    DATABASE CONNECTION MODEL
     Admin dashboard
     
     Chooser on admin : 
@@ -27,3 +27,20 @@ Major :
 Just when all is done:
     
     ¿Twitter linked?
+    
+-------------------------------------
+kinda done
+
+    MENU WILL LOOK LIKE:
+    	
+    	Ordenadores
+    	Componentes
+    	Perifericos
+    	Almacenamiento y lectores
+    	Imagen y audio
+    	Telefonia y redes 
+    	Software y Accesorios 
+--------------------------------------    	
+
+Done    -   IDEA : SELECT PARA CAMBIAR SU CATEGORIA!!!
+
