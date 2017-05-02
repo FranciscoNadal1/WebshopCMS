@@ -25,7 +25,7 @@
         
     </div>
 
-<div id="cuentaSiguente"></div>
+<div id="cuentaSiguente" style="display:none"></div>
 
 <script>
 var produ;
@@ -38,8 +38,9 @@ $(document).ready(function(){
     var nameCategory = $('#CategoryHeader').attr('class'); 
     var stuff;
     var pag = 1; 
+    var paginationMax = 12;
     
-            $.get("/sampleProductList/"+pag+"/"+nameCategory, function( my_var ) {
+            $.get("/sampleProductList/" + pag + "/" + nameCategory, function( my_var ) {
             pag++;
             
             stuff = my_var;
@@ -50,7 +51,7 @@ $(document).ready(function(){
     $("#btn1").click(function(){
         $('#btn1').html("Cargando...");
         
-        $.get("/sampleProductList/"+pag+"/"+nameCategory, function( my_var ) {
+        $.get("/sampleProductList/" + pag + "/" + nameCategory, function( my_var ) {
             pag++;
             
             stuff = my_var;
@@ -60,10 +61,10 @@ $(document).ready(function(){
         console.log("wtf " + stuff); //undefined
                 console.log("name " + nameCategory); //undefined
                 */
-                sta = "<div class='expansion"+pag+"'></div>";
+                sta = "<div class='expansion" + pag + "'></div>";
                  $("#ProductContainer").append(sta);
                  
-                 $( ".expansion"+pag ).load( "/sampleProductList/"+pag+"/"+nameCategory, function() {
+                 $( ".expansion"+pag ).load( "/sampleProductList/" + pag + "/"+nameCategory, function() {
                   //alert( "Load was performed." );
                   
        // $("#btn1").attr('value', 'Cargar mas productos...');
@@ -74,11 +75,12 @@ $(document).ready(function(){
                
                      
         $("#cuentaSiguente").load( "/countSampleProductList/" + pag + "/" + nameCategory, function() {
-                  alert( "Load was performed." );
+            //      alert( "Load was performed." );
 
+            if($("cuentaSiguente").textContent < paginationMax)
+                   
+                   $("btn1").style.display = "none";
                 });
-                
-
     });
 });
 

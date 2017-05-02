@@ -44,11 +44,23 @@ class DBData{
         $results = \DB::select("select count(*)as c FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" LIMIT ". $pager .", " . self::$numberOfProductsByPage);
          */
          
-         $result=mysqli_query("select count(*)as c FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" LIMIT ". $pager .", " . self::$numberOfProductsByPage);
-        $data=mysqli_fetch_assoc($result);
-        echo $data['c'];
+         
+         
+        $results = \DB::select("select count(*) as d FROM (select TITULO as tit from " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" LIMIT ". $pager .", " . self::$numberOfProductsByPage.") as c");
+         
+         
+   //     $result = mysqli_query("select count(*) FROM (select TITULO as tit from " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" LIMIT ". $pager .", " . self::$numberOfProductsByPage.") as c");
+
+/*        
+        (select count(*) from(
+SELECT TITULO as tit FROM `csv` WHERE 1 limit 12,12
+    ) as c)
+      */  
         
-        print_r($results);
+     //   $data=mysqli_fetch_assoc($results);
+     //   echo $data['c'];
+        
+     //   print_r($results);
           
         return $results;
    }

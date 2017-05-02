@@ -79,6 +79,10 @@ $app->get('/admin', function () use ($app) {
     return view('admin/adminDashboard', ['name' => 'adminDashboard']
     );
 });
+$app->get('/admin/productStatistics', function () use ($app) {
+    return view('admin/productCallStatistics', ['name' => 'Product Call Statistics']
+    );
+});
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -103,6 +107,9 @@ $app->get('/sampleProductList/{page}/{name}', function ($page, $name) use ($app)
 
 $app->get('/countSampleProductList/{page}/{name}', function ($page, $name) use ($app) {
     
-     $results =  DBData::countAllWhereTituloFamiliaPage($name, $page);  
-    return $results[0]->TITULO + "hola";
+    $results =  DBData::countAllWhereTituloFamiliaPage($name, $page);  
+   // return $results[0]->c;
+ 
+ 
+   return $results[0]->d;
 });
