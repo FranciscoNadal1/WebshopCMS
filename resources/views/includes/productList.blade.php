@@ -77,9 +77,9 @@ $(document).ready(function(){
         $("#cuentaSiguente").load( "/countSampleProductList/" + pag + "/" + nameCategory, function() {
             //      alert( "Load was performed." );
 
-            if($("cuentaSiguente").textContent < paginationMax)
+            if(document.getElementById("cuentaSiguente").textContent < paginationMax)
                    
-                   $("btn1").style.display = "none";
+                   document.getElementById("btn1").style.display = "none";
                 });
     });
 });
