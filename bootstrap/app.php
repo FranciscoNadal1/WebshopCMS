@@ -87,6 +87,7 @@ class_alias('Assets\AssetManager', 'GetAsset');
 class_alias('Providers\infortisa\infortisaApi', 'infortisaApi');
 class_alias('DBQuerys\DBData', 'DBData');
 class_alias('ApiCallNumber\ApiNumber', 'ApiCount');
+class_alias('ProductViewNumber\ProductViewNumber', 'ProductViewNumber');
 
 // $app->withEloquent();
 

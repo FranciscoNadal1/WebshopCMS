@@ -1,36 +1,36 @@
 <?php
 
-namespace ApiCallNumber;
+namespace ProductViewNumber;
 
-class ApiNumber{
+class ProductViewNumber{
     static  $disabled = "no";
  
-    static function getApiOfToday(){
+    static function getProductiOfToday($id){
         if(self::$disabled == "no"){
-       $results =  \DB::table('apiCalls')->where('Date', date("d-m-y"))->first();  
+            $results =  \DB::table('ProductCalls')->where('Id', $id)->where('Date', date("d-m-y"))->first();  
       
       return $results->Number; 
         }
    }    
    
-    static function plusOneApi(){
+    static function plusOneView($id){
         
         if(self::$disabled == "no"){
-            $results =  \DB::table('apiCalls')->where('Date', date("d-m-y"))->first();  
+            $results =  \DB::table('ProductCalls')->where('Id', $id)->where('Date', date("d-m-y"))->first();  
      
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ////////////        Checks if the api is called that day, if not, create the day and adds one
 
         if (!count($results)) {
-            \DB::table('apiCalls')->insert([
-                ['Number' => 1, 'Date' => date("d-m-y")]
+            \DB::table('ProductCalls')->insert([
+                ['Calls' => 1, 'Date' => date("d-m-y"), 'Id' => $id]
             ]);
           }
           
           
         if (count($results)) {
             
-            \DB::table('apiCalls')->where('Date', date("d-m-y"))->increment('Number', 1);
+            \DB::table('ProductCalls')->where('Date', date("d-m-y"))->where('Id', $id)->increment('Calls', 1);
           }
 ///////////////////////////////////////////////////////////////////////////////////////////////          
           

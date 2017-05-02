@@ -1,4 +1,17 @@
+<!-- Plain page for the description of each product-->
 
+
+
+    <!-- Add an increment for each product view on each date, to keep statistic  -->
+    
+    
+        <!-- NOTE : Should add user field on table for the future -->
+    
+    <?php
+        \ProductViewNumber::plusOneView($results[0]->CODIGOINTERNO);
+    ?>
+    
+    <!-- ----------------------------------------------------------------------- -->
 
 <div id="container"  class="">
     
