@@ -20,13 +20,16 @@ $app->get('/', function () use ($app) {
 
 $app->get('/listado/{id}', function ($id) use ($app) {
     
-     $results =  DBData::getAllWhereTituloFamilia($id);  
+   //  $results =  DBData::getAllWhereTituloFamilia($id);  
+     $results =  DBData::getAllWhereTituloFamiliaPage($id, 0);  
      
     return view('routes/productBrowser', ['name' => 'index', 
     'categoria' => $id,
     'results' => $results]
     
     );
+    
+    
 });
 
 
@@ -78,3 +81,28 @@ $app->get('/admin', function () use ($app) {
 });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////// ROUTES TO RAW INCLUDES, TO BE USED BY SCRIPTS
+
+$app->get('/sampleProductList', function () use ($app) {
+    
+     $results =  DBData::getAllWhereTituloFamilia("Minitorre y Microtorre");  
+    return view('includes/gridProductListPage', ['name' => 'sample', 'resu' => $results[0]]
+    );
+});
+
+$app->get('/sampleProductList/{page}/{name}', function ($page, $name) use ($app) {
+    
+     $results =  DBData::getAllWhereTituloFamiliaPage($name, $page);  
+    return view('includes/gridProductListPage', ['name' => 'sample', 'results' => $results]
+    );
+});
+
+$app->get('/countSampleProductList/{page}/{name}', function ($page, $name) use ($app) {
+    
+     $results =  DBData::countAllWhereTituloFamiliaPage($name, $page);  
+    return $results[0]->TITULO + "hola";
+});

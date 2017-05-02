@@ -7,6 +7,7 @@ class DBData{
 
     static $productTableName = "csv";
     static $categoryTableName = "categorias";
+    static $numberOfProductsByPage = "12";
     
     static function getAllCategories(){
               $results = \DB::select("SELECT * FROM " . self::$categoryTableName . " where name not like '-%'");
@@ -25,6 +26,31 @@ class DBData{
       
       $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" group by CODIGOINTERNO");
     return $results;
+   }
+    static function getAllWhereTituloFamiliaPage($name, $page){
+      
+      $name = self::makeFriendlier($name);
+      $pager = self::$numberOfProductsByPage * $page;
+      $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" group by CODIGOINTERNO LIMIT ". $pager .", " . self::$numberOfProductsByPage);
+      
+    return $results;
+   }
+       
+    static function countAllWhereTituloFamiliaPage($name, $page){
+          
+        $name = self::makeFriendlier($name);
+        $pager = self::$numberOfProductsByPage * $page;
+        /*
+        $results = \DB::select("select count(*)as c FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" LIMIT ". $pager .", " . self::$numberOfProductsByPage);
+         */
+         
+         $result=mysqli_query("select count(*)as c FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" LIMIT ". $pager .", " . self::$numberOfProductsByPage);
+        $data=mysqli_fetch_assoc($result);
+        echo $data['c'];
+        
+        print_r($results);
+          
+        return $results;
    }
    
     static function getProductDBInfo($name){

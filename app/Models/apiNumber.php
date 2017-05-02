@@ -3,7 +3,7 @@
 namespace ApiCallNumber;
 
 class ApiNumber{
-    static  $disabled = "yes";
+    static  $disabled = "no";
  
     static function getApiOfToday(){
         if(self::$disabled == "no"){
@@ -16,20 +16,26 @@ class ApiNumber{
     static function plusOneApi(){
         
         if(self::$disabled == "no"){
-      $results =  \DB::table('apiCalls')->where('Date', date("d-m-y"))->first();  
+            $results =  \DB::table('apiCalls')->where('Date', date("d-m-y"))->first();  
      
-
-          if(is_null($results))
-          {
+///////////////////////////////////////////////////////////////////////////////////////////////
+////////////        Checks if the api is called that day, if not, create the day and adds one
+        if (!count($results)) {
             \DB::table('apiCalls')->insert([
                 ['Number' => 1, 'Date' => date("d-m-y")]
             ]);
-          }else{
-            \DB::table('apiCalls')->increment('Number', 1, ['Date' => date("d-m-y")]);
           }
           
-
-   } 
+          
+        if (count($results)) {
+            
+            \DB::table('apiCalls')->where('Date', date("d-m-y"))->increment('Number', 1);
+          }
+///////////////////////////////////////////////////////////////////////////////////////////////          
+          
+          
+          
+        } 
     }
 }
 
