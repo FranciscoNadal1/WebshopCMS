@@ -39,7 +39,7 @@
        margin:0 auto;
     }
     .precioProducto{
-        
+ /*       
         background: -moz-linear-gradient(top, rgba(5,5,2,0) 1%, rgba(115,115,185,0.5) 3%, rgba(84,116,153,1) 100%) !important;
         background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,rgba(125,185,2,0)), color-stop(3%,rgba(125,185,232,0.02)), color-stop(100%,rgba(84,116,153,1))) !important;
         background: -webkit-linear-gradient(top, rgba(5,5,2,0) 1%,rgba(115,115,185,0.5) 3%,rgba(84,116,153,1) 100%) !important;
@@ -47,11 +47,11 @@
         background: -ms-linear-gradient(top, rgba(5,5,2,0) 1%,rgba(115,115,185,0.5) 3%,rgba(84,116,153,1) 100%) !important;
         background: linear-gradient(to bottom, rgba(5,5,2,0) 1%,rgba(115,115,185,0.5) 3%,rgba(84,116,153,1) 100%) !important;
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#007db9e8', endColorstr='#547499',GradientType=0 ) !important;
+*/
 
 
-
-    background-color:#282F44;
-    color:#F5D061;
+/*    background-color:#282F44;*/
+/*    color:#F5D061;*/
     
 }   
     #CategoryHeader::after {
@@ -113,23 +113,28 @@
     
      .typeGrid .nombreProducto{
       /*  font-size: 1.0em !important;*/
-      font-size: 1vw;
+ /*     font-size: 1vw;*/
         text-align:center;
         padding:10px;
-        height:75px;
+  /*      height:75px;*/
     }
     
     .typeGrid .productWrapper .precioProducto{
       /*  border-top:1px solid black;*/
         text-align:center;
         font-size: 1.4em;
+        position:relative;
+        top:10px;
+        float:right;
+        right:10px;
+            border:1px solid black;
+            width:50%;
+            background-color:rgba(220,220,220,0.3);
     }
     .typeGrid .productWrapper .product{
-        border-radius:50px 0px 0px 0px;
         
     }
     .typeGrid .productWrapper .product img{
-        border-radius:25px 0px 0px 0px;
     }
     
     
@@ -143,8 +148,7 @@
     
     .typeGrid .stockProducto{
     
-        background-color: #547499 !important;
-    
+
     }
     
     .loadMoreProducts{

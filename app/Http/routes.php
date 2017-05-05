@@ -11,7 +11,9 @@
 |
 */
 
+
 $app->get('/', function () use ($app) {
+    
     return view('routes/productBrowser', ['name' => 'index']
     
     );
@@ -68,23 +70,6 @@ $app->get('/test', function () use ($app) {
     );
 });
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// MUST ADD PERMISSION THINGS //////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-$app->post('/admin', function () use ($app) {
-    return view('admin/adminDashboard', ['name' => 'adminDashboard']
-    );
-});
-$app->get('/admin', function () use ($app) {
-    return view('admin/adminDashboard', ['name' => 'adminDashboard']
-    );
-});
-$app->get('/admin/productStatistics', function () use ($app) {
-    return view('admin/productCallStatistics', ['name' => 'Product Call Statistics']
-    );
-});
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -113,3 +98,26 @@ $app->get('/countSampleProductList/{page}/{name}', function ($page, $name) use (
  
    return $results[0]->d;
 });
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// MUST ADD PERMISSION THINGS //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+$app->post('/admin', function () use ($app) {
+    return view('admin/adminDashboard', ['name' => 'adminDashboard']
+    );
+});
+$app->get('/admin', function () use ($app) {
+    return view('admin/adminDashboard', ['name' => 'adminDashboard']
+    );
+});
+$app->get('/admin/productStatistics', function () use ($app) {
+    return view('admin/productCallStatistics', ['name' => 'Product Call Statistics']
+    );
+});
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

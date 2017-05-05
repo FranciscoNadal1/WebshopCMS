@@ -7,7 +7,7 @@
     <div id="ProductContainer" class="container">
         
             
-            <?php            $typeList = "grid";            ?>
+            <?php            $typeList = \GetSettings::getProductListType();            ?>
             
             
         @foreach ($results as $resul)
@@ -38,7 +38,7 @@ $(document).ready(function(){
     var nameCategory = $('#CategoryHeader').attr('class'); 
     var stuff;
     var pag = 1; 
-    var paginationMax = 12;
+    var paginationMax = "{{ \GetSettings::getProductEachPage() }}"
     
             $.get("/sampleProductList/" + pag + "/" + nameCategory, function( my_var ) {
             pag++;

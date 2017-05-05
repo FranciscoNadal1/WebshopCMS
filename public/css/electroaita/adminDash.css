@@ -1,0 +1,26 @@
+#admin .productWrapper {
+    height:300px;
+    border:1px solid black;
+    padding:5px;
+    overflow-x:none;
+    overflow-y:scroll;
+    margin:10px;
+    background-color:white;
+}
+
+
+.productStatistic {
+    
+    border:1px solid black;
+}
+
+#ProductStatisticcontainer{
+    margin:20px;
+}
+
+
+
+.productStatistic {
+    text-align:center;
+  
+}

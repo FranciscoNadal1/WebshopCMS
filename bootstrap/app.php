@@ -82,7 +82,7 @@ $app = new Laravel\Lumen\Application(
 | Now we will register a few alias for the used models
 |
 */
-
+class_alias('Settings\getSettings', 'GetSettings');
 class_alias('Assets\AssetManager', 'GetAsset');
 class_alias('Providers\infortisa\infortisaApi', 'infortisaApi');
 class_alias('DBQuerys\DBData', 'DBData');

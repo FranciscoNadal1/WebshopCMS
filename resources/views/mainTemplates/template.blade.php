@@ -1,16 +1,9 @@
-        <?php   
-
-            $activeTheme = "baseTheme";
-          //  $activeTheme = "electroaita";
-        ?>
-
-
 <html>
     <head>
         <title>App Name - {{ $name }}</title>
 
 
-        <link rel="stylesheet" href={{ GetAsset::GetCSS($activeTheme . "/style.css") }} type="text/css">
+        <link rel="stylesheet" href={{ GetAsset::GetCSS(\GetSettings::getTheme() . "/style.css") }} type="text/css">
 
         
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
