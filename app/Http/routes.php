@@ -120,4 +120,9 @@ $app->get('/admin/productStatistics', function () use ($app) {
     );
 });
 
+$app->get('/admin/testChamber', function () use ($app) {
+    return view('admin/testChamber', ['name' => 'Product Call Statistics']
+    );
+});
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

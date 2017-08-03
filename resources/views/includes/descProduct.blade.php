@@ -27,7 +27,7 @@
         <div class="boxes container" id="containerDesc">
             <div class="col1 col-xs-5 col-md-5 col-lg-5 article-block boxes">
                 <div class="imagenProducto">
-                    <img width="75%" src=https://www.infortisa.com/images/product/large/{{ $results[0]->CODIGOINTERNO }}_1.jpg />
+                    <img width="75%" src={{ infortisaApi::getProductMainImage($results[0]->CODIGOINTERNO) }} />
                 </div>
                 </div>
              <div class="col2 col-xs-7 col-md-7 col-lg-7 article-block boxes">

@@ -13,7 +13,7 @@
     }
 
 </style>
-
+<!--
 <script>
     $("nav, #HoverMenu").mouseover(function(){
         $("#HoverMenu").slideDown();
@@ -25,6 +25,8 @@
 });
     
 </script>
+
+--> 
 
 <div id="HoverMenu">
     

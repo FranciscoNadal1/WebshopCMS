@@ -5,6 +5,9 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 use Providers\infortisa\infortisaGets as infortisaGets;
 
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Load provider classes
@@ -82,6 +85,8 @@ $app = new Laravel\Lumen\Application(
 | Now we will register a few alias for the used models
 |
 */
+
+
 class_alias('Settings\getSettings', 'GetSettings');
 class_alias('Assets\AssetManager', 'GetAsset');
 class_alias('Providers\infortisa\infortisaApi', 'infortisaApi');
@@ -131,13 +136,13 @@ $app->singleton(
 |
 */
 
-// $app->middleware([
-//    App\Http\Middleware\ExampleMiddleware::class
-// ]);
+ $app->middleware([
+    App\Http\Middleware\ExampleMiddleware::class
+ ]);
 
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+ $app->routeMiddleware([
+     'auth' => App\Http\Middleware\Authenticate::class,
+ ]);
 
 /*
 |--------------------------------------------------------------------------

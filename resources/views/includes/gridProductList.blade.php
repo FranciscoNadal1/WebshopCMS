@@ -7,10 +7,10 @@
               <div class="product">
                   <div class="precioProducto"> {{ round($resu->PRECIO,2) }} &euro;</div>
                 <div class="imagenProducto">
-                    <img width="75%" src=https://www.infortisa.com/images/product/large/{{ $resu->CODIGOINTERNO }}_1.jpg />
+                    <img width="75%" src={{ infortisaApi::getProductMainImage($resu->CODIGOINTERNO) }} />
                 </div>
                 <div class="nombreProducto"><a href="/producto/{{ DBData::desAccentify($resu->TITULO) }}"> {{ $resu->TITULO }}</a></div>
-                
+               
                 <div class="stockProducto"> {{ $resu->STOCK }}</div>
                     </div>
             </div>

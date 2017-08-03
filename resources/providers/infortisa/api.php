@@ -617,6 +617,15 @@ return $stock;
 
 }
 
+static function getProductMainImage($code){
+    
+    /*
+    $code = "PPCTPV0052";
+    return "https://www.infortisa.com/images/product/large/" + $code + "_1.jpg";
+    */
+    return "https://www.infortisa.com/images/product/large/" . $code . "_1.jpg";
+}
+
 static function calledApi(){
     
    // echo "someone called, sayed hi. Hi!";
