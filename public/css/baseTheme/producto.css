@@ -28,9 +28,10 @@
      background-color:grey;
      
      */
-     
+        max-width: 1140px;
+    
          margin:0 auto;
-         width:85%;
+       /*  width:85%;*/
     }
     
  #ProductContainer{
@@ -73,7 +74,7 @@
    /*
    border-top:6px solid #282F44;
    */
-  border-top:6px solid #547499;   
+  border-top:6px solid #292F33;   
     
 }
 
@@ -94,7 +95,7 @@
         padding:10px;
         */
       margin-bottom: 5px;
-      margin-top: 5px;
+      
        
     }
     .typeGrid .product{
@@ -112,12 +113,26 @@
     }
     
      .typeGrid .nombreProducto{
-      /*  font-size: 1.0em !important;*/
+       font-size: 1.0em;
  /*     font-size: 1vw;*/
         text-align:center;
-        padding:10px;
-  /*      height:75px;*/
+        padding:2px;
+        word-wrap: break-word;
+        height:60px;
+    /*    font-size:1vw;*/
+        
     }
+        .row {
+          display: -webkit-box;
+          display: -webkit-flex;
+          display: -ms-flexbox;
+          display:         flex;
+          flex-wrap: wrap;
+        }
+        .row > [class*='col-'] {
+          display: flex;
+          flex-direction: column;
+        }
     
     .typeGrid .productWrapper .precioProducto{
       /*  border-top:1px solid black;*/
@@ -152,11 +167,13 @@
     }
     
     .loadMoreProducts{
+      margin:0 auto;
         margin-top:10px;
         margin-bottom:10px;
         border:1px dotted solid;
         padding:5px;
-        background-color:#F5D061;
+        background-color:#292F33;
+        color:#BBBBFF;
         
     }
 
@@ -168,7 +185,7 @@
         padding-left:5px;
         margin-bottom:10px;
         border:2px dotted silver;
-        background-color:#547499;
+        background-color: #292F33;
         color:white;
         font-size:16px;
     }

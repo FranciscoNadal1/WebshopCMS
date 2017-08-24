@@ -2,28 +2,35 @@
     
 
 
-        
-        
-    <div id="ProductContainer" class="container">
-        
+        <div class="container">
+            <div class="row">    
+                <div id="filterBar" class="containerdiv hidden-sm hidden-xs hidden-md visible-lg-block col-lg-2">
+                    
+                     @include('includes/filter', array('subFamilia' => $results[0]->CODSUBFAMILIA))
+                    
+                    
+                </div>
             
-            <?php            $typeList = \GetSettings::getProductListType();            ?>
-            
-            
-        @foreach ($results as $resul)
-            @if ($typeList == "grid")
-                @include('includes/gridProductList', array('resu' => $resul))
-            @endif
-            
-            @if ($typeList == "list")
-                @include('includes/listProductList', array('resu' => $resul))
-            @endif
-                      
-            
-        @endforeach
-        
-        
-    </div>
+                <div id="ProductContainer" class="container col-sm-12 col-md-12 col-lg-10">
+                    
+                        
+                        <?php            $typeList = \GetSettings::getProductListType();            ?>
+                        
+                        
+                    @foreach ($results as $resul)
+                        @if ($typeList == "grid")
+                            @include('includes/gridProductList', array('resu' => $resul))
+                        @endif
+                        
+                        @if ($typeList == "list")
+                            @include('includes/listProductList', array('resu' => $resul))
+                        @endif
+                                  
+                        
+                    @endforeach
+                    
+                    
+                </div>
 
 <div id="cuentaSiguente" style="display:none"></div>
 
@@ -87,7 +94,8 @@ $(document).ready(function(){
 
 </script>
 
-
+            </div>
+        </div>
 </head>
 
 

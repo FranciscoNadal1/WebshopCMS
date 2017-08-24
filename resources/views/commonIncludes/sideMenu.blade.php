@@ -1,7 +1,3 @@
-   <script>
-       
-
-   </script>
    
         <div class="overlay"></div>
     
@@ -13,12 +9,16 @@
                  <div>Categor&iacute;as</div>
              </div>
              
-            {{--*/ $results = DBData::getAllCategories() /*--}}
-             
+
+            <?php
+            $categories = \DBData::getAllCategories();
+            ?>
 
             
-            @foreach ($results as $resu)
-                <li><a href={{ "/categoria/" . DBData::desAccentify($resu->name) . "/" }}> {{ $resu->name }}</a></li>
+            @foreach ($categories as $cat)
+
+                    <li><a href={{ "/categoria/" . DBData::desAccentify($cat->name) . "/" }}> {{ $cat->name }}</a></li>
+            
             @endforeach
             
             

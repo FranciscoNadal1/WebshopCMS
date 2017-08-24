@@ -1,4 +1,19 @@
-
+<style>
+        
+.row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
+  flex-wrap: wrap;
+  min-height: 100px;
+}
+.row > [class*='col-'] {
+  display: flex;
+  flex-direction: column;
+}
+    
+</style>
 <div id=""  class="">
     
     
@@ -10,17 +25,22 @@
         
     <div id="" class="container-fluid categoryContainer">
         
-            
-    {{--*/ $results = \DBData::getFamilyFromCategoryName($categoria) /*--}}
+    <?php
+      $results = \DBData::getFamilyFromCategoryName($categoria);
+    ?>
 
 
 
+<div class="row row-eq-height">
           @foreach ($results as $resul)
               <div class="col-xs-4 category"> 
                 <div class="category2">
                     <div class="title">{{ $resul->TITULOFAMILIA }}</div>
 
-    {{--*/ $results2 = \DBData::getSubFamiliaFromTitulo($resul->TITULOFAMILIA) /*--}}
+
+    <?php
+      $results2 = \DBData::getSubFamiliaFromTitulo($resul->TITULOFAMILIA);
+    ?>
                     <ul>
                           @foreach ($results2 as $resul2)
                               <a href="/listado/{{ \DBData::desAccentify($resul2->TITULOSUBFAMILIA) }}"><li>{{ $resul2->TITULOSUBFAMILIA }}</li></a>
@@ -30,6 +50,7 @@
                 </div>
             </div>
             <div class="clearfix visible-xs-block"></div>
-            @endforeach     
+            @endforeach   
+            </div>
     </div>
 </div>
