@@ -3,7 +3,7 @@
 
 
     @section('content')
-
+   <!--
 <div >
   <div ng-controller="PieCtrl">
     <canvas id="pie" class="chart chart-pie"
@@ -18,7 +18,43 @@
             <p>You wrote: @{{ name }}</p> 
         
         </div>
+-->
 
+
+<script>
+var myApp = angular.module('myApp', []);
+
+function MyCtrl($scope) {
+    $scope.save = function (formId) {
+        $('#' + formId).find('input').each(function (idx, input) {
+            // Do your DOM manipulation here
+            console.log($(input).val());
+        });
+    };
+}
+</script>
+
+<h1>Idea</h1>
+<h2>Un personalizador de los colores principales de la web, se realizará recorriendo todos los ficheros del tema y substituyendo cada color, 
+previamente habiendo añadido al color //Template:1</h2>
+
+<body ng-app="myApp">
+    <div ng-controller="MyCtrl">
+        <form id="test">
+            <div>
+                <input type="text" class="test1" name="test2" />
+            </div>
+            <div>
+                <input type="text" class="test3" name="test4" />
+            </div>
+        </form>
+        <div>
+            <input type="button" ng-click="save('test')" value="submit" />
+        </div>
+    </div>
+</body>
+
+JavaScript:
 
 <!--
 

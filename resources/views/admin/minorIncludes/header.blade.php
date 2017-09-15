@@ -37,19 +37,22 @@
   <div class="belowClose">
   
   <div class="separator">Estadísticas</div>
-  <a href="/admin/productCallStatistics">Estadisticas de productos</a>
+      <a href="/admin/productCallStatistics">Estadisticas de productos</a>
 
   
   <div class="separator">Administración</div>
   
-  <a href="/admin/changeCategories">Cambiar enlace de menu de categorias</a>
+      <a href="/admin/changeCategories">Cambiar enlace de menu de categorias</a>
+      <a href="/admin/settings">settings</a>
+      <a href="/admin/settings">Change style</a>
   
-  <a href="/admin/settings">settings</a>
   
   <div class="separator">Pruebas</div>
-
-    <a href="/admin/testChamber">Tests</a>
-    </div>
+     <a href="/admin/testChamber">Tests</a>
+</div>
+    
+    
+    
 </div>
 
 <script>

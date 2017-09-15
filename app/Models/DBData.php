@@ -35,6 +35,41 @@ class DBData{
       
     return $results;
    }
+   
+    static function getAllWhereTituloFamiliaPagePlusFilters($name, $page, $filters){
+      
+      $name = self::makeFriendlier($name);
+      $pager = self::$numberOfProductsByPage * $page;
+      
+
+      
+      $filte = explode("/", $filters);
+      
+      $ids = join("','",$filte);   
+
+        
+        $inVariable = "";
+        
+        foreach($filte as $value) {
+            $inVariable = $inVariable . "'" . $value . "'" . ",";
+        }
+        $inVariable = rtrim($inVariable, ',');
+
+////////////////////////////////////////////////////////////////////////////////
+//////////      SQL INJECTION PROBABLE VULNERABILITY, CHECK
+
+      $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and  NOMFABRICANTE in ($inVariable) group by CODIGOINTERNO LIMIT ". $pager .", " . self::$numberOfProductsByPage);
+      
+      
+      
+      
+      
+    return $results;
+   } 
+   
+   
+   
+   
        
     static function countAllWhereTituloFamiliaPage($name, $page){
           

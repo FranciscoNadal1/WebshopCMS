@@ -3,7 +3,7 @@
         ?>
 
 <div class="header">
-    <div class="container"> 
+    <div class=""> 
         <div id="logoContainer">
             <a class="logo" href="/">
                 <img width="250" height="100" src="{{ GetAsset::getLogo() }}">

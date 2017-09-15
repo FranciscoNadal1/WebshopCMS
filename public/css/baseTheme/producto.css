@@ -200,3 +200,27 @@
         
         border:1px solid black;
     }
+    
+    .progress{
+        margin-left:20px;
+        margin-right:20px;
+        border-radius:10px;
+    }
+    .stock-bar, .progress{
+        height:10px !important;    
+        
+        
+        
+    }
+    .stock-bar{
+        background-color:silver !important;
+        
+    }
+    .progress{
+        margin-bottom:5px;
+    }
+    
+    .stockProducto{
+        padding-bottom:1px;
+    }
+    

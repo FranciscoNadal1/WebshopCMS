@@ -1,8 +1,9 @@
 
     
 
-
-        <div class="container">
+ 
+        <!-- <div class="container"> -->
+            <div>
             <div class="row">    
                 <div id="filterBar" class="containerdiv hidden-sm hidden-xs hidden-md visible-lg-block col-lg-2">
                     
@@ -11,8 +12,8 @@
                     
                 </div>
             
-                <div id="ProductContainer" class="container col-sm-12 col-md-12 col-lg-10">
-                    
+               <div id="ProductContainer" class="container col-sm-12 col-md-12 col-lg-10">    
+              <!--   <div id="ProductContainer" class="">   -->
                         
                         <?php            $typeList = \GetSettings::getProductListType();            ?>
                         

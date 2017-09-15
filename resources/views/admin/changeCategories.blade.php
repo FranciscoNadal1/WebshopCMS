@@ -35,8 +35,10 @@
          @foreach ($results as $resul)
                        
              
-                                {{--*/ $selectedNumber = \DBData::getCategoryCodeFromName($resul->TITULOFAMILIA) /*--}}
-
+    <?php
+    
+        $selectedNumber = \DBData::getCategoryCodeFromName($resul->TITULOFAMILIA);
+    ?>
             
 <div class="productWrapper col-xs-3 col-md-3 col-lg-3 row-fluid ">
 
@@ -45,7 +47,12 @@
     <select class="form-control" name="{{ $resul->CODFAMILIA }}">
                  
         
-        {{--*/ $results3 = DBData::getAllCategories() /*--}}
+        <?php
+        
+            $results3 = DBData::getAllCategories();
+        
+        ?>
+        
             @foreach ($results3 as $resule)
                  <option 
                          @if($resule->index == $selectedNumber)

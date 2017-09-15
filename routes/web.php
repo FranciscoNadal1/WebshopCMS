@@ -31,11 +31,27 @@ Route::get('/listado/{id}', function ($id) {
 		    'categoria' => $id,
 		    'results' => $results
 	    ]
-    
     );
-    
-    
 });
+
+
+
+Route::get('/listado/{id}/{category}', function ($id, $category) {
+    
+   //  $results =  DBData::getAllWhereTituloFamilia($id);  
+   
+     	$results =  DBData::getAllWhereTituloFamiliaPagePlusFilters($id, 0, $category);  
+     
+     print_r($category);
+	    return view('routes/productBrowser', [
+		    'name' => 'index', 
+		    'categoria' => $id,
+		    'results' => $results
+	    ]
+    );
+})->where('category', '.+');
+
+
 
 
 

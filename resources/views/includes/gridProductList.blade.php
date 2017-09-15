@@ -11,7 +11,21 @@
                 </div>
                 <div class="nombreProducto"><a href="/producto/{{ DBData::desAccentify($resu->TITULO) }}"> {{ $resu->TITULO }}</a></div>
                
-                <div class="stockProducto"> {{ $resu->STOCK }}</div>
+                        <div class="stockProducto"> 
+                        
+                        
+                        <div class="progress">
+                          <div class=" stock-bar progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="{{ "width: " . $resu->STOCK *2 . "%" }}">
+                            
+                          </div>
+                        </div>
+                        
+                        
+                        
+                        
+                        
+                        
+                        </div>
                     </div>
             </div>
 
