@@ -68,6 +68,12 @@ Route::get('/', function (){
     );
 });
 
+Route::get('/login', function (){
+    
+    return view('layouts/app', ['name' => 'login']
+    
+    );
+});
 
 Route::get('/listado/{id}', function ($id){
     
@@ -207,3 +213,6 @@ Route::get('/admin/testChamber', function (){
     return view('admin/testChamber', ['name' => 'Product Call Statistics']
     );
 });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

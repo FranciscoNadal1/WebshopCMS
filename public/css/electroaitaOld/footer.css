@@ -1,5 +1,5 @@
 .footer-distributed{
-	background-color: #292F33;
+	background-color: #547499;
 	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
 	box-sizing: border-box;
 	width: 100%;
@@ -9,7 +9,7 @@
 	padding: 55px 50px;
 	margin-top: 80px;
 	
-	border-top:5px solid #CCD6DD;
+	border-top:5px solid #E6AF2E;
 	display:table;
 }
 
@@ -35,7 +35,7 @@
 }
 
 .footer-distributed h3 span{
-	color:  #CCD6DD;
+	color:  #E6AF2E;
 }
 
 /* Footer links */
@@ -99,7 +99,7 @@
 }
 
 .footer-distributed .footer-center p a{
-	color:  #CCD6DD;
+	color:  #E6AF2E;
 	text-decoration: none;;
 }
 
@@ -135,7 +135,7 @@
 	width: 35px;
 	height: 35px;
 	cursor: pointer;
-	background-color:  #CCD6DD ;
+	background-color:  #E6AF2E ;
 	border-radius: 2px;
 
 	font-size: 20px;
@@ -168,9 +168,4 @@
 		margin-left: 0;
 	}
 
-}
-
-footer{
-	position:absolute;
-	
 }

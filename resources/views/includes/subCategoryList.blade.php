@@ -19,7 +19,7 @@
     
 
         
-    <link rel="stylesheet" href={{ GetAsset::GetCSS("baseTheme" . "/style.css") }} type="text/css">
+        
         
     <div id="CategoryHeader" >{{ $categoria }}</div>
         

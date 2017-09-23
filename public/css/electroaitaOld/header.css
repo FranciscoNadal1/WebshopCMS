@@ -10,7 +10,7 @@
         -webkit-box-shadow: 0px 4px 2px 5px rgba(0,0,0,0.09);
         -moz-box-shadow: 0px 4px 2px 5px rgba(0,0,0,0.09);
         box-shadow: 0px 4px 2px 5px rgba(0,0,0,0.09);
-        border-left:5px solid #CCD6DD;
+        border-left:5px solid #E6AF2E;
         border-radius: 50px 0px 0px 0px;
     
     border-bottom:1px solid black;
@@ -42,20 +42,10 @@
     */
     padding-top:30px;
 }
-
-#auth li{
-        list-style:none;
-        float:right;
-        padding-right:10px;
-}
-
-
 #logoContainer{
-    /*
     float:left;
    
     width:30%;
-    */
     min-width: 350px;
 }
 
@@ -66,11 +56,10 @@
     float:right;
     width:50%;
     height:100px;
-  /*  border:1px solid black;*/
-  padding-top:30px;
+    border:1px solid black;
 }
 #searchAnduser{
-    width:65%;
+    width:70%;
     height:100px;
     float:right;
     
@@ -103,7 +92,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
     z-index: -1;
     height: 100%;
     width: 5px;
-    background-color: #CCD6DD;
+    background-color: #E6AF2E;
     -webkit-transition: width .2s ease-in;
     -moz-transition: width .2s ease-in;
     -ms-transition: width .2s ease-in;

@@ -95,7 +95,7 @@
         padding:10px;
         */
       margin-bottom: 5px;
-      
+      margin-top: 5px;
        
     }
     .typeGrid .product{
@@ -167,7 +167,6 @@
     }
     
     .loadMoreProducts{
-      margin:0 auto;
         margin-top:10px;
         margin-bottom:10px;
         border:1px dotted solid;
@@ -199,27 +198,3 @@
         
         border:1px solid black;
     }
-    
-    .progress{
-        margin-left:20px;
-        margin-right:20px;
-        border-radius:10px;
-    }
-    .stock-bar, .progress{
-        height:10px !important;    
-        
-        
-        
-    }
-    .stock-bar{
-        background-color:silver !important;
-        
-    }
-    .progress{
-        margin-bottom:5px;
-    }
-    
-    .stockProducto{
-        padding-bottom:1px;
-    }
-    
