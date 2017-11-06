@@ -58,9 +58,132 @@
                    </div>  
                 </div>
                    <div class="boxes container" id="fichaProducto">
+                       <pre>
                             <?php 
-                                echo infortisaApi::get_tecnica($results[0]->CODIGOINTERNO); 
+                            $tecDes = infortisaApi::get_tecnica($results[0]->CODIGOINTERNO);
+                              //  echo $tecDes; 
+                                
+                                
+                                echo htmlspecialchars($tecDes);
                             ?>
+                            </pre>
+                    </div>
+                    
+                    
+                    <div id="TestSpace">
+                        <h2>Espacio para tests</h2>
+                        
+                     <?php
+                     /*
+                        $peliculas = new SimpleXMLElement(html_entity_decode($tecDes));
+                    
+                 //       print_r($peliculas);
+                     $resultado = $peliculas->xpath('//tr/text()');
+                        
+                         $categories = $peliculas->xpath('//tr[text()]');
+
+                    while ($categorie = current($categories)) {
+                        print_r($categorie);
+                        echo "<br>-<br>";
+                        print_r($categorie->xpath('//strong'));                
+                                        
+                                        
+                                        
+                                    $categorieIn = $categorie->xpath('//text()');      
+                                    echo $categorieIn[1];
+                                    */
+                                            //    while ($categor = current($categorieIn)) {               
+                                       //       echo next($categor) ? ', ' : null;
+                                        //            echo "</br>";
+                                                    
+                                       //         }
+                                        
+                                        
+                                        
+                     //   echo $categorie->xpath("//*[0]/text()")->toString();
+                    //    $found = $categorie->xpath('//*');
+                    //    echo $found[0];
+/*
+                        if(next($categories))
+                            return ',';
+                        else
+                            break;
+                            */
+                            /*
+                        echo next($categories) ? ', ' : null;
+                        echo "</br>";
+                        
+                    }
+                    echo "---------------------<br>";
+                    $xml = simplexml_load_string(html_entity_decode($tecDes));
+
+                    foreach($xml as $SalesInvoice) {
+                        print_r($SalesInvoice->tr);
+                    }
+*/
+
+    /*
+                        while(list( , $nodo) = each($resultado)) {
+                            echo $nodo,"\n";
+                        }
+    */
+                    
+                    /* 
+                         libxml_use_internal_errors(true);
+                            $dom = new DOMDocument("1.0", "UTF-8");
+                            $dom->strictErrorChecking = false;
+                            $dom->validateOnParse = false;
+                            $dom->recover = true;
+                            $dom->loadXML($tecDes);
+                            $xml = simplexml_import_dom($dom);
+                        
+                        
+                        $simplexml = simplexml_load_string($tecDes);
+                        print_r($simplexml);
+                        
+                         echo $xml->table;
+                        
+                            libxml_clear_errors();
+                            libxml_use_internal_errors(false);
+                     ?>
+                       
+                       */
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                               
+                               /*                
+                        
+                        $doc = new DOMDocument("1.0", "UTF-8");
+                        $doc->loadHTMLFile(html_entity_decode($tecDes));
+                        
+                        $xpath = new DOMXpath($doc);
+                        */
+                        // example 1: for everything with an id
+                        //$elements = $xpath->query("//*[@id]");
+                        
+                        // example 2: for node data in a selected id
+                        //$elements = $xpath->query("/html/body/div[@id='yourTagIdHere']");
+                        
+                        // example 3: same as above with wildcard
+                        /*
+                        $elements = $xpath->query("//tr");
+                        
+                        if (!is_null($elements)) {
+                          foreach ($elements as $element) {
+                            echo "<br/>[". $element->nodeName. "]";
+                        
+                            $nodes = $element->childNodes;
+                            foreach ($nodes as $node) {
+                              echo $node->nodeValue. "\n";
+                            }
+                          }
+                        }
+                       
+                       
+                       */
+                       
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                       ?>
+                        
                     </div>
                 
     </div>

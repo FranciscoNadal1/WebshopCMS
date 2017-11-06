@@ -33,6 +33,15 @@ class AssetManager{
      
    }
    
+    static function getProductImg($code,$brand){
+
+        if(self::$urlIsSecured)
+          return $rutaCss =  "https://" . $_SERVER['HTTP_HOST'] . "/productImages/" . $brand . "/" . $code . ".jpg";
+         else      
+          return $rutaCss =  "http://" . $_SERVER['HTTP_HOST'] . "/productImages/" . $brand . "/" . $code . ".jpg";
+     
+   }
+   
    static function Test(){
       return "aaaaa";
    }
