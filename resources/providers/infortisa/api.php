@@ -54,10 +54,10 @@ class infortisaApi
         
               
         if (!file_exists("./productImages/electroaita/" . $cod_prod . ".jpg")) {
-            $image = file_get_contents("http://recursos.infortisa.com/" . strtolower($cod_prod) . "/" . $cod_prod . "_normal.jpg");
+            $image = file_get_contents("http://recursos.infortisa.com/" . strtolower($cod_prod) . "/" . $cod_prod . "_large.jpg");
             
             
-            file_put_contents("./productImages/electroaita/" . $cod_prod . ".jpg", $image);
+            file_put_contents("./productImages/electroaita/" . $cod_prod . "_large.jpg", $image);
         }
         
         return \GetAsset::getProductImg($cod_prod, "infortisa");
