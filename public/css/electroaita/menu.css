@@ -44,6 +44,8 @@ html { height: 100%;}
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
+    position:relative;
+    top:110px;
 }
 
 #wrapper.toggled {

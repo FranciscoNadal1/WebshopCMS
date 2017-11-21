@@ -14,6 +14,53 @@ class DBData{
     return $results;
     }
     
+        static function getAllSubfamiliaCodes(){
+              $results = \DB::select("SELECT CODSUBFAMILIA FROM " . self::$productTableName . "");
+    return $results;
+    }
+    
+    static function getNumberCategoriesNoBenefit(){
+        
+         $results = \DB::select("
+            SELECT count( code ) as coun
+            FROM `benefits`
+            WHERE (benefit =0
+            OR benefit = NULL)
+and
+code not in(SELECT code
+FROM `excluded`
+WHERE excluded =1)");
+             
+             return $results[0]->coun;
+    }
+    
+      static function getAllSubfamiliaAndCodeBenefit(){
+      
+
+
+
+
+      $results = \DB::select("SELECT csv.TITULOSUBFAMILIA, csv.CODSUBFAMILIA, benefits.benefit, excluded.excluded
+FROM csv
+LEFT JOIN benefits ON benefits.code = csv.CODSUBFAMILIA
+LEFT JOIN excluded ON excluded.code = csv.CODSUBFAMILIA
+GROUP BY csv.TITULOSUBFAMILIA");
+   
+    return $results;
+    }
+          static function getAllSubfamiliaAndCode(){
+      
+
+
+
+
+      $results = \DB::select("SELECT csv.TITULOSUBFAMILIA, csv.CODSUBFAMILIA FROM " . self::$productTableName . " GROUP BY csv.TITULOSUBFAMILIA");
+   print_r($results);
+    return $results;
+    }
+    
+    
+    
     static function getSubFamiliaFromTitulo($str){
     $name = self::makeFriendlier($str);
       
@@ -161,22 +208,25 @@ GROUP BY CODSUBCATEGORIA
        $deleted = \DB::delete('delete from menuBuilder');
    }
    
+   
+   static function deleteBenefits(){
+       $deleted = \DB::delete('delete from benefits');
+   }
+   
+   
     static function updateMenuSingleOne($codFamilia, $codCategoria){
-          //  
-          /*
-            try{
-                */
+
                 $affected = \DB::insert('insert into menuBuilder (CODSUBCATEGORIA, CODFAMILIA) values (?, ?)', [$codCategoria,$codFamilia]);
-                /*
-            }
-            catch (\ErrorException  $e){
-                
-                $affected = \DB::update('update menuBuilder set CODSUBCATEGORIA = ? where CODFAMILIA = ?', [$codCategoria,$codFamilia]);
-            }
-            */
-       //     echo $affected;
-    //return $results;
     }
+    
+    static function updateBenefitsSingleOne($code, $benefit){
+
+                $affected = \DB::insert('insert into benefits (code, benefit) values (?, ?)', [$code,$benefit]);
+    }    
+    
+    
+    
+    
    
 ////////////////////////////////////////////////////////////////////////////////
 ///////              TOOLS

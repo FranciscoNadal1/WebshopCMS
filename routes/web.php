@@ -42,7 +42,7 @@ Route::get('/listado/{id}/{category}', function ($id, $category) {
    
      	$results =  DBData::getAllWhereTituloFamiliaPagePlusFilters($id, 0, $category);  
      
-     print_r($category);
+     
 	    return view('routes/productBrowser', [
 		    'name' => 'index', 
 		    'categoria' => $id,
@@ -196,7 +196,10 @@ Route::post('/admin/settings', function (){
 
 
 
-
+Route::get('/dropDownTest', function (){
+    return view('commonIncludes/dropDown', ['name' => 'adminDashboard']
+    );
+});
 
 
 Route::get('/admin/changeCategories', function (){
@@ -204,8 +207,25 @@ Route::get('/admin/changeCategories', function (){
     );
 });
 
+
+
+Route::get('/admin/updaterBenefits', function (){
+    return view('admin/updaterBenefits', ['name' => 'updaterBenefits']
+    );
+});
+
+
+
+
+
+
 Route::get('/admin/productCallStatistics', function (){
     return view('admin/productCallStatistics', ['name' => 'Product Call Statistics']
+    );
+});
+
+Route::get('/admin/updater', function (){
+    return view('admin/automaticUpdater', ['name' => 'Updater']
     );
 });
 
@@ -213,6 +233,10 @@ Route::get('/admin/testChamber', function (){
     return view('admin/testChamber', ['name' => 'Product Call Statistics']
     );
 });
+
+
+
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -8,59 +8,33 @@
     
 ?>
 
-
-
-    <script>
-    /*
-        var app = angular.module('filterApp', []);
-        app.controller('mainController', function($scope) {
-        //  $scope.vm = {};
-          $scope.vm.myClick = function($event) {
-              
-              
-              
-                alert($scope + " - " + $event + $scope.vm);
-          }
-        });  
-        */
-        /*
-        var app = angular.module('filterApp', []);   
-        app.controller('mainController', ['$scope', function($scope) {
-            $scope.count = 0;
-            $scope.filter = function() {
-            $scope.count++;
-            
-            
-            angular.forEach($scope.test, function (element, name) {
-             
-            alert("hola");
-             
-                    // element is a form element!
+<script>
+    
+    $( document ).ready(function() {
+        
+        
+        var urlArray = window.location.href.split("/");
+        
+        
+            urlArray.forEach(function(entry) {
                 
+                       success =  entry.replace(' ', '-');   
+                if(document.getElementById(success)){
+                    
+                    
+                    
+                console.log(success);
+                    document.getElementById(success).checked = true;
+                }
+                
+            
             });
             
-            
-            
-            
-            };
-    }]);
-        */
-        
-        var myApp = angular.module('filterApp', []);
+    });
+    
+</script>
 
-        function mainController($scope) {
-            $scope.filter = function (formId) {
-                $('#' + formId).find('input').each(function (idx, input) {
-                    // Do your DOM manipulation here
-                    console.log($(input).val());
-                });
-            };
-        }
-        
-        
-  </script> 
-  
-  
+
 
 <div id="filterBig" ng-app="filterApp" name="filterBig">
     <div ng-controller="mainController">
@@ -72,7 +46,27 @@
                      <!--
                       <input ng-model="{{ $resul->NOMFABRICANTE }}"  ng-change="vm.myClick({{ $resul->NOMFABRICANTE }})" name="{{ $resul->NOMFABRICANTE }}" type="checkbox" value="">
                      -->
-                      <input name="{{ $resul->NOMFABRICANTE }}" type="checkbox" value="">
+                      <input name="{{ $resul->NOMFABRICANTE }}" id="{{ str_replace(' ', '-', $resul->NOMFABRICANTE)  }}" type="checkbox" value="" 
+                      onClick="
+                      if (this.checked) 
+                      {     
+                          window.location = window.location.href  + '/' + this.name; 
+                      
+                      }else if(!this.checked)
+                      {
+                          var myString = null;
+                          var myString = window.location.href;
+                          
+                          var success = myString.replace(this.name, '');
+
+                           success = success.replace(' ', '_');                          
+                          
+                        
+                        window.location.replace(success);
+                      }
+                      
+                      
+                      ">
                      
                           {{ $resul->NOMFABRICANTE }}
                       </label>
@@ -80,11 +74,11 @@
                 
         @endforeach
     
-    <button onclick="return false" ng-click="filter()">Filtrar</button>
+    <button onclick="return false" >Filtrar</button>
     
 
 
-    
+
     
     
     

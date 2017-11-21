@@ -9,7 +9,7 @@
             
             ///////                 Provisional
             if(!isset($categoria)){
-                    $categoria = "AMD socket FM2+";
+                    $categoria = "AMD socket AM4";
                     
                     $results =  \DBData::getAllWhereTituloFamilia($categoria);  
                 

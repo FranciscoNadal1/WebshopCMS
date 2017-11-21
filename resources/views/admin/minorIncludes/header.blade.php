@@ -43,6 +43,8 @@
   <div class="separator">Administración</div>
   
       <a href="/admin/changeCategories">Cambiar enlace de menu de categorias</a>
+      <a href="/admin/updaterBenefits">Cambiar beneficios</a>
+      <a href="/admin/updater">Actualizador Automático</a>
       <a href="/admin/settings">settings</a>
       <a href="/admin/settings">Change style</a>
   

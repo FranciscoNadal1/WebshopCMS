@@ -1,9 +1,4 @@
-
-    
-
- 
-        <!-- <div class="container"> -->
-            <div>
+        <div>
             <div class="row">    
                 <div id="filterBar" class="containerdiv hidden-sm hidden-xs hidden-md visible-lg-block col-lg-2">
                     
@@ -26,8 +21,6 @@
                         @if ($typeList == "list")
                             @include('includes/listProductList', array('resu' => $resul))
                         @endif
-                                  
-                        
                     @endforeach
                     
                     

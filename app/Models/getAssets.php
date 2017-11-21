@@ -91,6 +91,33 @@ class AssetManager{
      
    } 
    
+    static function getDropDownAssets(){
+        
+        
+       $ruta1 =  "https://" . $_SERVER['HTTP_HOST'] . "/css/reset.css";
+       $ruta2 =  "https://" . $_SERVER['HTTP_HOST'] . "/css/style.css";
+       $ruta3 =  "https://" . $_SERVER['HTTP_HOST'] . "/js/modernizr.js";
+       $ruta4 =  "https://" . $_SERVER['HTTP_HOST'] . "/js/jquery.menu-aim.js";
+       $ruta5 =  "https://" . $_SERVER['HTTP_HOST'] . "/js/main.js";
+       
+echo "
+	<link rel='stylesheet' href=$ruta1/>
+	<link rel='stylesheet' href=$ruta2/>
+	<script src=$ruta3></script> 
+	<script src=$ruta4></script> 
+	<script src=$ruta5></script> 
+	";
+	
+
+
+       //    return "";
+
+
+
+     
+   } 
+   
+   
    static function getAngular(){
        //    return "https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js";
 

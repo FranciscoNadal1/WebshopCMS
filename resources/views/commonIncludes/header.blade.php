@@ -9,7 +9,10 @@
                 <img width="250" height="100" src="{{ GetAsset::getLogo() }}">
             </a> 
         </div>
+        
+            @include('commonIncludes/dropDown')
         <div id="searchAnduser">
+            
            <div id="searchArea"  class=".col-sm-6">
                 
         @section('search')
@@ -26,6 +29,7 @@
             @include('commonIncludes/userCart')
         @show
         </div>
+        
         </div>
         
     </div>
