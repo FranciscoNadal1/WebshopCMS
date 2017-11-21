@@ -10,9 +10,10 @@
         -webkit-box-shadow: 0px 4px 2px 5px rgba(0,0,0,0.09);
         -moz-box-shadow: 0px 4px 2px 5px rgba(0,0,0,0.09);
         box-shadow: 0px 4px 2px 5px rgba(0,0,0,0.09);
+        /*
         border-left:5px solid #E6AF2E;
         border-radius: 50px 0px 0px 0px;
-    
+    */
     border-bottom:1px solid black;
     
     height:106px;
@@ -28,7 +29,9 @@
     display: block;
 }
 .logo{
+    /*
     margin-left:50px;
+    */
     width:250px;float:left;
 }
 

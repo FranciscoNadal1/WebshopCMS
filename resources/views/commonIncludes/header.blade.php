@@ -10,7 +10,10 @@
             </a> 
         </div>
         
-            @include('commonIncludes/dropDown')
+            @if($dropdownYesOrSideBar == "dropdown")
+                @include('commonIncludes/dropDown')
+            @endif
+        
         <div id="searchAnduser">
             
            <div id="searchArea"  class=".col-sm-6">
@@ -25,19 +28,21 @@
             
             <div id="userLoginBox" class=".col-sm-6">
                 
-        @section('userCart')
-            @include('commonIncludes/userCart')
-        @show
+            @section('userCart')
+                @include('commonIncludes/userCart')
+            @show
         </div>
         
         </div>
         
     </div>
-        <button type="button" class="hamburger is-closed" data-toggle="offcanvas">
-            <span class="hamb-top"></span>
-          	<span class="hamb-middle"></span>
-      		<span class="hamb-bottom"></span>
-        </button>
-        
+    
+            @if(!$dropdownYesOrSideBar == "dropdown")
+                <button type="button" class="hamburger is-closed" data-toggle="offcanvas">
+                    <span class="hamb-top"></span>
+                  	<span class="hamb-middle"></span>
+              		<span class="hamb-bottom"></span>
+                </button>
+            @endif
 
 </div>
