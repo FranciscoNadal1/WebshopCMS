@@ -7,7 +7,10 @@
                     
                 </div>
             
-               <div id="ProductContainer" class="container col-sm-12 col-md-12 col-lg-10">    
+               <div id="ProductContainer" class="container col-sm-12 col-md-10 col-lg-10">  
+               
+                       <div id="CategoryHeader" class="{{ \DBData::desAccentify($results[0]->TITULOSUBFAMILIA) }}">{{ $results[0]->TITULOSUBFAMILIA }}</div>
+
               <!--   <div id="ProductContainer" class="">   -->
                         
                         <?php            $typeList = \GetSettings::getProductListType();            ?>

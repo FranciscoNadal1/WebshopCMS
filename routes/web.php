@@ -13,6 +13,7 @@
 
 Route::get('/', function () {
     return view('welcome');
+    
 });
 
 Route::get('/info', function () {
@@ -62,10 +63,10 @@ Route::get('/listado/{id}/{category}', function ($id, $category) {
 
 
 Route::get('/', function (){
-    
-    return view('routes/productBrowser', ['name' => 'index']
-    
-    );
+
+     return redirect('/listado/Auricular-con-microfono');
+     
+     
 });
 
 Route::get('/login', function (){

@@ -9,10 +9,15 @@
 ?>
 
 <script>
-    
+
+
     $( document ).ready(function() {
         
-        
+         $(".filterHeader").click(function(){
+            $(".checkboxContainer").slideToggle();
+        });
+    
+    
         var urlArray = window.location.href.split("/");
         
         
@@ -39,9 +44,12 @@
 <div id="filterBig" ng-app="filterApp" name="filterBig">
     <div ng-controller="mainController">
           <form id="test">
+              <div class="filterHeader">Marcas:</div>
+              <div class="checkboxContainer">
         @foreach ($results as $resul)
     
                 <div class="checkbox">
+                    
                   <label>
                      <!--
                       <input ng-model="{{ $resul->NOMFABRICANTE }}"  ng-change="vm.myClick({{ $resul->NOMFABRICANTE }})" name="{{ $resul->NOMFABRICANTE }}" type="checkbox" value="">
@@ -73,7 +81,7 @@
                 </div>
                 
         @endforeach
-    
+    </div>
     <button onclick="return false" >Filtrar</button>
     
 

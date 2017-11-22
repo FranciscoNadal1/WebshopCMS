@@ -14,6 +14,7 @@
                 @include('commonIncludes/dropDown')
             @endif
         
+        {{--
         <div id="searchAnduser">
             
            <div id="searchArea"  class=".col-sm-6">
@@ -34,7 +35,7 @@
         </div>
         
         </div>
-        
+        --}}
     </div>
     
             @if(!$dropdownYesOrSideBar == "dropdown")

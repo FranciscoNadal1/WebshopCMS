@@ -48,11 +48,14 @@ class AssetManager{
    
       static function getLogo(){
 
-    if(self::$urlIsSecured)
-      return $rutaCss =  "https://" . $_SERVER['HTTP_HOST'] . "/public/img/logoplaceholder.png";
-     else      
-      return $rutaCss =  "http://" . $_SERVER['HTTP_HOST'] . "/public/img/logoplaceholder.png";
-    
+        //$name = "logoplaceholder.png
+        $name = "logo.png";
+        
+        if(self::$urlIsSecured)
+          return $rutaCss =  "https://" . $_SERVER['HTTP_HOST'] . "/public/img/" . $name;
+         else      
+          return $rutaCss =  "http://" . $_SERVER['HTTP_HOST'] . "/public/img/" . $name;
+        
    }
    
    ///////////////////////////////////
