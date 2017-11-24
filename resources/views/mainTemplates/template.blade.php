@@ -23,7 +23,6 @@ GetAsset::getDropDownAssets()
 @endif
 
 
-
 <script type="text/javascript" src={{ GetAsset::getJS("hamburger.js") }} ></script>
 
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -51,7 +50,6 @@ GetAsset::getDropDownAssets()
           
        @yield('content')
       
-        
                
         @section('footer')
             @include('commonIncludes/footer')

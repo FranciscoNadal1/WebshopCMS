@@ -44,3 +44,15 @@
                 padding-top:10px;
                     
             }
+            
+            
+        .specificationsTr td:nth-child(2){width:100%;
+            
+            padding:10px;
+        }
+        
+        .specificationsTr td:nth-child(1){
+        font-weight: bold;
+        
+            
+        }

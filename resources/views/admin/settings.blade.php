@@ -28,10 +28,10 @@
                <input type="text" class="form-control" name="eachPage" value='{{ \GetSettings::getProductEachPage() }}'/>
               
           <div class="apartado"> <label for="maintenance">Modo mantenimiento:</label></div>   
-              <input type="text" class="form-control" name="maintenance" value=' {{ \GetSettings::isMaintenanceOn() }}'/>
+              <input type="text" class="form-control" name="maintenance" value='{{ \GetSettings::isMaintenanceOn() }}'/>
               
           <div class="apartado"> <label for="company">Nombre de la compañía:</label></div>    
-              <input type="text" class="form-control" name="company" value=' {{ \GetSettings::companyName() }}'/>
+              <input type="text" class="form-control" name="company" value='{{ \GetSettings::companyName() }}'/>
               
               
               </br>

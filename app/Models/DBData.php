@@ -7,7 +7,19 @@ class DBData{
 
     static $productTableName = "csv";
     static $categoryTableName = "categorias";
-    static $numberOfProductsByPage = "12";
+    static $numberOfProductsByPage;
+
+
+    static function numberOfProductsByPage()
+      {
+        return \GetSettings::getProductEachPage();
+      }
+      
+    
+
+
+
+
     
     static function getAllCategories(){
               $results = \DB::select("SELECT * FROM " . self::$categoryTableName . " where name not like '-%'");
@@ -77,8 +89,8 @@ GROUP BY csv.TITULOSUBFAMILIA");
     static function getAllWhereTituloFamiliaPage($name, $page){
       
       $name = self::makeFriendlier($name);
-      $pager = self::$numberOfProductsByPage * $page;
-      $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" group by CODIGOINTERNO LIMIT ". $pager .", " . self::$numberOfProductsByPage);
+      $pager = self::numberOfProductsByPage() * $page;
+      $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" group by CODIGOINTERNO LIMIT ". $pager .", " . self::numberOfProductsByPage());
       
     return $results;
    }
@@ -86,7 +98,7 @@ GROUP BY csv.TITULOSUBFAMILIA");
     static function getAllWhereTituloFamiliaPagePlusFilters($name, $page, $filters){
       
       $name = self::makeFriendlier($name);
-      $pager = self::$numberOfProductsByPage * $page;
+      $pager = self::numberOfProductsByPage() * $page;
       
 
       
@@ -105,7 +117,7 @@ GROUP BY csv.TITULOSUBFAMILIA");
 ////////////////////////////////////////////////////////////////////////////////
 //////////      SQL INJECTION PROBABLE VULNERABILITY, CHECK
 
-      $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and  NOMFABRICANTE in ($inVariable) group by CODIGOINTERNO LIMIT ". $pager .", " . self::$numberOfProductsByPage);
+      $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and  NOMFABRICANTE in ($inVariable) group by CODIGOINTERNO LIMIT ". $pager .", " . self::numberOfProductsByPage());
       
       
       
@@ -121,17 +133,17 @@ GROUP BY csv.TITULOSUBFAMILIA");
     static function countAllWhereTituloFamiliaPage($name, $page){
           
         $name = self::makeFriendlier($name);
-        $pager = self::$numberOfProductsByPage * $page;
+        $pager = self::numberOfProductsByPage() * $page;
         /*
-        $results = \DB::select("select count(*)as c FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" LIMIT ". $pager .", " . self::$numberOfProductsByPage);
+        $results = \DB::select("select count(*)as c FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" LIMIT ". $pager .", " . self::numberOfProductsByPage());
          */
          
          
          
-        $results = \DB::select("select count(*) as d FROM (select TITULO as tit from " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" LIMIT ". $pager .", " . self::$numberOfProductsByPage.") as c");
+        $results = \DB::select("select count(*) as d FROM (select TITULO as tit from " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" LIMIT ". $pager .", " . self::numberOfProductsByPage().") as c");
          
          
-   //     $result = mysqli_query("select count(*) FROM (select TITULO as tit from " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" LIMIT ". $pager .", " . self::$numberOfProductsByPage.") as c");
+   //     $result = mysqli_query("select count(*) FROM (select TITULO as tit from " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" LIMIT ". $pager .", " . self::numberOfProductsByPage().") as c");
 
 /*        
         (select count(*) from(
@@ -224,6 +236,83 @@ GROUP BY CODSUBCATEGORIA
                 $affected = \DB::insert('insert into benefits (code, benefit) values (?, ?)', [$code,$benefit]);
     }    
     
+
+////////////////////////////////////////////////////////////////////////////////
+///////              DESCRIPTION
+////////////////////////////////////////////////////////////////////////////////
+
+
+    static function isProductDataSaved($code){
+        
+         $results = \DB::select("SELECT count(*) as coun FROM `productData` WHERE code like '" . $code . "'");
+         
+         if($results[0]->coun != 0)
+             return true;
+         else
+             return false;
+         
+    }
+    
+        static function isDescriptionDataSaved($code){
+        
+         $results = \DB::select("SELECT count(description) as coun FROM `productData` WHERE LENGTH(description)=0 and code like '" . $code . "'");
+         
+         if($results[0]->coun != 0)
+             return true;
+         else
+             return false;
+         
+    }
+    
+    
+    
+        static function isSpecificationsDataSaved($code){
+        
+         $results = \DB::select("SELECT count(specifications) as coun FROM `productData` WHERE LENGTH(specifications)=0 and code like '" . $code . "'");
+         
+         if($results[0]->coun != 0)
+             return true;
+         else
+             return false;
+         
+    }
+
+ //////////////////////////////////////////////////////    
+        static function insertProductSpecifications($code, $data){
+            
+            if(self::isProductDataSaved($code))
+                \DB::table('productData')->where('code', $code)->update(['specifications' => $data]);
+            else
+                \DB::insert('insert into productData (code, description, specifications) values (?, ?, ?)', [$code,"",$data]);
+    }    
+    
+        static function getProductSpecifications($code){
+         $results = \DB::select("SELECT specifications FROM `productData` WHERE code like '" . $code . "'");
+         return $results[0]->specifications;
+    }
+    
+ //////////////////////////////////////////////////////
+ 
+        static function insertEmptyProductData($code){
+                \DB::insert('insert into productData (code, description, specifications) values (?, ?, ?)', [$code,"",""]);
+            }
+    
+        static function insertProductDescription($code, $data){
+            
+            if(self::isProductDataSaved($code)){
+                \DB::table('productData')->where('code', $code)->update(['description' => $data]);
+            }
+            else{
+                \DB::insert('insert into productData (code, description, specifications) values (?, ?, ?)', [$code,$data,""]);
+            }
+    }    
+    
+        static function getProductDescription($code){
+         $results = \DB::select("SELECT description FROM `productData` WHERE code like '" . $code . "'");
+         return $results[0]->description;
+    }
+    
+    
     
     
     
@@ -249,7 +338,6 @@ GROUP BY CODSUBCATEGORIA
    }
    
    static function desAccentify($name){
-        
         $name = str_replace(" ", "-", $name); 
         $name = str_replace("/", "-", $name); 
         

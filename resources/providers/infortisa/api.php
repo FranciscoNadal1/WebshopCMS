@@ -241,24 +241,54 @@ class infortisaApi
     static function get_tecnica($cod_prod)
     {
         
-        $ch      = curl_init();
-        $timeout = 5;
+        $contenido ="";
+        
+        if(!\DBData::isProductDataSaved($cod_prod))
+            \DBData::insertEmptyProductData($cod_prod);
+            
+            
+            
+        if(\DBData::isSpecificationsDataSaved($cod_prod)){
+            $ch      = curl_init();
+            $timeout = 5;
+            
+            
+            
+            $numero2 = $cod_prod;
+            $numero1 = strtolower($cod_prod);
+                try{    
+                    $variable = "http://recursos.infortisa.com/" . $numero1 . "/" . $numero2 . "_FichaTec.html";
+                    curl_setopt($ch, CURLOPT_URL, $variable);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+
+                    $contenido = curl_exec($ch);
+                }catch(Exception $e){
+                    return "";
+                }finally{
+                    curl_close($ch);
+                }
+        
+            
+            
+        
+        $contenido = preg_replace("/<([a-z][a-z0-9]*)[^>]*?(\/?)>/i",'<$1$2>', $contenido);
+        $contenido = str_replace("<table","<table class=\" table table-bordered table-responsive table-striped\"",$contenido);
+        $contenido = str_replace("width=\"65%\"","width=\"100%\"",$contenido);
+        $contenido = str_replace("<tr","<tr class=\"specificationsTr\"",$contenido);
+
+
+        \DBData::insertProductSpecifications($cod_prod, $contenido);
         
         
-        
-        $numero2 = $cod_prod;
-        $numero1 = strtolower($cod_prod);
-        
-        $variable = "http://recursos.infortisa.com/" . $numero1 . "/" . $numero2 . "_FichaTec.html";
-        curl_setopt($ch, CURLOPT_URL, $variable);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-        $contenido = curl_exec($ch);
-        curl_close($ch);
+        }else{
+        $contenido = \DBData::getProductSpecifications($cod_prod);
         
         
-        self::calledApi();
+        }
         return $contenido;
+        
+        
     }
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -266,25 +296,45 @@ class infortisaApi
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static function get_comercial($cod_prod)
     {
-        
-        $ch      = curl_init();
-        $timeout = 5;
+        $contenido ="";
         
         
+        if(!\DBData::isProductDataSaved($cod_prod))
+            \DBData::insertEmptyProductData($cod_prod);
         
-        $numero2 = $cod_prod;
-        $numero1 = strtolower($cod_prod);
+        if(\DBData::isDescriptionDataSaved($cod_prod)){
+            
+            $ch      = curl_init();
+            $timeout = 5;
+            
+            
+            
+            $numero2 = $cod_prod;
+            $numero1 = strtolower($cod_prod);
+            
+                     try{               
+                        $variable = "http://recursos.infortisa.com/" . $numero1 . "/" . $numero2 . "_FichaCom.html";
+                        curl_setopt($ch, CURLOPT_URL, $variable);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+    
+                        $contenido = curl_exec($ch);
+                    }catch(Exception $e){
+                        return "";
+                    }finally{
+                        curl_close($ch);
+                    }
+            
         
-        $variable = "http://recursos.infortisa.com/" . $numero1 . "/" . $numero2 . "_FichaCom.html";
-        curl_setopt($ch, CURLOPT_URL, $variable);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-        $contenido = curl_exec($ch);
-        curl_close($ch);
         
         
         
-        self::calledApi();
+        \DBData::insertProductDescription($cod_prod, $contenido);
+        }else{
+       $contenido = \DBData::getProductDescription($cod_prod);
+
+        
+        }
         return $contenido;
         
         

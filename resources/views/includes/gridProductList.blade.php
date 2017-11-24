@@ -3,7 +3,7 @@
 
 <div class="typeGrid ">
 
-           <div class="productWrapper col-xs-6 col-md-4 col-lg-3 article-block">
+           <div class="productWrapper col-xs-6 col-md-4 col-lg-2 article-block">
         <!--
               <div class="typeGrid productWrapper col-xs-4 col-md-3 col-lg-3 article-block">
         -->          
