@@ -1,334 +1,266 @@
+<script>
+$( document ).ready(function() {
+	jQuery(document).on('click', '.mega-dropdown', function(e) {
+	  e.stopPropagation()
+	})
+});
 
-
-		<div class="cd-dropdown-wrapper">
-			<a class="cd-dropdown-trigger" href="#0">Productos</a>
-			<nav class="cd-dropdown">
-			    
-				<a href="#0" class="cd-close">Close</a>
-				<ul class="cd-dropdown-content">
-					<li>
-						<form class="cd-search">
-							<input type="search" placeholder="Búsqueda...">
-						</form>
-					</li>
-<!--
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////				
--->						
+	
+</script>
 <?php
 			$categories = DBData::getAllCategories();
 ?>
 
 
+	<nav class=" header">
+	  <div id="TopHeader">
+	    <div class="navbar-header">
+	      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".js-navbar-collapse">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	        <a class="logo navbar-brand" href="/">
+	           <img width="250" height="100" src="{{ GetAsset::getLogo() }}">
+	         </a> 
+	    </div>
+	  </div><div id="BotHeader">
+	    
+	    
+<div class="menuLinks">
+  
+          	@foreach ($categories as $cat)
+          	  
+          	
+<ul class="nav navbar-nav">
+          	
+          	    
+          	        <li class="dropdown mega-dropdown">
+          	          <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{$cat->name}} {{--<span class="glyphicon glyphicon-chevron-down pull-right"></span>--}}</a>
 
-            @foreach ($categories as $cat)
-						
-			
-			
-					<li class="has-children">
-			
-			
-			
-						<a href="http://codyhouse.co/?p=748">{{$cat->name}}</a>
+          	          <ul class="dropdown-menu mega-dropdown-menu row">
+          	            <li class="col-sm-3">
+          	              <ul>
+          	                <li class="dropdown-header">Novedades</li>
+          	                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+          	                  <div class="carousel-inner">
+          	                    
+          	                    <?php
+                                			$randomProduct = \DBData::getRandomProductByCategory($cat->name);
+                                                    			        
+                                $count = 1;    
+                                 ?>
+                                       
+          	@foreach ($randomProduct as $ran)
+          	
+          	                    <div class="item {{ $count == 1 ? ' active' : '' }}">
+          	                      
+          	{{$ran->TITULO}}
+          	                      <a href="#"><img src={{ infortisaApi::getProductMainImage($ran->CODIGOINTERNO) }} class="img-responsive" alt="product"></a>
+          	                      <h4><small{{ $ran->TITULO }}</small></h4>
+          	                      <button class="btn btn-primary" type="button">{{ $ran->PRECIO }}€</button>
+          	                      <button href="#" class="btn btn-default" type="button"><span class="glyphicon glyphicon-heart"></span> Comprar</button>
+          	                    </div>
+          	                    
+          	                    <?php
+          	                    ++$count;
+          	                    ?>
+          	@endforeach
+          	                    
+          	                    
+          	                    
+          	                    {{--
+          	                    <!-- End Item -->
+          	                    <div class="item">
+          	                      <a href="#"><img src="http://placehold.it/254x150/ef5e55/f5f5f5/&text=New+Collection" class="img-responsive" alt="product 2"></a>
+          	                      <h4><small>-----------------</small></h4>
+          	                      <button class="btn btn-primary" type="button">9,99 €</button>
+          	                      <button href="#" class="btn btn-default" type="button"><span class="glyphicon glyphicon-heart"></span> Comprar</button>
+          	                    </div>
+          	                    <!-- End Item -->
+          	                    <div class="item">
+          	                      <a href="#"><img src="http://placehold.it/254x150/2ecc71/f5f5f5/&text=New+Collection" class="img-responsive" alt="product 3"></a>
+          	                      <h4><small>-----------------</small></h4>
+          	                      <button class="btn btn-primary" type="button">49,99 €</button>
+          	                      <button href="#" class="btn btn-default" type="button"><span class="glyphicon glyphicon-heart"></span> Comprar</button>
+          	                    </div>
+          	                    
+          	                    --}}
+          	                    <!-- End Item -->
+          	                  </div>
+          	                  <!-- End Carousel Inner -->
+          	                </div>
+          	                <!-- /.carousel -->
+          	                <li class="divider"></li>
+          	            {{--    <li><a href="#">View all Collection <span class="glyphicon glyphicon-chevron-right pull-right"></span></a></li> --}}
+          	              </ul>
+          	            </li>
+          	            
+          	<?php
+          		$results = \DBData::getFamilyFromCategoryName($cat->name);
+          	?>
+              
+              
+          		@foreach ($results as $resul)	
+          		         
+          		         <li class="col-sm-3">
+          	              <ul>
+          	                <li class="dropdown-header">{{ $resul->TITULOFAMILIA }}</li>
+          	                
+          <?php
+          	$results2 = \DBData::getSubFamiliaFromTitulo($resul->TITULOFAMILIA);
+          ?>
+                        @foreach ($results2 as $resul2)
+                                        
+          
+          										<li><a href="/listado/{{ \DBData::desAccentify($resul2->TITULOSUBFAMILIA) }}">{{ $resul2->TITULOSUBFAMILIA }}</a>        </li>    
+          										
+                        @endforeach
+                        
+          	                <li class="divider"></li>
+          	                {{--
+          	                <li><a href="#">Unique Features</a></li>
+          	                <li><a href="#">Image Responsive</a></li>
+          	                <li><a href="#">Auto Carousel</a></li>
+          	                <li><a href="#">Newsletter Form</a></li>
+          	                <li><a href="#">Four columns</a></li>
+          	                <li class="divider"></li>
+          	                <li class="dropdown-header">Tops</li>
+          	                <li><a href="#">Good Typography</a></li>
+          	                
+          	                --}}
+          	                
+          	              </ul>
+          	            </li>
+          		            			
+          		@endforeach
+    
+	            
+	          </ul>
 
-						<ul class="cd-secondary-dropdown is-hidden">
-							<li class="go-back"><a href="#0">Menu</a></li>
-							{{--
-							<li class="see-all"><a href="http://codyhouse.co/?p=748">All Clothing</a></li>
-							--}}
-							
-		<!-- -------------------------------------------------------------- --->						
-							    <?php
-      $results = \DBData::getFamilyFromCategoryName($cat->name);
-    ?>
+	        </li>
+
+	
+	    
+	    
+		      </ul>
+
+	@endforeach	
+	</div>
+	    
+	  </div>
+	  
+	  
+	  </nav>
 
 
-
-			
-            			@foreach ($results as $resul)						
-							<li class="has-children">
-								<a href="http://codyhouse.co/?p=748">{{ $resul->TITULOFAMILIA }}</a>
-
-								<ul class="is-hidden">
-									{{--
-									<li class="go-back"><a href="#0">Clothing</a></li>
-									<li class="see-all"><a href="http://codyhouse.co/?p=748">All Accessories</a></li>
-									--}}
-									
-	<?php
-      $results2 = \DBData::getSubFamiliaFromTitulo($resul->TITULOFAMILIA);
-    ?>
-                              @foreach ($results2 as $resul2)
-                          
-
-								{{--	<li class="has-children"> --}}
-									<li class="">
-										
-										<a href="/listado/{{ \DBData::desAccentify($resul2->TITULOSUBFAMILIA) }}">{{ $resul2->TITULOSUBFAMILIA }}</a>
 {{--
-										<ul class="is-hidden">
-											<li class="go-back"><a href="#0">Accessories</a></li>
-											<li class="see-all"><a href="http://codyhouse.co/?p=748">All Benies</a></li>
-											<li><a href="http://codyhouse.co/?p=748">Caps &amp; Hats</a></li>
-											<li><a href="http://codyhouse.co/?p=748">Gifts</a></li>
-											<li><a href="http://codyhouse.co/?p=748">Scarves &amp; Snoods</a></li>
-										</ul>
-										--}}
-									</li>		
-			                   @endforeach    
-									{{--
-									<li class="has-children">
-										<a href="#0">Caps &amp; Hats</a>
 
-										<ul class="is-hidden">
-											<li class="go-back"><a href="#0">Accessories</a></li>
-											<li class="see-all"><a href="http://codyhouse.co/?p=748">All Caps &amp; Hats</a></li>
-											<li><a href="http://codyhouse.co/?p=748">Beanies</a></li>
-											<li><a href="http://codyhouse.co/?p=748">Caps</a></li>
-											<li><a href="http://codyhouse.co/?p=748">Hats</a></li>
-										</ul>
-									</li>
-									<li><a href="http://codyhouse.co/?p=748">Glasses</a></li>
-									<li><a href="http://codyhouse.co/?p=748">Gloves</a></li>
-									<li><a href="http://codyhouse.co/?p=748">Jewellery</a></li>
-									<li><a href="http://codyhouse.co/?p=748">Scarves</a></li>
-									--}}
-								</ul>
-							</li>
-
-						@endforeach														
-		<!-- -------------------------------------------------------------- --->					
-							{{--
-							<li class="has-children">
-								<a href="http://codyhouse.co/?p=748">Accessories</a>
-
-								<ul class="is-hidden">
-									<li class="go-back"><a href="#0">Clothing</a></li>
-									<li class="see-all"><a href="http://codyhouse.co/?p=748">All Accessories</a></li>
-									<li class="has-children">
-										<a href="#0">Beanies</a>
-
-										<ul class="is-hidden">
-											<li class="go-back"><a href="#0">Accessories</a></li>
-											<li class="see-all"><a href="http://codyhouse.co/?p=748">All Benies</a></li>
-											<li><a href="http://codyhouse.co/?p=748">Caps &amp; Hats</a></li>
-											<li><a href="http://codyhouse.co/?p=748">Gifts</a></li>
-											<li><a href="http://codyhouse.co/?p=748">Scarves &amp; Snoods</a></li>
-										</ul>
-									</li>
-									<li class="has-children">
-										<a href="#0">Caps &amp; Hats</a>
-
-										<ul class="is-hidden">
-											<li class="go-back"><a href="#0">Accessories</a></li>
-											<li class="see-all"><a href="http://codyhouse.co/?p=748">All Caps &amp; Hats</a></li>
-											<li><a href="http://codyhouse.co/?p=748">Beanies</a></li>
-											<li><a href="http://codyhouse.co/?p=748">Caps</a></li>
-											<li><a href="http://codyhouse.co/?p=748">Hats</a></li>
-										</ul>
-									</li>
-									<li><a href="http://codyhouse.co/?p=748">Glasses</a></li>
-									<li><a href="http://codyhouse.co/?p=748">Gloves</a></li>
-									<li><a href="http://codyhouse.co/?p=748">Jewellery</a></li>
-									<li><a href="http://codyhouse.co/?p=748">Scarves</a></li>
-								</ul>
-							</li>
-
-							<li class="has-children">
-								<a href="http://codyhouse.co/?p=748">Bottoms</a>
-
-								<ul class="is-hidden">
-									<li class="go-back"><a href="#0">Clothing</a></li>
-									<li class="see-all"><a href="http://codyhouse.co/?p=748">All Bottoms</a></li>
-									<li><a href="http://codyhouse.co/?p=748">Casual Trousers</a></li>
-									<li class="has-children">
-										<a href="#0">Jeans</a>
-
-										<ul class="is-hidden">
-											<li class="go-back"><a href="#0">Bottoms</a></li>
-											<li class="see-all"><a href="http://codyhouse.co/?p=748">All Jeans</a></li>
-											<li><a href="http://codyhouse.co/?p=748">Ripped</a></li>
-											<li><a href="http://codyhouse.co/?p=748">Skinny</a></li>
-											<li><a href="http://codyhouse.co/?p=748">Slim</a></li>
-											<li><a href="http://codyhouse.co/?p=748">Straight</a></li>
-										</ul>
-									</li>
-									<li><a href="#0">Leggings</a></li>
-									<li><a href="#0">Shorts</a></li>
-								</ul>
-							</li>
-
-							<li class="has-children">
-								<a href="http://codyhouse.co/?p=748">Jackets</a>
-
-								<ul class="is-hidden">
-									<li class="go-back"><a href="#0">Clothing</a></li>
-									<li class="see-all"><a href="http://codyhouse.co/?p=748">All Jackets</a></li>
-									<li><a href="http://codyhouse.co/?p=748">Blazers</a></li>
-									<li><a href="http://codyhouse.co/?p=748">Bomber jackets</a></li>
-									<li><a href="http://codyhouse.co/?p=748">Denim Jackets</a></li>
-									<li><a href="http://codyhouse.co/?p=748">Duffle Coats</a></li>
-									<li><a href="http://codyhouse.co/?p=748">Leather Jackets</a></li>
-									<li><a href="http://codyhouse.co/?p=748">Parkas</a></li>
-								</ul>
-							</li>
-
-							<li class="has-children">
-								<a href="http://codyhouse.co/?p=748">Tops</a>
-
-								<ul class="is-hidden">
-									<li class="go-back"><a href="#0">Clothing</a></li>
-									<li class="see-all"><a href="http://codyhouse.co/?p=748">All Tops</a></li>
-									<li><a href="http://codyhouse.co/?p=748">Cardigans</a></li>
-									<li><a href="http://codyhouse.co/?p=748">Coats</a></li>
-									<li><a href="http://codyhouse.co/?p=748">Polo Shirts</a></li>
-									<li><a href="http://codyhouse.co/?p=748">Shirts</a></li>
-									<li class="has-children">
-										<a href="#0">T-Shirts</a>
-
-										<ul class="is-hidden">
-											<li class="go-back"><a href="#0">Tops</a></li>
-											<li class="see-all"><a href="http://codyhouse.co/?p=748">All T-shirts</a></li>
-											<li><a href="http://codyhouse.co/?p=748">Plain</a></li>
-											<li><a href="http://codyhouse.co/?p=748">Print</a></li>
-											<li><a href="http://codyhouse.co/?p=748">Striped</a></li>
-											<li><a href="http://codyhouse.co/?p=748">Long sleeved</a></li>
-										</ul>
-									</li>
-									<li><a href="http://codyhouse.co/?p=748">Vests</a></li>
-								</ul>
-							</li>
-							--}}
-						</ul> <!-- .cd-secondary-dropdown -->
-					</li> <!-- .has-children -->
-
-				
-						
-			@endforeach			
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-<!--
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////				
--->
-{{--						
-					<li class="has-children">
-						<a href="http://codyhouse.co/?p=748">Services</a>
-						<ul class="cd-dropdown-icons is-hidden">
-							<li class="go-back"><a href="#0">Menu</a></li>
-							<li class="see-all"><a href="http://codyhouse.co/?p=748">Browse Services</a></li>
-							<li>
-								<a class="cd-dropdown-item item-1" href="http://codyhouse.co/?p=748">
-									<h3>Service #1</h3>
-									<p>This is the item description</p>
-								</a>
-							</li>
-
-							<li>
-								<a class="cd-dropdown-item item-2" href="http://codyhouse.co/?p=748">
-									<h3>Service #2</h3>
-									<p>This is the item description</p>
-								</a>
-							</li>
-
-							<li>
-								<a class="cd-dropdown-item item-3" href="http://codyhouse.co/?p=748">
-									<h3>Service #3</h3>
-									<p>This is the item description</p>
-								</a>
-							</li>
-
-							<li>
-								<a class="cd-dropdown-item item-4" href="http://codyhouse.co/?p=748">
-									<h3>Service #4</h3>
-									<p>This is the item description</p>
-								</a>
-							</li>
-
-							<li>
-								<a class="cd-dropdown-item item-5" href="http://codyhouse.co/?p=748">
-									<h3>Service #5</h3>
-									<p>This is the item description</p>
-								</a>
-							</li>
-
-							<li>
-								<a class="cd-dropdown-item item-6" href="http://codyhouse.co/?p=748">
-									<h3>Service #6</h3>
-									<p>This is the item description</p>
-								</a>
-							</li>
-
-							<li>
-								<a class="cd-dropdown-item item-7" href="http://codyhouse.co/?p=748">
-									<h3>Service #7</h3>
-									<p>This is the item description</p>
-								</a>
-							</li>
-
-							<li>
-								<a class="cd-dropdown-item item-8" href="http://codyhouse.co/?p=748">
-									<h3>Service #8</h3>
-									<p>This is the item description</p>
-								</a>
-							</li>
-
-							<li>
-								<a class="cd-dropdown-item item-9" href="http://codyhouse.co/?p=748">
-									<h3>Service #9</h3>
-									<p>This is the item description</p>
-								</a>
-							</li>
-
-							<li>
-								<a class="cd-dropdown-item item-10" href="http://codyhouse.co/?p=748">
-									<h3>Service #10</h3>
-									<p>This is the item description</p>
-								</a>
-							</li>
-
-							<li>
-								<a class="cd-dropdown-item item-11" href="http://codyhouse.co/?p=748">
-									<h3>Service #11</h3>
-									<p>This is the item description</p>
-								</a>
-							</li>
-
-							<li>
-								<a class="cd-dropdown-item item-12" href="http://codyhouse.co/?p=748">
-									<h3>Service #12</h3>
-									<p>This is the item description</p>
-								</a>
-							</li>
-
-						</ul> <!-- .cd-dropdown-icons -->
-					</li> <!-- .has-children -->
-
-					<li class="cd-divider">Divider</li>
-
-					<li><a href="http://codyhouse.co/?p=748">Page 1</a></li>
-					<li><a href="http://codyhouse.co/?p=748">Page 2</a></li>
-					<li><a href="http://codyhouse.co/?p=748">Page 3</a></li>
-				</ul> <!-- .cd-dropdown-content -->
-				
-				--}}
-			</nav> <!-- .cd-dropdown -->
-		</div> <!-- .cd-dropdown-wrapper -->
+ <nav class=" header">
+    <div class="navbar-header">
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".js-navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+        <a class="logo navbar-brand" href="/">
+           <img width="250" height="100" src="{{ GetAsset::getLogo() }}">
+         </a> 
+    </div>
 
 
+    <div class="collapse navbar-collapse js-navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown mega-dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Collection <span class="glyphicon glyphicon-chevron-down pull-right"></span></a>
 
+          <ul class="dropdown-menu mega-dropdown-menu row">
+            <li class="col-sm-3">
+              <ul>
+                <li class="dropdown-header">New in Stores</li>
+                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                  <div class="carousel-inner">
+                    <div class="item active">
+                      <a href="#"><img src="http://placehold.it/254x150/3498db/f5f5f5/&text=New+Collection" class="img-responsive" alt="product 1"></a>
+                      <h4><small>Summer dress floral prints</small></h4>
+                      <button class="btn btn-primary" type="button">49,99 €</button>
+                      <button href="#" class="btn btn-default" type="button"><span class="glyphicon glyphicon-heart"></span> Add to Wishlist</button>
+                    </div>
+                    <!-- End Item -->
+                    <div class="item">
+                      <a href="#"><img src="http://placehold.it/254x150/ef5e55/f5f5f5/&text=New+Collection" class="img-responsive" alt="product 2"></a>
+                      <h4><small>Gold sandals with shiny touch</small></h4>
+                      <button class="btn btn-primary" type="button">9,99 €</button>
+                      <button href="#" class="btn btn-default" type="button"><span class="glyphicon glyphicon-heart"></span> Add to Wishlist</button>
+                    </div>
+                    <!-- End Item -->
+                    <div class="item">
+                      <a href="#"><img src="http://placehold.it/254x150/2ecc71/f5f5f5/&text=New+Collection" class="img-responsive" alt="product 3"></a>
+                      <h4><small>Denin jacket stamped</small></h4>
+                      <button class="btn btn-primary" type="button">49,99 €</button>
+                      <button href="#" class="btn btn-default" type="button"><span class="glyphicon glyphicon-heart"></span> Add to Wishlist</button>
+                    </div>
+                    <!-- End Item -->
+                  </div>
+                  <!-- End Carousel Inner -->
+                </div>
+                <!-- /.carousel -->
+                <li class="divider"></li>
+                <li><a href="#">View all Collection <span class="glyphicon glyphicon-chevron-right pull-right"></span></a></li>
+              </ul>
+            </li>
+            <li class="col-sm-3">
+              <ul>
+                <li class="dropdown-header">Dresses</li>
+                <li><a href="#">Unique Features</a></li>
+                <li><a href="#">Image Responsive</a></li>
+                <li><a href="#">Auto Carousel</a></li>
+                <li><a href="#">Newsletter Form</a></li>
+                <li><a href="#">Four columns</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Tops</li>
+                <li><a href="#">Good Typography</a></li>
+              </ul>
+            </li>
+            <li class="col-sm-3">
+              <ul>
+                <li class="dropdown-header">Jackets</li>
+                <li><a href="#">Easy to customize</a></li>
+                <li><a href="#">Glyphicons</a></li>
+                <li><a href="#">Pull Right Elements</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Pants</li>
+                <li><a href="#">Coloured Headers</a></li>
+                <li><a href="#">Primary Buttons & Default</a></li>
+                <li><a href="#">Calls to action</a></li>
+              </ul>
+            </li>
+            <li class="col-sm-3">
+              <ul>
+                <li class="dropdown-header">Accessories</li>
+                <li><a href="#">Default Navbar</a></li>
+                <li><a href="#">Lovely Fonts</a></li>
+                <li><a href="#">Responsive Dropdown </a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Newsletter</li>
+                <form class="form" role="form">
+                  <div class="form-group">
+                    <label class="sr-only" for="email">Email address</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter email">
+                  </div>
+                  <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                </form>
+              </ul>
+            </li>
+          </ul>
 
+        </li>
+      </ul>
+
+    </div>
+    <!-- /.nav-collapse -->
+  </nav>
+
+--}}

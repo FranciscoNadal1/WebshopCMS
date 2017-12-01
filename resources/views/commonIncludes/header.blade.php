@@ -1,19 +1,21 @@
+{{--
         <?php   
             use Assets\AssetManager as GetAsset; 
         ?>
 
 <div class="header">
+    <div id="topHeader">
     <div class=""> 
         <div id="logoContainer">
             <a class="logo" href="/">
                 <img width="250" height="100" src="{{ GetAsset::getLogo() }}">
             </a> 
         </div>
-        
+        <div id="searchAnduser">
             @if($dropdownYesOrSideBar == "dropdown")
                 @include('commonIncludes/dropDown')
             @endif
-        
+        </div>
         {{--
         <div id="searchAnduser">
             
@@ -47,3 +49,11 @@
             @endif
 
 </div>
+    <div id="botHeader">
+        
+        
+    </div>
+</div>
+
+
+--}}

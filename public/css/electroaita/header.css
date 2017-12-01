@@ -32,7 +32,10 @@
     /*
     margin-left:50px;
     */
-    width:250px;float:left;
+    /*
+    width:250px;
+    */
+    float:left;
 }
 
 #searchArea{

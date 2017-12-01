@@ -18,12 +18,13 @@ body{
   */
         padding-top:100px;
         
+        /*
         background-image:url('../../img/amarillo.jpg');
-        
+        */
         
         background-position: 0% 0%;
         	background-attachment: fixed;
-background-size:     cover;    
+        background-size:     cover;    
     
 }
 

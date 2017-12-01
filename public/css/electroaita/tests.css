@@ -36,10 +36,26 @@
 
 
 
+.menuLinks{
+    
+    width:100%;
+    display:table;
+    
+    
+}
+.menuLinks > li{
+    
+    float:left;
+}
 
+.dropdown-menu {
+    width:100%;
+    
+}
 
-
-
+.navbar-header{
+    
+}
 #filterBar{
     /*
     border-top: 6px solid #292F33;
@@ -59,6 +75,68 @@
 
 
 
+#TopHeader{
+    display:block;
+    height:106px;
+    width:100%;
+}
+
+#BotHeader{
+    
+    display:block;
+    height:30px;
+    width:100%;
+    font-size:14px !important;
+    background-color:white;
+    margin-top:10px;
+    margin-bottom:10px;
+    
+    background-color:#90AFC5;
+    color:white;
+    
+}
+
+#botHeader .dropdown-toggle{
+    background-color:transparent; 
+}
+
+
+
+.dropdown-menu {
+    margin-top:50px !important;
+}
+
+.stock-bar, .filterHeader{
+    background-color:#90AFC5 !important;
+}
+
+body{
+    background-color:#eee !important;
+}
+
+
+
+#myBtn {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed/sticky position */
+    bottom: 20px; /* Place the button at the bottom of the page */
+    right: 30px; /* Place the button 30px from the right */
+    z-index: 99; /* Make sure it does not overlap */
+    border: none; /* Remove borders */
+    outline: none; /* Remove outline */
+    background-color: #90AFC5; /* Set a background color */
+    color: white; /* Text color */
+    cursor: pointer; /* Add a mouse pointer on hover */
+    padding: 15px; /* Some padding */
+    
+
+padding:15px;
+    height:25px;
+}
+
+#myBtn:hover {
+    background-color: #555; /* Add a dark-grey background on hover */
+}
 
 
 
@@ -66,21 +144,36 @@
 
 
 
+.navbar-nav {
+    display:table !important;
+    margin: 0 !important;
+}
+.navbar-nav > li {
+    float:none !important;
+    display:table-cell !important;
+    text-align:center !important;
+}
+/*
+#################################################
+*/
+.scrolled-nav img{
+    width:125px;
+    height:50px;
+}
+.scrolled-nav #TopHeader{
+    height:50px;
+}
 
+.scrolled-nav {
+    height:75px !important;
+    border-top:2px solid blue;
+}
 
+.scrolled-nav #BotHeader{
+    margin:0px;
+    
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.scrolled-nav .dropdown-menu{
+    margin-top:30px !important;
+}

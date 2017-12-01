@@ -52,11 +52,13 @@ WHERE excluded =1)");
 
 
 
-      $results = \DB::select("SELECT csv.TITULOSUBFAMILIA, csv.CODSUBFAMILIA, benefits.benefit, excluded.excluded
+      $results = \DB::select(" SELECT csv.TITULOFAMILIA, csv.TITULOSUBFAMILIA, csv.CODSUBFAMILIA, benefits.benefit, excluded.excluded
 FROM csv
 LEFT JOIN benefits ON benefits.code = csv.CODSUBFAMILIA
 LEFT JOIN excluded ON excluded.code = csv.CODSUBFAMILIA
-GROUP BY csv.TITULOSUBFAMILIA");
+GROUP BY csv.TITULOSUBFAMILIA
+ORDER BY csv.TITULOFAMILIA
+");
    
     return $results;
     }
@@ -201,18 +203,54 @@ GROUP BY CODSUBCATEGORIA
     static function getFamilyFromCategoryName($str){
               $str = self::makeFriendlier($str);
               
+              
+    //          SELECT count(TITULOSUBFAMILIA) FROM csv where TITULOFAMILIA like 'R' group by TITULOSUBFAMILIA
+              
+              
+              
             $results = \DB::select("
 
-                SELECT csv.TITULOFAMILIA FROM categorias,menuBuilder,csv 
+                SELECT csv.TITULOFAMILIA, csv.TITULOFAMILIA as R   FROM categorias,menuBuilder,csv 
                 where categorias.index = menuBuilder.CODSUBCATEGORIA and
                 menuBuilder.CODFAMILIA = csv.CODFAMILIA 
                 and categorias.name like \"$str\" 
                 group by csv.TITULOFAMILIA
+                
                                 
    ");
+   print_r($results);
     return $results;
    }  
    
+   
+   static function getRandomProductByCategory($str){
+                     $str = self::makeFriendlier($str);
+              /*
+            $results = \DB::select("
+
+                SELECT * FROM csv
+                where titulofamilia in(
+                SELECT csv.TITULOFAMILIA FROM categorias,menuBuilder,csv 
+                where categorias.index = menuBuilder.CODSUBCATEGORIA and
+                menuBuilder.CODFAMILIA = csv.CODFAMILIA 
+                and categorias.name like \"$str\" 
+                group by csv.TITULOFAMILIA )
+ORDER BY RAND()
+LIMIT 1
+
+                                
+   ");*/
+     $results = \DB::select("
+
+                SELECT * FROM csv
+                order by rand()
+                limit 4
+                ");
+   
+   
+    return $results;
+
+   }
 
    
    

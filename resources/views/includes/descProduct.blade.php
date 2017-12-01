@@ -57,9 +57,41 @@
                    
                    </div>  
                 </div>
-                   <div class="boxes container" id="fichaProducto">
+                   <div class="boxes" id="fichaProducto">
+                       
+                       
+		<div class="">		
+			<div class="">
+					<ul id="myTab" class="nav nav-tabs nav_tabs">
+						
+						<li class="active"><a href="#service-one" data-toggle="tab">DESCRIPCION</a></li>
+						<li><a href="#service-two" data-toggle="tab">FICHA TÉCNICA</a></li>
+						
+						
+					</ul>
+				<div id="myTabContent" class="tab-content">
+						<div class="tab-pane fade in active" id="service-one">
+							<section class="container jumbotron productDescriptionBox description">
+							    
+                                <?php   
+                                echo infortisaApi::get_comercial($results[0]->CODIGOINTERNO); 
+                                ?>
+							</section>
+						</div>
+					<div class="tab-pane fade" id="service-two">
+						
+    						<section class="container jumbotron productDescriptionBox specifications">
+                                <?php
+                                echo infortisaApi::get_tecnica($results[0]->CODIGOINTERNO); 
+                                ?>
+    						</section>
+					</div>
+				</div>
+				<hr>
+			</div>
+		</div>
                             <?php 
-                            
+                          /*  
                             $comDes ="";$tecDes ="";
                            $comDes = infortisaApi::get_comercial($results[0]->CODIGOINTERNO);
                            $tecDes  = infortisaApi::get_tecnica($results[0]->CODIGOINTERNO);
@@ -67,6 +99,7 @@
                                 
                              echo $comDes;    
                              echo $tecDes;
+                             */
                             ?>
                             
                     </div>

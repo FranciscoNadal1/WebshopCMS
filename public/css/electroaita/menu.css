@@ -45,7 +45,7 @@ html { height: 100%;}
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
     position:relative;
-    top:110px;
+    top:160px;
 }
 
 #wrapper.toggled {
@@ -389,7 +389,11 @@ html { height: 100%;}
 
 .nav>li>a:focus, .nav>li>a:hover {
     text-decoration: none;
+    /*    
     background-color: #F5D061 !important;
+    */
+    background-color:white !important;
+    border-bottom:2px solid black;
 }
 .navbar-inverse{
     background-color:none !important;

@@ -99,7 +99,9 @@
             ?>
             <div class="form-horizontal">
                 <div id="benefitUpdater" class="form-group">
+                    
                     <label for="inputEmail" class="control-label col-xs-6">{{ $resule->TITULOSUBFAMILIA }}</label>
+                    {{ $resule->TITULOFAMILIA}}
                     <div class="col-xs-3">
                         <input type="text"  class="form-control" name="{{ $resule->CODSUBFAMILIA }}" id="{{ $resule->CODSUBFAMILIA }}" value="{{ $resule->benefit }}">
                         
