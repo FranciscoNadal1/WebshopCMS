@@ -29,18 +29,20 @@
 <!-- ####################################################################################################### -->
 
     <form method="POST" action="#">
-       
-    <input type="submit"  name="Actualizar"  class="btn-primary" style="width:100%;" value="Actualizar"/>
-<div class="categoryChooser container-fluid">
+<input type="hidden" name="_token" value="{!! csrf_token() !!}">
+    <input type="submit" name="Actualizar" class="btn-primary" style="width:100%;" value="Actualizar"/>
+<div class="categoryChooser">
          @foreach ($results as $resul)
-                       
+                    
              
     <?php
     
         $selectedNumber = \DBData::getCategoryCodeFromName($resul->TITULOFAMILIA);
     ?>
             
-<div class="productWrapper col-xs-3 col-md-3 col-lg-3 row-fluid ">
+<div class="productWrapper col-xs-1 col-md-4 col-lg-4 row-fluid ">
+
+    <div class="eachProductWrapper">   
 
                </br><strong> {{ "" . $resul->TITULOFAMILIA . "" }} </strong>
                
@@ -54,6 +56,7 @@
         ?>
         
             @foreach ($results3 as $resule)
+            
                  <option 
                          @if($resule->index == $selectedNumber)
                            selected
@@ -74,12 +77,14 @@
                                            
                                             <blockquote>{!! "\t -- ". nl2br(e($resul2->TITULOSUBFAMILIA)) !!}</blockquote>
                             @endforeach        
-</div>                           
+</div>       
+ </div>
         @endforeach
+       
             <input name="Actualizar" type="submit" class="btn-primary" style="width:100%;" value="Actualizar"/>
      </form>           
-</div>
 
-</div>
+
+</div></div>
 
 @endsection

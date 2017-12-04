@@ -12,7 +12,7 @@ $dropdownYesOrSideBar = "dropdown";
 <script	type="text/javascript" src={{ GetAsset::getjQuery() }} integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="			  crossorigin="anonymous"></script>
 
 <link rel="stylesheet" href={{ GetAsset::getBootstrap() }} integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 @if($dropdownYesOrSideBar == "dropdown")
 {{
@@ -36,8 +36,12 @@ function scrollFunction() {
 
 // When the user clicks on the button, scroll to the top of the document
 function topFunction() {
+    /*
     document.body.scrollTop = 0; // For Safari
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    
+    */
+     $('html, body').animate({scrollTop:0}, 'slow');
 }
 
 
@@ -96,6 +100,6 @@ $(document).ready(function(){
         
    </div>     
 
-<button onclick="topFunction()" id="myBtn" title="Go to top">^</button>
+<button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-angle-up "></i></button>
     </body>
 </html>

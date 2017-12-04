@@ -387,12 +387,13 @@ html { height: 100%;}
     z-index: 1;
 }
 
-.nav>li>a:focus, .nav>li>a:hover {
+.nav li>a:focus, .nav li >a:hover {
     text-decoration: none;
     /*    
     background-color: #F5D061 !important;
     */
-    background-color:white !important;
+    color:black;
+  background-color: #F5D061 !important;
     border-bottom:2px solid black;
 }
 .navbar-inverse{

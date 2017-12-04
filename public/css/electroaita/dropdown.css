@@ -9,7 +9,14 @@
 }
 
 .navbar-nav>li{
-  font-size:12px;
+  padding-left:20px;
+  padding-right:20px;
+  font-size:1vw;
+}
+
+.navbar-nav>li a{
+  
+  color:white;
 }
 .navbar-brand > img{
   display: block;
@@ -89,12 +96,13 @@ top: -15px;
   white-space: normal;
 }
 
-.mega-dropdown-menu > li ul > li > a:hover,
+.mega-dropdown-menu > li ul > li > a:hover ,
 .mega-dropdown-menu > li ul > li > a:focus {
   text-decoration: none;
-  color: #444;
-  background-color: #f5f5f5 !important;
-  border-bottom:1px solid black;
+  color: black;
+  border:0px;
+  background-color:white !important;
+  
   
 }
 

@@ -1,4 +1,4 @@
-        <div>
+  <div>
             <div class="row">    
                 <div id="filterBar" class="containerdiv hidden-sm hidden-xs hidden-md visible-lg-block col-lg-2">
                     
@@ -10,22 +10,23 @@
                <div id="ProductContainer" class="container col-sm-12 col-md-10 col-lg-10">  
                
                        <div id="CategoryHeader" class="{{ \DBData::desAccentify($results[0]->TITULOSUBFAMILIA) }}">{{ $results[0]->TITULOSUBFAMILIA }}</div>
-
-              <!--   <div id="ProductContainer" class="">   -->
-                        
-                        <?php            $typeList = \GetSettings::getProductListType();            ?>
-                        
-                        
-                    @foreach ($results as $resul)
-                        @if ($typeList == "grid")
-                            @include('includes/gridProductList', array('resu' => $resul))
-                        @endif
-                        
-                        @if ($typeList == "list")
-                            @include('includes/listProductList', array('resu' => $resul))
-                        @endif
-                    @endforeach
                     
+                            <div class="productBlock">
+                      <!--   <div id="ProductContainer" class="">   -->
+                                
+                                <?php            $typeList = \GetSettings::getProductListType();            ?>
+                                
+                                
+                            @foreach ($results as $resul)
+                                @if ($typeList == "grid")
+                                    @include('includes/gridProductList', array('resu' => $resul))
+                                @endif
+                                
+                                @if ($typeList == "list")
+                                    @include('includes/listProductList', array('resu' => $resul))
+                                @endif
+                            @endforeach
+                            </div>                    
                     
                 </div>
 
@@ -33,9 +34,6 @@
 
 <script>
 var produ;
-
-
-
 $(document).ready(function(){
     
     
@@ -80,22 +78,16 @@ $(document).ready(function(){
                      
         $("#cuentaSiguente").load( "/countSampleProductList/" + pag + "/" + nameCategory, function() {
             //      alert( "Load was performed." );
-
             if(document.getElementById("cuentaSiguente").textContent < paginationMax)
                    
                    document.getElementById("btn1").style.display = "none";
                 });
     });
 });
-
-
 </script>
 
             </div>
         </div>
 </head>
-
-
-
 
 

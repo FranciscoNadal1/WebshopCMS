@@ -1,13 +1,21 @@
 #admin .productWrapper {
-    height:300px;
+
+}
+#admin .productWrapper .eachProductWrapper{
+    
+    padding:10px;
+        height:300px;
     border:1px solid black;
     padding:5px;
     overflow-x:none;
     overflow-y:scroll;
-    margin:10px;
+    
     background-color:white;
 }
 
+body #wrapper{
+    top:0px;
+}
 
 .productStatistic {
     

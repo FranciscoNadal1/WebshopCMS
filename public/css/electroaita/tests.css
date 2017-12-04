@@ -4,6 +4,8 @@
     font-size:26px;
     text-align:left;
     padding:12px 0px 12px 20px;
+    margin-left:10px;
+    margin-right:10px;
     
 }
 
@@ -88,10 +90,10 @@
     width:100%;
     font-size:14px !important;
     background-color:white;
-    margin-top:10px;
-    margin-bottom:10px;
+/*    margin-top:10px;    */
+
     
-    background-color:#90AFC5;
+    
     color:white;
     
 }
@@ -103,12 +105,26 @@
 
 
 .dropdown-menu {
-    margin-top:50px !important;
+    margin-top:20px !important;
 }
 
-.stock-bar, .filterHeader{
-    background-color:#90AFC5 !important;
+.stock-bar, .filterHeader , #BotHeader{
+    background-color:#547499 !important;
+    
+    
+            /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f6f8f9+0,547499+50,547499+73,5d7999+100 */
+        background: rgb(246,248,249); /* Old browsers */
+        background: -moz-linear-gradient(top, rgba(246,248,249,1) 0%, rgba(84,116,153,1) 50%, rgba(84,116,153,1) 73%, rgba(93,121,153,1) 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, rgba(246,248,249,1) 0%,rgba(84,116,153,1) 50%,rgba(84,116,153,1) 73%,rgba(93,121,153,1) 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, rgba(246,248,249,1) 0%,rgba(84,116,153,1) 50%,rgba(84,116,153,1) 73%,rgba(93,121,153,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f8f9', endColorstr='#5d7999',GradientType=0 ); /* IE6-9 */
+            
+    
+    
 }
+
+
+
 
 body{
     background-color:#eee !important;
@@ -128,10 +144,10 @@ body{
     color: white; /* Text color */
     cursor: pointer; /* Add a mouse pointer on hover */
     padding: 15px; /* Some padding */
-    
-
-padding:15px;
-    height:25px;
+    width: 45px;
+height:45px;
+text-align:center;
+font-size:20px;
 }
 
 #myBtn:hover {
@@ -156,6 +172,13 @@ padding:15px;
 /*
 #################################################
 */
+
+
+
+/*
+//##############################################
+// When scrolled change header : .scrolled-nav 
+
 .scrolled-nav img{
     width:125px;
     height:50px;
@@ -169,6 +192,9 @@ padding:15px;
     border-top:2px solid blue;
 }
 
+
+
+
 .scrolled-nav #BotHeader{
     margin:0px;
     
@@ -176,4 +202,46 @@ padding:15px;
 
 .scrolled-nav .dropdown-menu{
     margin-top:30px !important;
+}
+
+*/
+
+.typeGrid .priceAndStock{
+    display:table;
+    height:20px;
+    width:100%;
+}
+
+.typeGrid .precioProducto{
+    
+    float:left;
+    width:70%;
+    font-size: 1.2vw;
+    padding-left:20px;
+    position:relative;
+}
+
+.typeGrid .progress{
+    float:left;
+    width:30%;
+    margin-top:7px;
+    left: -10px;
+    position:relative;
+}
+.productWrapper {
+    padding:10px !important;
+}
+.typeGrid .product:hover{
+    
+  
+text-decoration:none !important;
+}
+ .product a:hover{
+    
+text-decoration:none !important;
+}
+
+
+#wrapper{
+    
 }

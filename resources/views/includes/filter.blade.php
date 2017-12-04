@@ -47,7 +47,10 @@
               <div class="filterHeader">Marcas:</div>
               <div class="checkboxContainer">
         @foreach ($results as $resul)
-    
+
+
+
+
                 <div class="checkbox">
                     
                   <label>

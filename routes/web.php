@@ -64,7 +64,9 @@ Route::get('/listado/{id}/{category}', function ($id, $category) {
 
 Route::get('/', function (){
 
-     return redirect('/listado/Auricular-con-microfono');
+    return view('routes/index', ['name' => 'index']
+    
+    );
      
      
 });
@@ -208,7 +210,10 @@ Route::get('/admin/changeCategories', function (){
     );
 });
 
-
+Route::post('/admin/changeCategories', function (){
+    return view('admin/changeCategories', ['name' => 'adminDashboard']
+    );
+});
 
 Route::get('/admin/updaterBenefits', function (){
     return view('admin/updaterBenefits', ['name' => 'updaterBenefits']

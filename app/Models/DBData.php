@@ -22,7 +22,9 @@ class DBData{
 
     
     static function getAllCategories(){
-              $results = \DB::select("SELECT * FROM " . self::$categoryTableName . " where name not like '-%'");
+            //  $results = \DB::select("SELECT * FROM " . self::$categoryTableName . " where name not like '-%'");
+             $results = \DB::select("SELECT * FROM " . self::$categoryTableName . "");
+    
     return $results;
     }
     
@@ -69,7 +71,7 @@ ORDER BY csv.TITULOFAMILIA
 
 
       $results = \DB::select("SELECT csv.TITULOSUBFAMILIA, csv.CODSUBFAMILIA FROM " . self::$productTableName . " GROUP BY csv.TITULOSUBFAMILIA");
-   print_r($results);
+//   print_r($results);
     return $results;
     }
     
@@ -88,6 +90,13 @@ ORDER BY csv.TITULOFAMILIA
       $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" group by CODIGOINTERNO");
     return $results;
    }
+   
+      static function getAllNovedades(){
+          
+      $results = \DB::select("SELECT * FROM " . self::$productTableName . " where CICLOVIDA like \"Novedad\" group by CODIGOINTERNO order by rand() limit 24");
+    return $results;
+   } 
+   
     static function getAllWhereTituloFamiliaPage($name, $page){
       
       $name = self::makeFriendlier($name);
@@ -196,7 +205,29 @@ WHERE `csv`.CODFAMILIA = `menuBuilder`.CODFAMILIA
 AND `csv`.TITULOFAMILIA = \"$str\"
 GROUP BY CODSUBCATEGORIA
    ");
+   /*
+   try{
+   print_r($results[0]);
+   return $results[0]->CODSUBCATEGORIA;
+   }catch(\Exception $e){
+       echo "FAIL";
+   }
+   */
+   
+   if (!empty($results[0])){
+       
     return $results[0]->CODSUBCATEGORIA;
+    echo $results[0]->CODSUBCATEGORIA;
+   }
+
+
+   
+/*
+    if($results[0]->CODSUBCATEGORIA == 0)
+       echo "wtf";
+    else
+        return $results[0]->CODSUBCATEGORIA;
+        */
    }  
    
    
@@ -218,7 +249,7 @@ GROUP BY CODSUBCATEGORIA
                 
                                 
    ");
-   print_r($results);
+   //print_r($results);
     return $results;
    }  
    
