@@ -192,6 +192,11 @@ Route::get('/admin/settings', function (){
     return view('admin/settings', ['name' => 'adminDashboard']
     );
 });
+
+Route::get('/admin/mail', function (){
+    return view('admin/mailPanel', ['name' => 'adminDashboard']
+    );
+});
 Route::post('/admin/settings', function (){
     return view('admin/settings', ['name' => 'adminDashboard']
     );

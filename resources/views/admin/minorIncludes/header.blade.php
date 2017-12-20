@@ -11,7 +11,7 @@
 
 <div class="header">
     
-    <div class="container"> 
+    <div class=""> 
             <div id="trigram"  class="col-sm-1 align-middle">
 
                  <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>

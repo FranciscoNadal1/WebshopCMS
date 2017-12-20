@@ -33,11 +33,11 @@ function MyCtrl($scope) {
     };
 }
 </script>
-
+{{--
 <h1>Idea</h1>
 <h2>Un personalizador de los colores principales de la web, se realizará recorriendo todos los ficheros del tema y substituyendo cada color, 
 previamente habiendo añadido al color //Template:1</h2>
-
+--}}
 <body ng-app="myApp">
     <div ng-controller="MyCtrl">
         <form id="test">

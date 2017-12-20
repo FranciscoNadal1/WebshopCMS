@@ -30,122 +30,122 @@ $( document ).ready(function() {
 	    
 <div class="menuLinks">
   
-          	@foreach ($categories as $cat)
-          	  
+  @foreach ($categories as $cat)
+        @if($cat->code != 1)
           	
-<ul class="nav navbar-nav">
-          	
-          	    
-          	        <li class="dropdown mega-dropdown">
-          	          <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{$cat->name}} {{--<span class="glyphicon glyphicon-chevron-down pull-right"></span>--}}</a>
-
-          	          <ul class="dropdown-menu mega-dropdown-menu row">
-          	            <li class="col-sm-3">
-          	              <ul>
-          	                <li class="dropdown-header">Novedades</li>
-          	                <div id="myCarousel" class="carousel slide" data-ride="carousel">
-          	                  <div class="carousel-inner">
-          	                    
-          	                    <?php
-                                			$randomProduct = \DBData::getRandomProductByCategory($cat->name);
-                                                    			        
-                                $count = 1;    
-                                 ?>
-                                       
-          	@foreach ($randomProduct as $ran)
-          	
-          	                    <div class="item {{ $count == 1 ? ' active' : '' }}">
-          	                      
-          	{{$ran->TITULO}}
-          	                      <a href="#"><img src={{ infortisaApi::getProductMainImage($ran->CODIGOINTERNO) }} class="img-responsive" alt="product"></a>
-          	                      <h4><small{{ $ran->TITULO }}</small></h4>
-          	                      <button class="btn btn-primary" type="button">{{ $ran->PRECIO }}€</button>
-          	                      <button href="#" class="btn btn-default" type="button"><span class="glyphicon glyphicon-heart"></span> Comprar</button>
-          	                    </div>
-          	                    
-          	                    <?php
-          	                    ++$count;
-          	                    ?>
-          	@endforeach
-          	                    
-          	                    
-          	                    
-          	                    {{--
-          	                    <!-- End Item -->
-          	                    <div class="item">
-          	                      <a href="#"><img src="http://placehold.it/254x150/ef5e55/f5f5f5/&text=New+Collection" class="img-responsive" alt="product 2"></a>
-          	                      <h4><small>-----------------</small></h4>
-          	                      <button class="btn btn-primary" type="button">9,99 €</button>
-          	                      <button href="#" class="btn btn-default" type="button"><span class="glyphicon glyphicon-heart"></span> Comprar</button>
-          	                    </div>
-          	                    <!-- End Item -->
-          	                    <div class="item">
-          	                      <a href="#"><img src="http://placehold.it/254x150/2ecc71/f5f5f5/&text=New+Collection" class="img-responsive" alt="product 3"></a>
-          	                      <h4><small>-----------------</small></h4>
-          	                      <button class="btn btn-primary" type="button">49,99 €</button>
-          	                      <button href="#" class="btn btn-default" type="button"><span class="glyphicon glyphicon-heart"></span> Comprar</button>
-          	                    </div>
-          	                    
-          	                    --}}
-          	                    <!-- End Item -->
-          	                  </div>
-          	                  <!-- End Carousel Inner -->
-          	                </div>
-          	                <!-- /.carousel -->
-          	                <li class="divider"></li>
-          	            {{--    <li><a href="#">View all Collection <span class="glyphicon glyphicon-chevron-right pull-right"></span></a></li> --}}
-          	              </ul>
-          	            </li>
-          	            
-          	<?php
-          		$results = \DBData::getFamilyFromCategoryName($cat->name);
-          	?>
+              <ul class="nav navbar-nav">
+                        	
+                        	    
+                        	        <li class="dropdown mega-dropdown">
+                        	          <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{$cat->name}} {{--<span class="glyphicon glyphicon-chevron-down pull-right"></span>--}}</a>
               
-              
-          		@foreach ($results as $resul)	
-          		         
-          		         <li class="col-sm-3">
-          	              <ul>
-          	                <li class="dropdown-header">{{ $resul->TITULOFAMILIA }}</li>
-          	                
-          <?php
-          	$results2 = \DBData::getSubFamiliaFromTitulo($resul->TITULOFAMILIA);
-          ?>
-                        @foreach ($results2 as $resul2)
-                                        
-          
-          										<li><a href="/listado/{{ \DBData::desAccentify($resul2->TITULOSUBFAMILIA) }}">{{ $resul2->TITULOSUBFAMILIA }}</a>        </li>    
-          										
-                        @endforeach
+                        	          <ul class="dropdown-menu mega-dropdown-menu row">
+                        	            <li class="col-sm-3">
+                        	              <ul>
+                        	                <li class="dropdown-header">Novedades</li>
+                        	                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                        	                  <div class="carousel-inner">
+                        	                    
+                        	                    <?php
+                                              			$randomProduct = \DBData::getRandomProductByCategory($cat->name);
+                                                                  			        
+                                              $count = 1;    
+                                               ?>
+                                                     
+                        	@foreach ($randomProduct as $ran)
+                        	
+                        	                    <div class="item {{ $count == 1 ? ' active' : '' }}">
+                        	                      
+                        	{{$ran->TITULO}}
+                        	                      <a href="#"><img src={{ infortisaApi::getProductMainImage($ran->CODIGOINTERNO) }} class="img-responsive" alt="product"></a>
+                        	                      <h4><small{{ $ran->TITULO }}</small></h4>
+                        	                      <button class="btn btn-primary" type="button">{{ $ran->PRECIO }}€</button>
+                        	                      <button href="#" class="btn btn-default" type="button"><span class="glyphicon glyphicon-heart"></span> Comprar</button>
+                        	                    </div>
+                        	                    
+                        	                    <?php
+                        	                    ++$count;
+                        	                    ?>
+                        	@endforeach
+                        	                    
+                        	                    
+                        	                    
+                        	                    {{--
+                        	                    <!-- End Item -->
+                        	                    <div class="item">
+                        	                      <a href="#"><img src="http://placehold.it/254x150/ef5e55/f5f5f5/&text=New+Collection" class="img-responsive" alt="product 2"></a>
+                        	                      <h4><small>-----------------</small></h4>
+                        	                      <button class="btn btn-primary" type="button">9,99 €</button>
+                        	                      <button href="#" class="btn btn-default" type="button"><span class="glyphicon glyphicon-heart"></span> Comprar</button>
+                        	                    </div>
+                        	                    <!-- End Item -->
+                        	                    <div class="item">
+                        	                      <a href="#"><img src="http://placehold.it/254x150/2ecc71/f5f5f5/&text=New+Collection" class="img-responsive" alt="product 3"></a>
+                        	                      <h4><small>-----------------</small></h4>
+                        	                      <button class="btn btn-primary" type="button">49,99 €</button>
+                        	                      <button href="#" class="btn btn-default" type="button"><span class="glyphicon glyphicon-heart"></span> Comprar</button>
+                        	                    </div>
+                        	                    
+                        	                    --}}
+                        	                    <!-- End Item -->
+                        	                  </div>
+                        	                  <!-- End Carousel Inner -->
+                        	                </div>
+                        	                <!-- /.carousel -->
+                        	                <li class="divider"></li>
+                        	            {{--    <li><a href="#">View all Collection <span class="glyphicon glyphicon-chevron-right pull-right"></span></a></li> --}}
+                        	              </ul>
+                        	            </li>
+                        	            
+                        	<?php
+                        		$results = \DBData::getFamilyFromCategoryName($cat->name);
+                        	?>
+                            
+                            
+                        		@foreach ($results as $resul)	
+                        		         
+                        		         <li class="col-sm-3">
+                        	              <ul>
+                        	                <li class="dropdown-header">{{ $resul->TITULOFAMILIA }}</li>
+                        	                
+                        <?php
+                        	$results2 = \DBData::getSubFamiliaFromTitulo($resul->TITULOFAMILIA);
+                        ?>
+                                      @foreach ($results2 as $resul2)
+                                                      
                         
-          	                <li class="divider"></li>
-          	                {{--
-          	                <li><a href="#">Unique Features</a></li>
-          	                <li><a href="#">Image Responsive</a></li>
-          	                <li><a href="#">Auto Carousel</a></li>
-          	                <li><a href="#">Newsletter Form</a></li>
-          	                <li><a href="#">Four columns</a></li>
-          	                <li class="divider"></li>
-          	                <li class="dropdown-header">Tops</li>
-          	                <li><a href="#">Good Typography</a></li>
-          	                
-          	                --}}
-          	                
-          	              </ul>
-          	            </li>
-          		            			
-          		@endforeach
-    
-	            
-	          </ul>
-
-	        </li>
-
-	
-	    
-	    
-		      </ul>
-
+                        										<li><a href="/listado/{{ \DBData::desAccentify($resul2->TITULOSUBFAMILIA) }}">{{ $resul2->TITULOSUBFAMILIA }}</a>        </li>    
+                        										
+                                      @endforeach
+                                      
+                        	                <li class="divider"></li>
+                        	                {{--
+                        	                <li><a href="#">Unique Features</a></li>
+                        	                <li><a href="#">Image Responsive</a></li>
+                        	                <li><a href="#">Auto Carousel</a></li>
+                        	                <li><a href="#">Newsletter Form</a></li>
+                        	                <li><a href="#">Four columns</a></li>
+                        	                <li class="divider"></li>
+                        	                <li class="dropdown-header">Tops</li>
+                        	                <li><a href="#">Good Typography</a></li>
+                        	                
+                        	                --}}
+                        	                
+                        	              </ul>
+                        	            </li>
+                        		            			
+                        		@endforeach
+                  
+              	            
+              	          </ul>
+              
+              	        </li>
+              
+              	
+              	    
+              	    
+              		      </ul>
+        @endif
 	@endforeach	
 	</div>
 	    

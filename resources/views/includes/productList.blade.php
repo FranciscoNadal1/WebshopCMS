@@ -1,3 +1,19 @@
+  <?php
+  $totalNumberProducts = count($results);
+  ?>
+  
+  
+  {{--
+  {{ \GetSettings::getProductEachPage() }}
+  @if($totalNumberProducts <= \GetSettings::getProductEachPage())
+  <style>
+      .loadMoreProducts{
+          display:none;
+      }
+  </style>
+  
+  @endif
+  --}}
   <div>
             <div class="row">    
                 <div id="filterBar" class="containerdiv hidden-sm hidden-xs hidden-md visible-lg-block col-lg-2">

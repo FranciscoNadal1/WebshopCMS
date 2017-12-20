@@ -1,6 +1,6 @@
 <?php
 
-namespace DBQuerys;
+namespace DBQueries;
 use Illuminate\Database\QueryException;
 
 class DBData{
@@ -23,7 +23,7 @@ class DBData{
     
     static function getAllCategories(){
             //  $results = \DB::select("SELECT * FROM " . self::$categoryTableName . " where name not like '-%'");
-             $results = \DB::select("SELECT * FROM " . self::$categoryTableName . "");
+             $results = \DB::select("SELECT * FROM " . self::$categoryTableName . " where code order by code");
     
     return $results;
     }
@@ -111,7 +111,7 @@ ORDER BY csv.TITULOFAMILIA
       $name = self::makeFriendlier($name);
       $pager = self::numberOfProductsByPage() * $page;
       
-
+    $stock = 0;
       
       $filte = explode("/", $filters);
       
@@ -121,18 +121,27 @@ ORDER BY csv.TITULOFAMILIA
         $inVariable = "";
         
         foreach($filte as $value) {
-            $inVariable = $inVariable . "'" . $value . "'" . ",";
+            if($value != "stock")
+                $inVariable = $inVariable . "'" . $value . "'" . ",";
+            else
+                $stock = 1;
+                
         }
         $inVariable = rtrim($inVariable, ',');
 
 ////////////////////////////////////////////////////////////////////////////////
 //////////      SQL INJECTION PROBABLE VULNERABILITY, CHECK
 
+    if($stock == 0)
       $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and  NOMFABRICANTE in ($inVariable) group by CODIGOINTERNO LIMIT ". $pager .", " . self::numberOfProductsByPage());
+    if($stock == 1){  
+     if($inVariable=="")
+            $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and STOCK > '0' group by CODIGOINTERNO LIMIT ". $pager .", " . self::numberOfProductsByPage());
+     else
+            $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and  NOMFABRICANTE in ($inVariable) and STOCK > '0' group by CODIGOINTERNO LIMIT ". $pager .", " . self::numberOfProductsByPage());
+    
       
-      
-      
-      
+    }
       
     return $results;
    } 
@@ -204,6 +213,7 @@ FROM `menuBuilder` , `csv`
 WHERE `csv`.CODFAMILIA = `menuBuilder`.CODFAMILIA
 AND `csv`.TITULOFAMILIA = \"$str\"
 GROUP BY CODSUBCATEGORIA
+ORDER BY CODSUBCATEGORIA DESC
    ");
    /*
    try{
@@ -219,7 +229,7 @@ GROUP BY CODSUBCATEGORIA
     return $results[0]->CODSUBCATEGORIA;
     echo $results[0]->CODSUBCATEGORIA;
    }
-
+}
 
    
 /*
@@ -228,7 +238,7 @@ GROUP BY CODSUBCATEGORIA
     else
         return $results[0]->CODSUBCATEGORIA;
         */
-   }  
+     
    
    
     static function getFamilyFromCategoryName($str){
@@ -242,7 +252,7 @@ GROUP BY CODSUBCATEGORIA
             $results = \DB::select("
 
                 SELECT csv.TITULOFAMILIA, csv.TITULOFAMILIA as R   FROM categorias,menuBuilder,csv 
-                where categorias.index = menuBuilder.CODSUBCATEGORIA and
+                where categorias.code = menuBuilder.CODSUBCATEGORIA and
                 menuBuilder.CODFAMILIA = csv.CODFAMILIA 
                 and categorias.name like \"$str\" 
                 group by csv.TITULOFAMILIA
@@ -299,6 +309,13 @@ LIMIT 1
 
                 $affected = \DB::insert('insert into menuBuilder (CODSUBCATEGORIA, CODFAMILIA) values (?, ?)', [$codCategoria,$codFamilia]);
     }
+    
+    static function insertCategoryName($codCategoria){
+
+                $affected = \DB::insert('insert into categorias (name) values (?)', [$codCategoria]);
+    }   
+    
+    
     
     static function updateBenefitsSingleOne($code, $benefit){
 

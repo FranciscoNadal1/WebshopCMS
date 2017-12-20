@@ -111,7 +111,8 @@ foreach (new RecursiveIteratorIterator($dir2) as $file) {
 class_alias('Settings\getSettings', 'GetSettings');
 class_alias('Assets\AssetManager', 'GetAsset');
 class_alias('Providers\infortisa\infortisaApi', 'infortisaApi');
-class_alias('DBQuerys\DBData', 'DBData');
+class_alias('DBQueries\DBData', 'DBData');
+class_alias('DBQueries\MailData', 'MailData');
 class_alias('ApiCallNumber\ApiNumber', 'ApiCount');
 class_alias('ProductViewNumber\ProductViewNumber', 'ProductViewNumber');
 
