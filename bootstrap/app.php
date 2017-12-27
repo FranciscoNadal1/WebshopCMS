@@ -98,6 +98,7 @@ foreach (new RecursiveIteratorIterator($dir2) as $file) {
 }
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Register Model Alias
@@ -112,10 +113,10 @@ class_alias('Settings\getSettings', 'GetSettings');
 class_alias('Assets\AssetManager', 'GetAsset');
 class_alias('Providers\infortisa\infortisaApi', 'infortisaApi');
 class_alias('DBQueries\DBData', 'DBData');
-class_alias('DBQueries\MailData', 'MailData');
 class_alias('ApiCallNumber\ApiNumber', 'ApiCount');
 class_alias('ProductViewNumber\ProductViewNumber', 'ProductViewNumber');
-
+class_alias('tools\ToolManager', 'Tools');
+class_alias('MailQueries\MailData', 'MailData');
 
 //|--------------------------------------------------------------------------
 

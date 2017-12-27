@@ -1,10 +1,10 @@
+
 @extends('mainTemplates/adminTemplate')
 
 @section('content')
 
 
 <?php
-
 
 		
 setlocale(LC_ALL, "en_US.utf8"); 
@@ -46,6 +46,7 @@ $var_url = trim($var_url);
 
 	";
 	
+ob_start();
 echo "
 	<div id='total'>
 	
@@ -260,6 +261,10 @@ CREATE TABLE `csv` (
     
         
             $results3 = DBData::getAllSubfamiliaAndCodeBenefit();
+            
+            $excludedList = DBData::getAllExcludedCategories();
+            
+            
             $numberNoBenefit = DBData::getNumberCategoriesNoBenefit();
             
             ?>
@@ -282,38 +287,67 @@ Warnings and errors                                                         -->
 <!-- ------------------------------------------------------------------------- -->
 <div class="table-responsive">
     <table class="table table-hover table-responsive">
+	<h2>Borrados</h2>
+            <tr>
+              <th>Nombre</th>
+              <th>Productos borrados</th>
+            </tr>
+            
+        @foreach ($excludedList as $resule)
+        
+        
+			@if($resule->excluded == 1)
+	        
+	        
+	        
+	            
+	                <tr>
+	          
+	                  <td>{{ $resule->name }}</td>
+	                  
+	                  <td>
+	                    {{
+	                    
+	                        \DB::table('csv')
+	                        ->where('CODSUBFAMILIA', $resule->code)
+	                        ->delete()
+	                        
+	                    }}
+	                  </td>
+	                </tr>
+	        @endif
+        @endforeach
+
+
+
+<!--
+//////////////////////////////////////////////
+-->
+<div class="table-responsive">
+    <table class="table table-hover table-responsive">
+	<h2>Modificados</h2>
             <tr>
               <th>Nombre</th>
               <th>Beneficio</th>
-              <th>Excluido</th>
               <th>Modificados</th>
             </tr>
             
         @foreach ($results3 as $resule)
         
-        
-
-        
-        
-        
-            @if($resule->benefit == 0 and $resule->excluded == 0)
-                <tr class="warning">
-            @else
-                <tr>
-            @endif
-          
-                  <td>{{ $resule->TITULOSUBFAMILIA }}</td>
-                  <td>{{ $resule->benefit }}</td>
-                  <td>{{ $resule->excluded }}</td>
-                  <td>
-                    {{
-                        \DB::table('csv')
-                        ->where('CODSUBFAMILIA', $resule->CODSUBFAMILIA)
-                        ->increment('PRECIO', $resule->benefit)
-                        
-                    }}
-                  </td>
-                </tr>
+	                <tr>
+	          
+	                  <td>{{ $resule->TITULOSUBFAMILIA }}</td>
+	                  <td>{{ $resule->benefit }}</td>
+	                  <td>
+	                    {{
+	                    
+	                        \DB::table('csv')
+	                        ->where('CODSUBFAMILIA', $resule->CODSUBFAMILIA)
+	                        ->increment('PRECIO', $resule->benefit)
+	                        
+	                    }}
+	                  </td>
+	                </tr>
         @endforeach
         
     </table>
@@ -324,6 +358,13 @@ Warnings and errors                                                         -->
 </div>
 
 
-
+<?php
+	$contenido = ob_get_contents();
+	echo $contenido;
+    \MailData::addMail("Update","Routine",$contenido);
+?>
 
 @endsection
+
+
+

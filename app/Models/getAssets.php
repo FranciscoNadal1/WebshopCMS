@@ -42,6 +42,15 @@ class AssetManager{
      
    }
    
+    static function getProductLargeImg($code,$brand){
+
+        if(self::$urlIsSecured)
+          return $rutaCss =  "https://" . $_SERVER['HTTP_HOST'] . "/productImages/" . $brand . "/" . $code . "_large.jpg";
+         else      
+          return $rutaCss =  "http://" . $_SERVER['HTTP_HOST'] . "/productImages/" . $brand . "/" . $code . "_large.jpg";
+     
+   }
+   
    static function Test(){
       return "aaaaa";
    }

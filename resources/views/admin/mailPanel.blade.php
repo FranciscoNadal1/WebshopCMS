@@ -367,7 +367,18 @@ ul {
 }
  
 </style>
+<script>
+    
+    function loadMail(code) {
+        
+    // document.getElementById("MailBox").innerHTML='<object type="text/html" data="/admin/mail/'+code+'" ></object>';
+     $("#MailBox").load("/admin/mail/" + code + '');
+     
+     
+        }
+</script>
 @extends('mainTemplates/adminTemplate')
+
 
 @section('content')
 <div class="">
@@ -376,11 +387,11 @@ ul {
                   <aside class="sm-side">
                       <div class="user-head">
                           <a class="inbox-avatar" href="javascript:;">
-                              <img  width="64" hieght="60" src="http://bootsnipp.com/img/avatars/ebeb306fd7ec11ab68cbcaa34282158bd80361a7.jpg">
+                              <img  width="150" hieght="100" src="{{ \GetAsset::getLogo() }}">
                           </a>
                           <div class="user-name">
-                              <h5><a href="#">Alireza Zare</a></h5>
-                              <span><a href="#">Info.Ali.Pci@Gmail.com</a></span>
+                              <h5><a href="#"></a></h5>
+                              <span><a href="#"></a></span>
                           </div>
                           <a class="mail-dropdown pull-right" href="javascript:;">
                               <i class="fa fa-chevron-down"></i>
@@ -443,7 +454,7 @@ ul {
                       </div>
                       <ul class="inbox-nav inbox-divider">
                           <li class="active">
-                              <a href="#"><i class="fa fa-inbox"></i> Inbox <span class="label label-danger pull-right">2</span></a>
+                              <a href="#"><i class="fa fa-inbox"></i> Inbox <span class="label label-danger pull-right">{{ \MailData::getNonReadCount() }}</span></a>
 
                           </li>
                           <li>
@@ -459,6 +470,7 @@ ul {
                               <a href="#"><i class=" fa fa-trash-o"></i> Trash</a>
                           </li>
                       </ul>
+                      {{--
                       <ul class="nav nav-pills nav-stacked labels-info inbox-divider">
                           <li> <h4>Labels</h4> </li>
                           <li> <a href="#"> <i class=" fa fa-sign-blank text-danger"></i> Work </a> </li>
@@ -468,6 +480,8 @@ ul {
                           </li><li> <a href="#"> <i class=" fa fa-sign-blank text-primary "></i> Office </a>
                           </li>
                       </ul>
+                      --}}
+                      {{--
                       <ul class="nav nav-pills nav-stacked labels-info ">
                           <li> <h4>Buddy online</h4> </li>
                           <li> <a href="#"> <i class=" fa fa-circle text-success"></i>Alireza Zare <p>I do not think</p></a>  </li>
@@ -477,6 +491,8 @@ ul {
                           </li><li> <a href="#"> <i class=" fa fa-circle text-muted "></i>Dead man<p>I do not think</p></a>
                           </li>
                       </ul>
+                      
+                      --}}
 
                       <div class="inbox-body text-center">
                           <div class="btn-group">
@@ -499,7 +515,7 @@ ul {
                   </aside>
                   <aside class="lg-side">
                       <div class="inbox-head">
-                          <h3>Inbox</h3>
+                          <h3><a href="./admin/mail">Inbox</a></h3>
                           <form action="#" class="pull-right position">
                               <div class="input-append">
                                   <input type="text" class="sr-input" placeholder="Search Mail">
@@ -564,18 +580,56 @@ ul {
                                  </li>
                              </ul>
                          </div>
-                          <table class="table table-inbox table-hover">
+                         <div id="MailBox">
+                          <table id="MailBox" class="table table-inbox table-hover">
                             <tbody>
-                                                              <tr class="unread">
+                    <?php
+                    
+                        $re = \MailData::populate();    
+                    ?>
+                    
+                    
+@foreach ($re as $mail)        
+                    @if($mail->isRead)
+                                      <tr class="">
+                    @else
+                                      <tr class="unread">
+                    @endif
+                    
                                   <td class="inbox-small-cells">
                                       <input type="checkbox" class="mail-checkbox">
                                   </td>
                                   <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
-                                  <td class="view-message  dont-show">PHPClass</td>
-                                  <td class="view-message ">aeieieiaiaidfo</td>
-                                  <td class="view-message  inbox-small-cells"><i class="fa fa-paperclip"></i></td>
-                                  <td class="view-message  text-right">9:27 AM</td>
+                                  
+                                <td class="view-message dont-show">
+                                    
+                                    <a  onclick="myFunction()" href="/admin/mail/{{ $mail->code }}">
+                                      System 
+                                      <span class="label label-danger pull-right">{{ $mail->type }}
+                                      </span>
+                                    </a>
+                                </td>
+                                 
+                                <td class="view-message  dont-show">
+                                    
+                                    <a  onclick="myFunction()" href="/admin/mail/{{ $mail->code }}">
+                                      {{ \MailData::formatMessage($mail)  }}
+                                      </span>
+                                    </a>
+                                </td>
+                                  
+                                  <td class="view-message  inbox-small-cells"></td>
+                                <td class="view-message  text-right">
+                                    
+                                    <a id="{{ $mail->code }}" onclick="loadMail(this.id)">
+                                      {{ $mail->date }}
+                                    </a>
+                                </td>
                               </tr>
+    </a>
+@endforeach                                
+   
+   {{--                         
                               <tr class="unread">
                                   <td class="inbox-small-cells">
                                       <input type="checkbox" class="mail-checkbox">
@@ -786,8 +840,10 @@ ul {
                                   <td class="view-message inbox-small-cells"><i class="fa fa-paperclip"></i></td>
                                   <td class="view-message text-right">feb 14</td>
                               </tr>
+                              --}}
                           </tbody>
                           </table>
+                          </div>
                       </div>
                   </aside>
               </div>

@@ -29,7 +29,7 @@ class DBData{
     }
     
         static function getAllSubfamiliaCodes(){
-              $results = \DB::select("SELECT CODSUBFAMILIA FROM " . self::$productTableName . "");
+              $results = \DB::select("SELECT CODSUBFAMILIA, TITULOSUBFAMILIA FROM " . self::$productTableName . "");
     return $results;
     }
     
@@ -48,14 +48,21 @@ WHERE excluded =1)");
              return $results[0]->coun;
     }
     
+    
+    static function getAllExcludedCategories(){
+        $results = \DB::select("
+        select * from excluded");
+   
+    return $results;
+    }
       static function getAllSubfamiliaAndCodeBenefit(){
       
 
 
-
+ 
 
       $results = \DB::select(" SELECT csv.TITULOFAMILIA, csv.TITULOSUBFAMILIA, csv.CODSUBFAMILIA, benefits.benefit, excluded.excluded
-FROM csv
+FROM " . self::$productTableName . " as csv
 LEFT JOIN benefits ON benefits.code = csv.CODSUBFAMILIA
 LEFT JOIN excluded ON excluded.code = csv.CODSUBFAMILIA
 GROUP BY csv.TITULOSUBFAMILIA
@@ -70,7 +77,7 @@ ORDER BY csv.TITULOFAMILIA
 
 
 
-      $results = \DB::select("SELECT csv.TITULOSUBFAMILIA, csv.CODSUBFAMILIA FROM " . self::$productTableName . " GROUP BY csv.TITULOSUBFAMILIA");
+      $results = \DB::select("SELECT csv.TITULOSUBFAMILIA, csv.CODSUBFAMILIA FROM " . self::$productTableName . " as csv GROUP BY csv.TITULOSUBFAMILIA");
 //   print_r($results);
     return $results;
     }
@@ -105,6 +112,53 @@ ORDER BY csv.TITULOFAMILIA
       
     return $results;
    }
+   
+    static function countAllWhereTituloFamiliaPage($name, $page){
+      
+      $name = self::makeFriendlier($name);
+      $pager = self::numberOfProductsByPage() * $page;
+      $results = \DB::select("SELECT count(*) as coun FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\"");
+      
+    return $results[0]->coun;
+   }
+    static function getAllWhereTituloFamiliaPageOrder($name, $page, $order){
+      
+      
+      $name = self::makeFriendlier($name);
+      $pager = self::numberOfProductsByPage() * $page;
+      
+      switch ($order) {
+            case "caro":
+                $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" group by CODIGOINTERNO order by PRECIO DESC LIMIT ". $pager .", " . self::numberOfProductsByPage());
+                break;
+            case "barato":
+                $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" group by CODIGOINTERNO order by PRECIO ASC LIMIT ". $pager .", " . self::numberOfProductsByPage());
+                break;            
+            case "alfa":
+                $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" group by CODIGOINTERNO order by TITULO ASC LIMIT ". $pager .", " . self::numberOfProductsByPage());
+                break;
+                 
+            case "novedades":
+                $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" group by CODIGOINTERNO 
+                
+                order by 
+                case when CICLOVIDA like 'Nove%' then 0 else 1 end, CICLOVIDA desc
+                LIMIT
+                ". $pager .", " . self::numberOfProductsByPage());
+                break;
+            default:
+                $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" group by CODIGOINTERNO LIMIT ". $pager .", " . self::numberOfProductsByPage());
+                break;
+}
+      
+       
+      
+      
+      
+      
+    return $results;
+   }
+   
    
     static function getAllWhereTituloFamiliaPagePlusFilters($name, $page, $filters){
       
@@ -146,11 +200,146 @@ ORDER BY csv.TITULOFAMILIA
     return $results;
    } 
    
-   
+    static function getAllWhereTituloFamiliaPagePlusFiltersOrder($name, $page, $filters, $order){
+      
+      $name = self::makeFriendlier($name);
+      $pager = self::numberOfProductsByPage() * $page;
+      
+    $stock = 0;
+      
+      $filte = explode("/", $filters);
+      
+      $ids = join("','",$filte);   
+
+        
+        $inVariable = "";
+        
+        foreach($filte as $value) {
+            if($value != "stock")
+                $inVariable = $inVariable . "'" . $value . "'" . ",";
+            else
+                $stock = 1;
+                
+        }
+        $inVariable = rtrim($inVariable, ',');
+
+////////////////////////////////////////////////////////////////////////////////
+//////////      SQL INJECTION PROBABLE VULNERABILITY, CHECK
+
+     switch ($order) {
+            case "caro":
+                
+                    if($stock == 0)
+                          $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and  NOMFABRICANTE in ($inVariable) group by CODIGOINTERNO order by PRECIO DESC LIMIT ". $pager .", " . self::numberOfProductsByPage());
+                    if($stock == 1)  
+                         if($inVariable=="")
+                                $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and STOCK > '0' group by CODIGOINTERNO order by PRECIO DESC LIMIT ". $pager .", " . self::numberOfProductsByPage());
+                         else
+                                $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and  NOMFABRICANTE in ($inVariable) and STOCK > '0' group by CODIGOINTERNO order by PRECIO DESC LIMIT ". $pager .", " . self::numberOfProductsByPage());
+                break;
+                
+            case "barato":
+
+                if($stock == 0)
+                      $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and  NOMFABRICANTE in ($inVariable) group by CODIGOINTERNO order by PRECIO ASC LIMIT ". $pager .", " . self::numberOfProductsByPage());
+                if($stock == 1)
+                     if($inVariable=="")
+                            $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and STOCK > '0' group by CODIGOINTERNO order by PRECIO ASC LIMIT ". $pager .", " . self::numberOfProductsByPage());
+                     else
+                            $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and  NOMFABRICANTE in ($inVariable) and STOCK > '0' group by CODIGOINTERNO order by PRECIO ASC LIMIT ". $pager .", " . self::numberOfProductsByPage());
+                break;            
+                
+            case "alfa":
+                    
+                if($stock == 0)
+                      $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and  NOMFABRICANTE in ($inVariable) group by CODIGOINTERNO order by TITULO ASC LIMIT ". $pager .", " . self::numberOfProductsByPage());
+                if($stock == 1) 
+                    if($inVariable=="")
+                            $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and STOCK > '0' group by CODIGOINTERNO order by TITULO ASC LIMIT ". $pager .", " . self::numberOfProductsByPage());
+                    else
+                            $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and  NOMFABRICANTE in ($inVariable) and STOCK > '0' group by CODIGOINTERNO order by TITULO ASC LIMIT ". $pager .", " . self::numberOfProductsByPage());
+                    
+                
+                break;
+                 
+            case "novedades":
+                
+                
+                if($stock == 0)
+                      $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and  NOMFABRICANTE in ($inVariable) group by CODIGOINTERNO order by 
+                case when CICLOVIDA like 'Nove%' then 0 else 1 end, CICLOVIDA desc LIMIT ". $pager .", " . self::numberOfProductsByPage());
+                if($stock == 1)  
+                    if($inVariable=="")
+                            $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and STOCK > '0' group by CODIGOINTERNO order by 
+                case when CICLOVIDA like 'Nove%' then 0 else 1 end, CICLOVIDA desc LIMIT ". $pager .", " . self::numberOfProductsByPage());
+                    else
+                            $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and  NOMFABRICANTE in ($inVariable) and STOCK > '0' group by CODIGOINTERNO order by 
+                case when CICLOVIDA like 'Nove%' then 0 else 1 end, CICLOVIDA desc LIMIT ". $pager .", " . self::numberOfProductsByPage());
+                    
+                break;
+            default:
+                    
+                if($stock == 0)
+                      $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and  NOMFABRICANTE in ($inVariable) group by CODIGOINTERNO LIMIT ". $pager .", " . self::numberOfProductsByPage());
+                if($stock == 1)  
+                     if($inVariable=="")
+                            $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and STOCK > '0' group by CODIGOINTERNO LIMIT ". $pager .", " . self::numberOfProductsByPage());
+                     else
+                            $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and  NOMFABRICANTE in ($inVariable) and STOCK > '0' group by CODIGOINTERNO LIMIT ". $pager .", " . self::numberOfProductsByPage());
+                    
+             
+                
+                
+                break;
+
+    }
+      
+    return $results;
+   } 
+    static function countAllWhereTituloFamiliaPagePlusFilters($name, $page, $filters){
+      
+      $name = self::makeFriendlier($name);
+      $pager = self::numberOfProductsByPage() * $page;
+      
+    $stock = 0;
+      
+      $filte = explode("/", $filters);
+      
+      $ids = join("','",$filte);   
+
+        
+        $inVariable = "";
+        
+        foreach($filte as $value) {
+            if($value != "stock")
+                $inVariable = $inVariable . "'" . $value . "'" . ",";
+            else
+                $stock = 1;
+                
+        }
+        $inVariable = rtrim($inVariable, ',');
+
+////////////////////////////////////////////////////////////////////////////////
+//////////      SQL INJECTION PROBABLE VULNERABILITY, CHECK
+
+    if($stock == 0)
+      $results = \DB::select("SELECT count(*) as coun FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and  NOMFABRICANTE in ($inVariable)");
+    if($stock == 1){  
+     if($inVariable=="")
+            $results = \DB::select("SELECT count(*) as coun FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and STOCK > '0'");
+     else
+            $results = \DB::select("SELECT count(*) as coun FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and  NOMFABRICANTE in ($inVariable) and STOCK > '0'");
+    
+      
+    }
+      
+    return $results[0]->coun;
+   } 
+    
    
    
        
-    static function countAllWhereTituloFamiliaPage($name, $page){
+    static function countAllWhereTituloFamiliaPage2($name, $page){
           
         $name = self::makeFriendlier($name);
         $pager = self::numberOfProductsByPage() * $page;
@@ -209,7 +398,7 @@ SELECT TITULO as tit FROM `csv` WHERE 1 limit 12,12
             $results = \DB::select("
 
 SELECT CODSUBCATEGORIA
-FROM `menuBuilder` , `csv`
+FROM `menuBuilder` , `" . self::$productTableName . "` as csv
 WHERE `csv`.CODFAMILIA = `menuBuilder`.CODFAMILIA
 AND `csv`.TITULOFAMILIA = \"$str\"
 GROUP BY CODSUBCATEGORIA
@@ -251,7 +440,7 @@ ORDER BY CODSUBCATEGORIA DESC
               
             $results = \DB::select("
 
-                SELECT csv.TITULOFAMILIA, csv.TITULOFAMILIA as R   FROM categorias,menuBuilder,csv 
+                SELECT csv.TITULOFAMILIA, csv.TITULOFAMILIA as R   FROM categorias,menuBuilder," . self::$productTableName . " as csv
                 where categorias.code = menuBuilder.CODSUBCATEGORIA and
                 menuBuilder.CODFAMILIA = csv.CODFAMILIA 
                 and categorias.name like \"$str\" 
@@ -283,7 +472,7 @@ LIMIT 1
    ");*/
      $results = \DB::select("
 
-                SELECT * FROM csv
+                SELECT * FROM " . self::$productTableName . "
                 order by rand()
                 limit 4
                 ");

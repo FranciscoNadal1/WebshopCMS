@@ -38,6 +38,7 @@
   
   <div class="separator">Estadísticas</div>
       <a href="/admin/productCallStatistics">Estadisticas de productos</a>
+      <a href="/admin/mail">Notificaciones - {{ \MailData::getNonReadCount() }}</a>
 
   
   <div class="separator">Administración</div>
@@ -47,7 +48,9 @@
       <a href="/admin/updater">Actualizador Automático</a>
       <a href="/admin/settings">settings</a>
       <a href="/admin/settings">Change style</a>
+      
   
+      <a href="/admin/cleanLocal">Borrar archivos locales</a>
   
   <div class="separator">Pruebas</div>
      <a href="/admin/testChamber">Tests</a>

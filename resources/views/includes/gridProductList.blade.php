@@ -37,28 +37,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f6f8', end
     padding:0px !important;
   }
 </style>
-<script>
-  
-        $.fn.parpadear = function()
-        {
-        	this.each(function parpadear()
-        	{
-        		$(this).fadeIn(500).delay(250).fadeOut(500, parpadear);
-        	});
-        }
-        
-        
-    $( document ).ready(function() {
-      
-        $('.parpadeo').parpadear();
-      
-        });
-        
-</script>
+
 
 <div class="typeGrid ">
 
-           <div class="productWrapper col-xs-6 col-md-3 col-lg-3 article-block">
+           <div class="productWrapper row-eq-height col-xs-6 col-md-3 col-lg-3 article-block">
         <!--
               <div class="typeGrid productWrapper col-xs-4 col-md-3 col-lg-3 article-block">
         -->          

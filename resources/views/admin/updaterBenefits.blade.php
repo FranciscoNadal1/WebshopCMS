@@ -35,6 +35,18 @@
             ->where('code', $resul->CODSUBFAMILIA)
             ->update(['excluded' => 1]);
             
+            
+            
+            
+         \DB::table('excluded')
+            ->where('code', $resul->CODSUBFAMILIA)
+            ->update(['name' => $resul->TITULOSUBFAMILIA])    
+            
+            
+            
+            
+            
+            
             ?>
         @else
                         

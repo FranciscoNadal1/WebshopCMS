@@ -26,10 +26,13 @@ Route::get('/listado/{id}', function ($id) {
     
    //  $results =  DBData::getAllWhereTituloFamilia($id);  
      	$results =  DBData::getAllWhereTituloFamiliaPage($id, 0);  
-     
+     	$count =  DBData::countAllWhereTituloFamiliaPage($id, 0);  
+     	
+     	
 	    return view('routes/productBrowser', [
 		    'name' => 'index', 
 		    'categoria' => $id,
+		    'countAllProducts' => $count,
 		    'results' => $results
 	    ]
     );
@@ -42,17 +45,36 @@ Route::get('/listado/{id}/{category}', function ($id, $category) {
    //  $results =  DBData::getAllWhereTituloFamilia($id);  
    
      	$results =  DBData::getAllWhereTituloFamiliaPagePlusFilters($id, 0, $category);  
-     
+     	$count =  DBData::countAllWhereTituloFamiliaPagePlusFilters($id, 0, $category);  
+     	
      
 	    return view('routes/productBrowser', [
 		    'name' => 'index', 
 		    'categoria' => $id,
+		    'list' => $category,
+		    'countAllProducts' => $count,
 		    'results' => $results
 	    ]
     );
 })->where('category', '.+');
 
-
+Route::post('/listado/{id}/{category}', function ($id, $category) {
+    
+   //  $results =  DBData::getAllWhereTituloFamilia($id);  
+   
+     	$results =  DBData::getAllWhereTituloFamiliaPagePlusFiltersOrder($id, 0, $category, $_REQUEST['order']);  
+     	$count =  DBData::countAllWhereTituloFamiliaPagePlusFilters($id, 0, $category);  
+     	
+     
+	    return view('routes/productBrowser', [
+		    'name' => 'index', 
+		    'categoria' => $id,
+		    'list' => $category,
+		    'countAllProducts' => $count,
+		    'results' => $results
+	    ]
+    );
+})->where('category', '.+');
 
 
 
@@ -82,15 +104,37 @@ Route::get('/listado/{id}', function ($id){
     
    //  $results =  DBData::getAllWhereTituloFamilia($id);  
      $results =  DBData::getAllWhereTituloFamiliaPage($id, 0);  
+     $count     =  DBData::countAllWhereTituloFamiliaPage($id, 0);  
      
     return view('routes/productBrowser', ['name' => 'index', 
     'categoria' => $id,
+    'countAllProducts' => $count,
     'results' => $results]
     
     );
     
     
 });
+
+
+
+Route::post('/listado/{id}', function ($id){
+    
+   //  $results =  DBData::getAllWhereTituloFamilia($id);  
+     $results   =  DBData::getAllWhereTituloFamiliaPageOrder($id, 0, $_REQUEST['order']);  
+     $count     =  DBData::countAllWhereTituloFamiliaPage($id, 0, "");  
+    return view('routes/productBrowser', ['name' => 'postListado', 
+    'categoria' => $id,
+    'countAllProducts' => $count,
+    'results' => $results]
+    
+    );
+    
+
+
+});
+
+
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -157,12 +201,49 @@ Route::get('/sampleProductList', function (){
     );
 });
 
-Route::get('/sampleProductList/{page}/{name}', function ($page, $name){
-    
-     $results =  DBData::getAllWhereTituloFamiliaPage($name, $page);  
+
+
+
+Route::get('/sampleProductList/{page}/{name}/order/{order}', function ($page, $name, $order){
+
+     $results =  DBData::getAllWhereTituloFamiliaPageOrder($name, $page,$order);  
     return view('includes/gridProductListPage', ['name' => 'sample', 'results' => $results]
     );
 });
+
+Route::post('/sampleProductList/{page}/{name}/order/{order}', function ($page, $name, $order){
+    
+     $results =  DBData::getAllWhereTituloFamiliaPageOrder($name, $page,$order);  
+    return view('includes/gridProductListPage', ['name' => 'sample', 'results' => $results]
+    );
+});
+/*
+Route::post('/sampleProductList/{page}/{name}/filters', function ($page, $name){
+
+
+     $results =  DBData::getAllWhereTituloFamiliaPagePlusFiltersOrder($name, $page,"",$_REQUEST['order']);  
+    return view('includes/gridProductListPage', ['name' => 'sample', 'results' => $results]
+    );
+});
+*/
+
+Route::get('/sampleProductList/{page}/{name}/filters/{category}', function ($page, $name, $category){
+    
+     $results =  DBData::getAllWhereTituloFamiliaPagePlusFilters($name, $page, $category);  
+    return view('includes/gridProductListPage', ['name' => 'sample', 'results' => $results]
+    );
+})->where('category', '.+');
+
+Route::post('/sampleProductList/{page}/{name}/filters/{category}', function ($page, $name, $category){
+    
+
+
+     $results =  DBData::getAllWhereTituloFamiliaPagePlusFiltersOrder($name, $page, $category, $_REQUEST['order']);  
+    return view('includes/gridProductListPage', ['name' => 'sample', 'results' => $results]
+    );
+})->where('category', '.+');
+
+
 
 Route::get('/countSampleProductList/{page}/{name}', function ($page, $name){
     
@@ -197,6 +278,26 @@ Route::get('/admin/mail', function (){
     return view('admin/mailPanel', ['name' => 'adminDashboard']
     );
 });
+Route::get('/admin/mail/{id}', function ($id){
+    
+   //  $results =  DBData::getAllWhereTituloFamilia($id);  
+   //  $results =  DBData::getAllWhereTituloFamiliaPage($id, 0);  
+     /*
+    return view('routes/productBrowser', ['name' => 'index', 
+    'categoria' => $id,
+    'results' => $results]
+    
+    );
+    */
+    \MailData::setMailIsRead($id); 
+    
+    return((string)MailData::getMail($id));
+});
+
+
+
+
+
 Route::post('/admin/settings', function (){
     return view('admin/settings', ['name' => 'adminDashboard']
     );
@@ -238,6 +339,11 @@ Route::get('/admin/productCallStatistics', function (){
 Route::get('/admin/updater', function (){
     return view('admin/automaticUpdater', ['name' => 'Updater']
     );
+});
+
+Route::get('/admin/cleanLocal', function (){
+    \Tools::cleanLocalFiles();
+
 });
 
 Route::get('/admin/testChamber', function (){

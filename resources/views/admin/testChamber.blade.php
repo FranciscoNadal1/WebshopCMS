@@ -147,4 +147,5 @@ SettingsController1.prototype.clearContact = function(contact) {
 
 <!-- ------------------------------------------------------------------------------------ -->
 
+{{    \MailData::addMail("Subject","","This is a message") }}
     @endsection

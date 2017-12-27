@@ -13,9 +13,11 @@
     
     <!-- ----------------------------------------------------------------------- -->
 
+  <link rel="stylesheet" href="../lib/lightbox/lightbox.min.css">
+  
+  <script src="../lib/lightbox/lightbox.min.js"></script>
 <div id="container"  class="">
     
-    <div id="CategoryHeader" >{{ $results[0]->TITULO }}</div>
         
     <div id="ProductContainer" class="container">
     
@@ -24,20 +26,27 @@
         </style>
         
         
-        <div class="boxes container" id="containerDesc">
-            <div class="col1 col-xs-5 col-md-5 col-lg-5 article-block boxes">
+        <div class="boxes container row row-eq-height " id="containerDesc">
+            <div class="imagenProductoContainer">
                 <div class="imagenProducto">
-                    <img width="75%" src={{ infortisaApi::getProductMainImage($results[0]->CODIGOINTERNO) }} />
+                    <a href="{{ infortisaApi::get_imagenesLarge($results[0]->CODIGOINTERNO) }} " data-lightbox="gallery" ><img width="65%" src={{ infortisaApi::getProductMainImage($results[0]->CODIGOINTERNO) }} /></a>
                 </div>
                 </div>
-             <div class="col2 col-xs-7 col-md-7 col-lg-7 article-block boxes">
+             <div class="productDataContainer">
+                 
+                <div id="DescriptionHeader" >{{ $results[0]->TITULO }}</div>
+                 <div class="productData">
                 
                                
 
-                <div class="categoryName">Precio</div>
-                    <div class="categoryText">      {{ $results[0]->PRECIO }}</div>
+                <div class="categoryName">Precio
+                    <span class="categoryText">      {{ $results[0]->PRECIO }} €</span>
+                    </div>
+                    <!--
                 <div class="categoryName">Nombre del producto</div>    
                     <div class="categoryText">      {{ $results[0]->TITULO }}</div>
+                    -->
+                    
                     
                     <!--
                 <div class="categoryName">Precio</div>    
@@ -47,12 +56,36 @@
                     <div>      {{ $results[0]->TITULOFAMILIA }}</div>
                     
                     -->
-                <div class="categoryName">C&oacute;digo</div>    
-                    <div class="categoryText">      {{ $results[0]->CODIGOINTERNO }}</div>
-                <div class="categoryName">Fabricante</div>    
-                    <div class="categoryText">      {{ $results[0]->NOMFABRICANTE }}</div>
-                <div class="categoryName">Stock</div>    
-                    <div class="categoryText">      {{ $results[0]->STOCK }}</div>
+                <div class="categoryName">C&oacute;digo   
+                    <span class="categoryText">      {{ $results[0]->CODIGOINTERNO }}</span>
+                    </div> 
+                <div class="categoryName">Fabricante    
+                    <span class="categoryText">      {{ $results[0]->NOMFABRICANTE }}</span>
+                    </div>
+                <div class="categoryName">Stock   
+                    <span class="categoryText">      {{ $results[0]->STOCK }}</span>
+                    </div> 
+                   
+                   
+                   </div>
+                   
+                   
+                       <div class="altImages">
+                       <?php
+                       
+                           $array = \infortisaApi::get_imagenes_alternativas($results[0]->CODIGOINTERNO);
+                           $i = 0;
+                           
+                           for($i=1;$i<count($array);$i++)
+                                echo "<a href=\"$array[$i]\" data-lightbox=\"gallery\" ><img src=\"$array[$i]\" class=\"altImg\"></a>";
+                            
+                       ?>
+
+
+
+                       
+                       </div>
+                   
                    
                    
                    </div>  
