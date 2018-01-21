@@ -40,7 +40,20 @@ class ToolManager{
            return $empty && rmdir($path);
          }
 
-
+        static function hexadecimalAzar($caracteres){
+        
+            $caracteresPosibles = "0123456789ABCDEF";
+            $azar = '';
+        
+            for($i=0; $i<$caracteres; $i++){
+        
+                $azar .= $caracteresPosibles[rand(0,strlen($caracteresPosibles)-1)];
+        
+            }
+        
+            return $azar;
+        
+        }
 }
 
 

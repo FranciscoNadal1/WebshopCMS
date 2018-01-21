@@ -1,3 +1,9 @@
+<?php
+    $type = $results[0]->PROVIDER. 'Api'; 
+    $field = new $type();
+?>
+
+
 <style>
   .letreroProvisional{
     
@@ -55,7 +61,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f6f8', end
                           </div>
                           @endif  
                     <div class="imagenProducto">
-                        <img width="50%" src={{ infortisaApi::getProductMainImage($resu->CODIGOINTERNO) }} />
+                        <img width="50%" src={{ $field::getProductMainImage($resu->CODIGOINTERNO) }} />
                     </div>
 
                     <div class="nombreProducto"> {{ $resu->TITULO }}</div>

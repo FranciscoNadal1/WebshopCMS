@@ -54,9 +54,7 @@ $app->singleton(
 
 
 
-////////////////////////////////////////////////////////////////////////////////////////////////
-//////									 					IMPORTED FROM THE LUMEN LAST VERSION
-use Providers\infortisa\infortisaGets as infortisaGets;
+
 
 
 /*
@@ -69,11 +67,14 @@ use Providers\infortisa\infortisaGets as infortisaGets;
 |
 */
 
+
+include(__DIR__.'/../resources/providers/ProvidersApiInterface.php');
+
 $dir = new RecursiveDirectoryIterator( __DIR__.'/../resources/providers');
 foreach (new RecursiveIteratorIterator($dir) as $file) {
     if (!is_dir($file)) {
-        if( fnmatch('*.php', $file) )
-                        if (strpos($file, 'no_') == false) 
+        if( fnmatch('*api.php', $file) )
+                        if (strpos($file, 'no_') == false ) 
             include $file;
     }
 }
@@ -112,6 +113,7 @@ foreach (new RecursiveIteratorIterator($dir2) as $file) {
 class_alias('Settings\getSettings', 'GetSettings');
 class_alias('Assets\AssetManager', 'GetAsset');
 class_alias('Providers\infortisa\infortisaApi', 'infortisaApi');
+class_alias('Providers\home\homeApi', 'homeApi');
 class_alias('DBQueries\DBData', 'DBData');
 class_alias('ApiCallNumber\ApiNumber', 'ApiCount');
 class_alias('ProductViewNumber\ProductViewNumber', 'ProductViewNumber');

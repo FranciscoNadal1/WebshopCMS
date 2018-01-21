@@ -7,37 +7,36 @@
 				<h3>Company<span>logo</span></h3>
 
 				<p class="footer-links">
-					<a href="#">Home</a>
 					·
-					<a href="#">Blog</a>
+					<a href="/condicionesVenta">Condiciones de venta</a></br>
 					·
-					<a href="#">Pricing</a>
+					<a href="/condicionesEmpresa">Condiciones de empresa</a></br>
 					·
-					<a href="#">About</a>
+					<a href="/contacto">Contacto/Horarios</a></br>
 					·
-					<a href="#">Faq</a>
+					<a href="/politicaPrivacidad">Política de privacidad</a></br>
 					·
-					<a href="#">Contact</a>
+					<a href="/entregaTransporte">Entrega y transporte</a></br>
 				</p>
 
-				<p class="footer-company-name">Company Name &copy; 2015</p>
+				<p class="footer-company-name">{{ \GetSettings::companyName() }} &copy; {{ date("Y") }}</p>
 			</div>
 
 			<div class="footer-center col1 col-xs-3 col-md-3 col-lg-3">
 
 				<div>
 					<i class="fa fa-map-marker"></i>
-					<p><span>21 Revolution Street</span> Paris, France</p>
+					<p><span>{{ \GetSettings::getStreet() }}</span> {{ \GetSettings::getTownAndCountry() }}</p>
 				</div>
 
 				<div>
 					<i class="fa fa-phone"></i>
-					<p>+1 555 123456</p>
+					<p>{{ \GetSettings::getContactPhone() }}</p>
 				</div>
 
 				<div>
 					<i class="fa fa-envelope"></i>
-					<p><a href="mailto:support@company.com">support@company.com</a></p>
+					<p><a href="mailto:{{ \GetSettings::getContactMail() }}">{{ \GetSettings::getContactMail() }}</a></p>
 				</div>
 
 			</div>

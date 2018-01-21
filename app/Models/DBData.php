@@ -5,7 +5,7 @@ use Illuminate\Database\QueryException;
 
 class DBData{
 
-    static $productTableName = "csv";
+    static $productTableName = "totalCsv";
     static $categoryTableName = "categorias";
     static $numberOfProductsByPage;
 
@@ -98,9 +98,9 @@ ORDER BY csv.TITULOFAMILIA
     return $results;
    }
    
-      static function getAllNovedades(){
+      static function getAllNovedades($limit){
           
-      $results = \DB::select("SELECT * FROM " . self::$productTableName . " where CICLOVIDA like \"Novedad\" group by CODIGOINTERNO order by rand() limit 24");
+      $results = \DB::select("SELECT * FROM " . self::$productTableName . " where CICLOVIDA like \"Novedad\" group by CODIGOINTERNO order by rand() limit " . $limit);
     return $results;
    } 
    
@@ -112,6 +112,192 @@ ORDER BY csv.TITULOFAMILIA
       
     return $results;
    }
+ 
+     static function getSearchData($name, $page){
+      
+      $name = self::makeFriendlier($name);
+      $pager = self::numberOfProductsByPage() * $page;
+      /*
+      $results = \DB::select("
+      SELECT *
+        FROM " . self::$productTableName . " 
+        WHERE MATCH(column) AGAINST('" . $name . " ')
+      LIMIT ". $pager .", " . self::numberOfProductsByPage());
+      */
+          $results = \DB::select("
+      SELECT *
+        FROM " . self::$productTableName . " 
+        WHERE TITULO like '%" . $name ."%' 
+      LIMIT ". $pager .", " . self::numberOfProductsByPage());  
+      
+    return $results;
+   }
+   
+       static function countSearchDataPlusFilters($name, $filters){
+      
+      $name = self::makeFriendlier($name);
+      
+    $stock = 0;
+      
+      $filte = explode("/", $filters);
+      
+      $ids = join("','",$filte);   
+
+        
+        $inVariable = "";
+        
+        foreach($filte as $value) {
+            if($value != "stock")
+                $inVariable = $inVariable . "'" . $value . "'" . ",";
+            else
+                $stock = 1;
+                
+        }
+        $inVariable = rtrim($inVariable, ',');
+
+////////////////////////////////////////////////////////////////////////////////
+//////////      SQL INJECTION PROBABLE VULNERABILITY, CHECK
+
+    if($stock == 0)
+      
+                $results = \DB::select("
+      SELECT count(*) as coun 
+        FROM " . self::$productTableName . " 
+        WHERE TITULO like '%" . $name ."%' 
+        and  NOMFABRICANTE in ($inVariable)
+      ");  
+      
+      
+    if($stock == 1){  
+     if($inVariable=="")
+     
+            
+                            $results = \DB::select("
+      SELECT count(*) as coun 
+        FROM " . self::$productTableName . " 
+        WHERE TITULO like '%" . $name ."%' 
+        and STOCK > '0'");  
+            
+            
+            
+     else
+
+                                    $results = \DB::select("
+      SELECT count(*) as coun 
+        FROM " . self::$productTableName . " 
+        WHERE TITULO like '%" . $name ."%' 
+        and  NOMFABRICANTE in ($inVariable)
+        and STOCK > '0' 
+      ");  
+        
+        
+        
+        
+    }
+    return $results[0]->coun;
+   } 
+
+
+
+
+
+
+
+
+       static function getSearchDataPlusFilters($name, $page, $filters){
+      
+      $name = self::makeFriendlier($name);
+      $pager = self::numberOfProductsByPage() * $page;
+      
+    $stock = 0;
+      
+      $filte = explode("/", $filters);
+      
+      $ids = join("','",$filte);   
+
+        
+        $inVariable = "";
+        
+        foreach($filte as $value) {
+            if($value != "stock")
+                $inVariable = $inVariable . "'" . $value . "'" . ",";
+            else
+                $stock = 1;
+                
+        }
+        $inVariable = rtrim($inVariable, ',');
+
+////////////////////////////////////////////////////////////////////////////////
+//////////      SQL INJECTION PROBABLE VULNERABILITY, CHECK
+
+    if($stock == 0)
+      
+                $results = \DB::select("
+      SELECT *
+        FROM " . self::$productTableName . " 
+        WHERE TITULO like '%" . $name ."%' 
+        and  NOMFABRICANTE in ($inVariable) 
+      LIMIT ". $pager .", " . self::numberOfProductsByPage());  
+      
+      
+    if($stock == 1){  
+     if($inVariable=="")
+     
+            
+                            $results = \DB::select("
+      SELECT *
+        FROM " . self::$productTableName . " 
+        WHERE TITULO like '%" . $name ."%' 
+        
+        and STOCK > '0' 
+      LIMIT ". $pager .", " . self::numberOfProductsByPage());  
+            
+            
+            
+     else
+
+                                    $results = \DB::select("
+      SELECT *
+        FROM " . self::$productTableName . " 
+        WHERE TITULO like '%" . $name ."%' 
+        and  NOMFABRICANTE in ($inVariable)
+        and STOCK > '0' 
+        
+      LIMIT ". $pager .", " . self::numberOfProductsByPage());  
+        
+        
+        
+        
+    }
+    return $results;
+   } 
+   
+   
+   
+   
+   
+   
+   
+   
+   
+        static function countSearchData($name){
+      
+      $name = self::makeFriendlier($name);
+      
+
+          $results = \DB::select("
+      SELECT count(*) as coun 
+        FROM " . self::$productTableName . " 
+        WHERE TITULO like '%" . $name ."%' 
+        ");  
+      
+    return $results[0]->coun;
+   }
+   
+   
+   
+   
+   
    
     static function countAllWhereTituloFamiliaPage($name, $page){
       

@@ -24,7 +24,7 @@
 </div>    
             <?php
 
-                    $results =  \DBData::GetAllNovedades();  
+                    $results =  \DBData::GetAllNovedades(8);  
                 
             ?>
 

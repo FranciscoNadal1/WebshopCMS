@@ -9,7 +9,7 @@ use Providers\ProvidersApi\ProvidersApiInterface as ProvidersApiInterface;
 class infortisaApi implements ProvidersApiInterface
 {
     
-    static $downloadImage = 1;
+    static $downloadImage = 0;
     
     private static function add_consulta()
     {

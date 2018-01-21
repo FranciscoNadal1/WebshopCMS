@@ -45,15 +45,16 @@
             <div class="row">    
                 <div id="filterBar" class="containerdiv hidden-sm hidden-xs hidden-md visible-lg-block col-lg-2">
                     
-                     @include('includes/filter', array('subFamilia' => $results[0]->CODSUBFAMILIA))
+                     @include('includes/searchFilter', array('subFamilia' => $results[0]->CODSUBFAMILIA))
                     
                     
                 </div>
             
                <div id="ProductContainer" class="container col-sm-12 col-md-12 col-lg-10">  
                
-                       <div id="CategoryHeader" class="{{ \DBData::desAccentify($results[0]->TITULOSUBFAMILIA) }}">{{ $results[0]->TITULOSUBFAMILIA }} ({{ $totalNumberProducts }})
+                       <div id="CategoryHeader" class="{{ \DBData::desAccentify($results[0]->TITULOSUBFAMILIA) }}">Resultados de {{ $categoria }} : ({{ $totalNumberProducts }})
                            <span>
+                               {{--
                                <form id="myForm" action="" method="POST">
                                
                                     <input type="hidden" name="_token" value="{!! csrf_token() !!}">
@@ -96,6 +97,7 @@
                                       
                                     </select> 
                                </form>
+                               --}}
                            </span>
                        </div>
                     

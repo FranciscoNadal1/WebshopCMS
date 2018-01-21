@@ -256,15 +256,96 @@ CREATE TABLE `csv` (
 
 }
 
+////////////////////////////////////////////////////////////////////////////////
+//////				CREATE HOME DATABASE
+
+try{
+$create = DB::statement("
+CREATE TABLE `home` (
+  `REFFABRICANTE` char(27) collate utf8_bin default NULL,
+
+  `TITULO` char(50) collate utf8_bin default NULL,
+  `CODIGOINTERNO` char(50) collate utf8_bin default NULL,
+
+  `EAN/UPC` char(15) collate utf8_bin default NULL,
+  `CODFAMILIA` char(50) collate utf8_bin default NULL,
+  `TITULOFAMILIA` char(28) collate utf8_bin default NULL,
+  `CODSUBFAMILIA` char(10) collate utf8_bin default NULL,
+  `TITULOSUBFAMILIA` char(30) collate utf8_bin default NULL,
+  `CODFABRICANTE` char(70) collate utf8_bin default NULL,
+  `NOMFABRICANTE` char(21) collate utf8_bin default NULL,  
+  
+  `PRECIO` double collate utf8_bin default NULL,
+  
+  `STOCK` char(7) collate utf8_bin default NULL,
+  `PESO` char(8) collate utf8_bin default NULL,
+  `PROXIMA_LLEGADA` char(90) collate utf8_bin default NULL,
+  `CICLOVIDA` char(131) collate utf8_bin default NULL,
+  `PLAZOENTREGA` char(131) collate utf8_bin default NULL,  
+  
+  PRIMARY KEY  (`CODIGOINTERNO`)
+) ENGINE=innoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=17801 ;
+	")  or die("e".mysql_error());
+}catch(\Exception $e){
+	
+}
+	
+	
+////////////////////////////////////////////////////////////////////////////////
+//////				CREATE TOTAL CSV DATABASE
+$totalCsv = "totalCsv";
 
 
+  
+try{
+$createTotal = DB::statement("
+CREATE TABLE `totalCsv` (
+  `REFFABRICANTE` char(27) collate utf8_bin default NULL,
+
+  `TITULO` char(50) collate utf8_bin default NULL,
+  `CODIGOINTERNO` char(50) collate utf8_bin default NULL,
+
+  `EAN/UPC` char(15) collate utf8_bin default NULL,
+  `CODFAMILIA` char(50) collate utf8_bin default NULL,
+  `TITULOFAMILIA` char(28) collate utf8_bin default NULL,
+  `CODSUBFAMILIA` char(10) collate utf8_bin default NULL,
+  `TITULOSUBFAMILIA` char(30) collate utf8_bin default NULL,
+  `CODFABRICANTE` char(70) collate utf8_bin default NULL,
+  `NOMFABRICANTE` char(21) collate utf8_bin default NULL,  
+  
+  `PRECIO` double collate utf8_bin default NULL,
+  
+  `STOCK` char(7) collate utf8_bin default NULL,
+  `PESO` char(8) collate utf8_bin default NULL,
+  `PROXIMA_LLEGADA` char(90) collate utf8_bin default NULL,
+  `CICLOVIDA` char(131) collate utf8_bin default NULL,
+  `PLAZOENTREGA` char(131) collate utf8_bin default NULL, 
+  `PROVIDER` char(131) collate utf8_bin default NULL,
+  PRIMARY KEY  (`CODIGOINTERNO`)
+) ENGINE=innoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=17801 ;
+	")  or die("e".mysql_error());
+}catch(\Exception $e){
+	
+}
+
+$deleteTotal = DB::statement("DELETE FROM ".$totalCsv."");
+$createTotal = DB::statement("
+	INSERT INTO totalCsv
+    SELECT `REFFABRICANTE`, `TITULO`, `CODIGOINTERNO`, `EAN/UPC`, `CODFAMILIA`, `TITULOFAMILIA`, `CODSUBFAMILIA`, `TITULOSUBFAMILIA`, `CODFABRICANTE`, `NOMFABRICANTE`, `PRECIO`, `STOCK`, `PESO`, `PROXIMA_LLEGADA`, `CICLOVIDA`, `PLAZOENTREGA`, 'infortisa'
+    FROM csv
+    ");
+ $createTotal = DB::statement("
+	INSERT INTO totalCsv
+    SELECT `REFFABRICANTE`, `TITULO`, `CODIGOINTERNO`, `EAN/UPC`, `CODFAMILIA`, `TITULOFAMILIA`, `CODSUBFAMILIA`, `TITULOSUBFAMILIA`, `CODFABRICANTE`, `NOMFABRICANTE`, `PRECIO`, `STOCK`, `PESO`, `PROXIMA_LLEGADA`, `CICLOVIDA`, `PLAZOENTREGA`, 'home'
+    FROM home
+    ");   
     
-        
+    
+    
+    
+////////////////////////////////////////////////////////////////////////////////        
             $results3 = DBData::getAllSubfamiliaAndCodeBenefit();
-            
             $excludedList = DBData::getAllExcludedCategories();
-            
-            
             $numberNoBenefit = DBData::getNumberCategoriesNoBenefit();
             
             ?>

@@ -1,6 +1,9 @@
 <!-- Plain page for the description of each product-->
 
-
+<?php
+    $type = $results[0]->PROVIDER. 'Api'; 
+    $field = new $type();
+?>
 
     <!-- Add an increment for each product view on each date, to keep statistic  -->
     
@@ -29,7 +32,8 @@
         <div class="boxes container row row-eq-height " id="containerDesc">
             <div class="imagenProductoContainer">
                 <div class="imagenProducto">
-                    <a href="{{ infortisaApi::get_imagenesLarge($results[0]->CODIGOINTERNO) }} " data-lightbox="gallery" ><img width="65%" src={{ infortisaApi::getProductMainImage($results[0]->CODIGOINTERNO) }} /></a>
+
+                    <a href="{{ $field::get_imagenesLarge($results[0]->CODIGOINTERNO) }} " data-lightbox="gallery" ><img width="65%" src={{ $field::getProductMainImage($results[0]->CODIGOINTERNO) }} /></a>
                 </div>
                 </div>
              <div class="productDataContainer">
@@ -73,7 +77,7 @@
                        <div class="altImages">
                        <?php
                        
-                           $array = \infortisaApi::get_imagenes_alternativas($results[0]->CODIGOINTERNO);
+                           $array = $field::get_imagenes_alternativas($results[0]->CODIGOINTERNO);
                            $i = 0;
                            
                            for($i=1;$i<count($array);$i++)
@@ -107,7 +111,7 @@
 							<section class="container jumbotron productDescriptionBox description">
 							    
                                 <?php   
-                                echo infortisaApi::get_comercial($results[0]->CODIGOINTERNO); 
+                                echo $field::get_comercial($results[0]->CODIGOINTERNO); 
                                 ?>
 							</section>
 						</div>
@@ -115,7 +119,7 @@
 						
     						<section class="container jumbotron productDescriptionBox specifications">
                                 <?php
-                                echo infortisaApi::get_tecnica($results[0]->CODIGOINTERNO); 
+                                echo $field::get_tecnica($results[0]->CODIGOINTERNO); 
                                 ?>
     						</section>
 					</div>
@@ -126,8 +130,8 @@
                             <?php 
                           /*  
                             $comDes ="";$tecDes ="";
-                           $comDes = infortisaApi::get_comercial($results[0]->CODIGOINTERNO);
-                           $tecDes  = infortisaApi::get_tecnica($results[0]->CODIGOINTERNO);
+                           $comDes = $field::get_comercial($results[0]->CODIGOINTERNO);
+                           $tecDes  = $field::get_tecnica($results[0]->CODIGOINTERNO);
                                                        
                                 
                              echo $comDes;    

@@ -25,6 +25,16 @@ $( document ).ready(function() {
 	           <img width="250" height="100" src="{{ GetAsset::getLogo() }}">
 	         </a> 
 	    </div>
+	    
+           <div id="searchArea"  class=".col-sm-4">
+                @section('search')
+                    @include('commonIncludes/searchBar')
+                @show
+            </div>
+            
+            
+            
+            
 	  </div><div id="BotHeader">
 	    
 	    

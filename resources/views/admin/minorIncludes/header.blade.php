@@ -43,6 +43,7 @@
   
   <div class="separator">Administración</div>
   
+      <a href="/admin/addpc">Añadir pc</a>
       <a href="/admin/changeCategories">Cambiar enlace de menu de categorias</a>
       <a href="/admin/updaterBenefits">Cambiar beneficios</a>
       <a href="/admin/updater">Actualizador Automático</a>

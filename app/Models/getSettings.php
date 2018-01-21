@@ -29,6 +29,23 @@ class getSettings{
             return $results[0]->companyName;
     }
     
+   static function getContactPhone(){
+            return "2349234234";
+    }
+   
+   static function getStreet(){
+            return "9 Calle Isabel la Católica";
+    }   
+   static function getTownAndCountry(){
+            return "Olleria, Valencia";
+    }    
+       static function getContactMail (){
+            return "info@electroaita.com";
+    }    
+    
+    
+    
+    
     
     static function updateSettings($theme, $listType, $eachPage, $maintenance, $company){
        

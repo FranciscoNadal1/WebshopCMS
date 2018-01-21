@@ -245,3 +245,19 @@ text-decoration:none !important;
 #wrapper{
     
 }
+
+#customPage{
+    margin:25px;
+    background-color:white;
+    padding:50px;
+    
+}
+#customPage img{
+    margin-bottom:30px;
+}
+
+
+#customPage font{
+    color:blue;
+}
+
