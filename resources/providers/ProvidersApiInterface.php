@@ -13,6 +13,7 @@ interface ProvidersApiInterface
      static function get_tecnica($var);
      static function get_comercial($cod_prod);
      
+     static function updateDatabase();
 }
 
 ?>

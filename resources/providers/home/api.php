@@ -36,6 +36,47 @@ return $contenido;
      static function get_comercial($cod_prod){
          return \DBData::getProductDescription($cod_prod);
      }
+     
+     
+     
+     
+     static function updateDatabase(){
+          
+          ////////////////////////////////////////////////////////////////////////////////
+//////				CREATE HOME DATABASE
+
+          try{
+          $create = \DB::statement("
+          CREATE TABLE `home` (
+            `REFFABRICANTE` char(27) collate utf8_bin default NULL,
+          
+            `TITULO` char(50) collate utf8_bin default NULL,
+            `CODIGOINTERNO` char(50) collate utf8_bin default NULL,
+          
+            `EAN/UPC` char(15) collate utf8_bin default NULL,
+            `CODFAMILIA` char(50) collate utf8_bin default NULL,
+            `TITULOFAMILIA` char(28) collate utf8_bin default NULL,
+            `CODSUBFAMILIA` char(10) collate utf8_bin default NULL,
+            `TITULOSUBFAMILIA` char(30) collate utf8_bin default NULL,
+            `CODFABRICANTE` char(70) collate utf8_bin default NULL,
+            `NOMFABRICANTE` char(21) collate utf8_bin default NULL,  
+            
+            `PRECIO` double collate utf8_bin default NULL,
+            
+            `STOCK` char(7) collate utf8_bin default NULL,
+            `PESO` char(8) collate utf8_bin default NULL,
+            `PROXIMA_LLEGADA` char(90) collate utf8_bin default NULL,
+            `CICLOVIDA` char(131) collate utf8_bin default NULL,
+            `PLAZOENTREGA` char(131) collate utf8_bin default NULL,  
+            
+            PRIMARY KEY  (`CODIGOINTERNO`)
+          ) ENGINE=innoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=17801 ;
+          	")  or die("e".mysql_error());
+          }catch(\Exception $e){
+          	
+          }
+          
+     }
 }
 
 ?>
