@@ -77,10 +77,13 @@
         <?php
         
             
-            $results = \DB::select("SELECT * FROM ProductCalls  where Date = '" . date("d-m-y")."' order by Calls desc");
+            $results = \DB::select("SELECT * FROM ProductCalls, totalCsv  where   ProductCalls.Id = totalCsv.CODIGOINTERNO and Date = '" . date("d-m-y")."' order by Calls desc");
+            
+            
+            
            // return $results;
             
-        
+            
         ?>
         
         
@@ -91,11 +94,24 @@
         
     <div id="ProductStatisticcontainer">
         @foreach ($results as $resul)
+            <?php
+                $type = $resul->PROVIDER. 'Api'; 
+                $field = new $type();  
+            ?>
+            <a href="../producto/{{ DBData::desAccentify($resul->TITULO) }}">
             <div class="productStatistic panel panel-default col-sm-4">
-                    <div class="image panel-heading "><img height="50%" src='{{  infortisaApi::getProductMainImage($resul->Id)  }}'/></div>
-                    <div class="number panel-body">{{ $resul->Calls }}</div>            
-            </div>          
+                    <div class="image panel-heading "><img height="50%" src='{{   $field::getProductMainImage($resul->Id)   }}'/></div>
+                    <div class="number panel-body">{{ $resul->TITULO }}</div>     
+                    <div class="number panel-body">{{ $resul->PROVIDER }}</div>     
+                    <div class="number panel-body">Calls : {{ $resul->Calls }}</div>            
+            </div>    
+            </a>
         @endforeach 
+        
+        
+        
+        
+        
     </div>
     
     

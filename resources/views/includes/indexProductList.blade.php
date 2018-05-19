@@ -28,7 +28,7 @@
                
 
 
-<iframe src="https://www.google.com/maps/embed?pb=!1m25!1m12!1m3!1d3104.4097010523765!2d-0.5527465018293267!3d38.91461220127114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m10!1i0!3e2!4m3!3m2!1d38.9145913!2d-0.5502857999999999!4m3!3m2!1d38.9145616!2d-0.5502602!5e0!3m2!1ses!2ses!4v1427481636163" style="border:0"  height="500" frameborder="0"></iframe>
+<iframe width="100%" height="500" src="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=en&amp;coord=38.914536, -0.550173&amp;q=Calle%20Isabel%20la%20Cat%C3%B3lica%2C%2012%2C%2046850%20Oller%C3%ADa%2C%20Valencia+(Electroaita)&amp;ie=UTF8&amp;t=&amp;z=16&amp;iwloc=B&amp;output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"><a href="https://www.maps.ie/create-google-map/">Google map generator</a></iframe>
 
            
                 </div>

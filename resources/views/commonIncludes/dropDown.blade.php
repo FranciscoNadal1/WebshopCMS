@@ -45,12 +45,15 @@ $( document ).ready(function() {
           	
               <ul class="nav navbar-nav">
                         	
-                        	    
-                        	        <li class="dropdown mega-dropdown">
+           <style>.rowy{float:left;}</style>             	    
+                        	        <li class="dropdown mega-dropdown container-fluid">
                         	          <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{$cat->name}} {{--<span class="glyphicon glyphicon-chevron-down pull-right"></span>--}}</a>
               
-                        	          <ul class="dropdown-menu mega-dropdown-menu row">
-                        	            <li class="col-sm-3">
+                        	          <ul class="dropdown-menu mega-dropdown-menu">
+<!--------------------------------------------------------------------
+                      Novedades
+---------------------------------------------------------------------->
+                        	              <div class="novedadesMenu col-sm-2">
                         	              <ul>
                         	                <li class="dropdown-header">Novedades</li>
                         	                <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -67,10 +70,10 @@ $( document ).ready(function() {
                         	                    <div class="item {{ $count == 1 ? ' active' : '' }}">
                         	                      
                         	{{$ran->TITULO}}
-                        	                      <a href="#"><img src={{ infortisaApi::getProductMainImage($ran->CODIGOINTERNO) }} class="img-responsive" alt="product"></a>
+                        	                      <a href="/producto/{{ DBData::desAccentify($ran->TITULO) }}"><img src={{ infortisaApi::getProductMainImage($ran->CODIGOINTERNO) }} class="img-responsive" alt="product"></a>
                         	                      <h4><small{{ $ran->TITULO }}</small></h4>
-                        	                      <button class="btn btn-primary" type="button">{{ $ran->PRECIO }}€</button>
-                        	                      <button href="#" class="btn btn-default" type="button"><span class="glyphicon glyphicon-heart"></span> Comprar</button>
+                        	                      <div class="price col-sm-6">{{ $ran->PRECIO }}€</div>
+                        	                      <div class="stock col-sm-6">Stock : {{ $ran->STOCK }}</div>
                         	                    </div>
                         	                    
                         	                    <?php
@@ -105,48 +108,54 @@ $( document ).ready(function() {
                         	                <li class="divider"></li>
                         	            {{--    <li><a href="#">View all Collection <span class="glyphicon glyphicon-chevron-right pull-right"></span></a></li> --}}
                         	              </ul>
-                        	            </li>
+                        	            </div>
+<!--------------------------------------------------------->                      	            
                         	            
                         	<?php
-                        		$results = \DBData::getFamilyFromCategoryName($cat->name);
+                        		  $results = \DBData::getFamilyFromCategoryName($cat->name);
+                              $contador = 0;                      	
                         	?>
                             
-                            
-                        		@foreach ($results as $resul)	
-                        		         
-                        		         <li class="col-sm-3">
-                        	              <ul>
-                        	                <li class="dropdown-header">{{ $resul->TITULOFAMILIA }}</li>
-                        	                
-                        <?php
-                        	$results2 = \DBData::getSubFamiliaFromTitulo($resul->TITULOFAMILIA);
-                        ?>
-                                      @foreach ($results2 as $resul2)
-                                                      
+<!--------------------------------------------------------------------
+                      Menu
+---------------------------------------------------------------------->       
                         
-                        										<li><a href="/listado/{{ \DBData::desAccentify($resul2->TITULOSUBFAMILIA) }}">{{ $resul2->TITULOSUBFAMILIA }}</a>        </li>    
-                        										
-                                      @endforeach
-                                      
-                        	                <li class="divider"></li>
-                        	                {{--
-                        	                <li><a href="#">Unique Features</a></li>
-                        	                <li><a href="#">Image Responsive</a></li>
-                        	                <li><a href="#">Auto Carousel</a></li>
-                        	                <li><a href="#">Newsletter Form</a></li>
-                        	                <li><a href="#">Four columns</a></li>
-                        	                <li class="divider"></li>
-                        	                <li class="dropdown-header">Tops</li>
-                        	                <li><a href="#">Good Typography</a></li>
-                        	                
-                        	                --}}
-                        	                
-                        	              </ul>
-                        	            </li>
-                        		            			
-                        		@endforeach
-                  
-              	            
+                                  <div class="categoriesMenu col-sm-10">
+                                    <div class="row">
+                          		@foreach ($results as $resul)	
+                                  <?php 
+                                  $contador++; 
+                                  ?>
+                                     
+                          		             <li class=" col-lg-3 col-md-4 individualMenuCategory">
+                          		               
+                          		               
+                          		               
+                          	              <ul>
+                          	                <li class="dropdown-header">{{ $resul->TITULOFAMILIA }}</li>
+                          	                
+                          <?php
+                          	$results2 = \DBData::getSubFamiliaFromTitulo($resul->TITULOFAMILIA);
+                          ?>
+                                        @foreach ($results2 as $resul2)
+                                                        
+                          
+                          										<li class="subCategoriesMenu"><a class="subCategoriesMenuLink" href="/listado/{{ \DBData::desAccentify($resul2->TITULOSUBFAMILIA) }}">{{ $resul2->TITULOSUBFAMILIA }}</a>        </li>    
+                          										
+                                        @endforeach
+                                        
+
+
+                          	                
+                          	              </ul>
+                          	            </li>
+                          	            
+                          	                <div class="divider"></div>
+                          		@endforeach
+                              </div>
+                         
+                         </div>
+ <!--------------------------------------------------------->                  	            
               	          </ul>
               
               	        </li>
@@ -187,7 +196,7 @@ $( document ).ready(function() {
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Collection <span class="glyphicon glyphicon-chevron-down pull-right"></span></a>
 
           <ul class="dropdown-menu mega-dropdown-menu row">
-            <li class="col-sm-3">
+            <li class="col-lg-2 col-md-3">
               <ul>
                 <li class="dropdown-header">New in Stores</li>
                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -221,7 +230,7 @@ $( document ).ready(function() {
                 <li><a href="#">View all Collection <span class="glyphicon glyphicon-chevron-right pull-right"></span></a></li>
               </ul>
             </li>
-            <li class="col-sm-3">
+            <li class="col-lg-2 col-md-3">
               <ul>
                 <li class="dropdown-header">Dresses</li>
                 <li><a href="#">Unique Features</a></li>
@@ -234,7 +243,7 @@ $( document ).ready(function() {
                 <li><a href="#">Good Typography</a></li>
               </ul>
             </li>
-            <li class="col-sm-3">
+            <li class="col-lg-2 col-md-3">
               <ul>
                 <li class="dropdown-header">Jackets</li>
                 <li><a href="#">Easy to customize</a></li>
@@ -247,7 +256,7 @@ $( document ).ready(function() {
                 <li><a href="#">Calls to action</a></li>
               </ul>
             </li>
-            <li class="col-sm-3">
+            <li class="col-lg-2 col-md-3">
               <ul>
                 <li class="dropdown-header">Accessories</li>
                 <li><a href="#">Default Navbar</a></li>

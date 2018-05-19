@@ -30,14 +30,14 @@ class getSettings{
     }
     
    static function getContactPhone(){
-            return "2349234234";
+            return "962201410 - 617696647";
     }
    
    static function getStreet(){
-            return "9 Calle Isabel la Católica";
+            return "12 Calle Isabel la Católica";
     }   
    static function getTownAndCountry(){
-            return "Olleria, Valencia";
+            return "l'Olleria, Valencia";
     }    
        static function getContactMail (){
             return "info@electroaita.com";

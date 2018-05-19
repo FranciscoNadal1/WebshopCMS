@@ -4,7 +4,11 @@
         
 			<div class="footer-left col1 col-xs-3 col-md-3 col-lg-3">
 
-				<h3>Company<span>logo</span></h3>
+				<h3>
+					{{ ucfirst ( \GetSettings::companyName()) }}
+				
+				
+				</h3>
 
 				<p class="footer-links">
 					·
