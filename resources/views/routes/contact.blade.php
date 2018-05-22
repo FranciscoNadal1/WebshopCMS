@@ -150,12 +150,13 @@
                     <input type=text name=asunto>
 					<br><br>
 <!-- <div >Captcha</div> -->
+<!--
 <img id="captcha" src="./securimage/securimage_show.php" alt="CAPTCHA Image" /><br>
 <input type="text" name="captcha_code" size="10" maxlength="6" /><font color="#0000FF">
 					</font>
 <a href="#" onclick="document.getElementById('captcha').src = './securimage/securimage_show.php?' + Math.random(); return false">[ Cargar otra imagen ]</a><font color="#0000FF">
 					</font>
-
+-->
 <br>			
 
 
@@ -174,7 +175,7 @@
 	  <?php
 
 
-
+/*
 include_once ('./securimage/securimage.php');	
 $securimage = new Securimage();
 
@@ -192,7 +193,7 @@ mail("info@electroaita.com", $_POST['asunto'], $_POST['texto'], $cabeceras);
 if(($_POST['Enviar'] == "Enviar") and ($securimage->check($_POST['captcha_code']) == false)){
 echo "Has introducido el captcha mal";
 }
-
+*/
 ?>	
 	  </div>		
 			</tr>

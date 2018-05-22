@@ -118,6 +118,7 @@ class_alias('DBQueries\DBData', 'DBData');
 class_alias('ApiCallNumber\ApiNumber', 'ApiCount');
 class_alias('ProductViewNumber\ProductViewNumber', 'ProductViewNumber');
 class_alias('tools\ToolManager', 'Tools');
+class_alias('Charts\ChartManager', 'Charts');
 class_alias('MailQueries\MailData', 'MailData');
 
 //|--------------------------------------------------------------------------

@@ -46,6 +46,7 @@ setlocale(LC_ALL, "en_US.utf8");
 	";
 	
 ob_start();
+
 echo "
 	<div id='total'>
 	
@@ -236,7 +237,9 @@ Warnings and errors                                                         -->
         
     </table>
 </div>
-
+<?php
+                			\DB::table('totalCsv')->where('CICLOVIDA', 'Encargo')->update(['CICLOVIDA' => 'Por encargo'])
+                			?>
 </div>
 
 <?php

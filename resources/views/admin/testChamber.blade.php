@@ -21,18 +21,13 @@
 -->
 
 
-<script>
-var myApp = angular.module('myApp', []);
+<?php
+    Charts::apiCalls("stocks-chart");
+?>
 
-function MyCtrl($scope) {
-    $scope.save = function (formId) {
-        $('#' + formId).find('input').each(function (idx, input) {
-            // Do your DOM manipulation here
-            console.log($(input).val());
-        });
-    };
-}
-</script>
+<div id="stocks-chart" style="height:20%;width:50%;border:1px solid black"></div>
+
+
 {{--
 <h1>Idea</h1>
 <h2>Un personalizador de los colores principales de la web, se realizará recorriendo todos los ficheros del tema y substituyendo cada color, 

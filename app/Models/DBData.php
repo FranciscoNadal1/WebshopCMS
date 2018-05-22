@@ -117,6 +117,9 @@ ORDER BY csv.TITULOFAMILIA
       
       $name = self::makeFriendlier($name);
       $pager = self::numberOfProductsByPage() * $page;
+      
+      $name = str_replace(" ", "%", $name);$name=strtolower($name);
+      
       /*
       $results = \DB::select("
       SELECT *
@@ -127,7 +130,7 @@ ORDER BY csv.TITULOFAMILIA
           $results = \DB::select("
       SELECT *
         FROM " . self::$productTableName . " 
-        WHERE TITULO like '%" . $name ."%' 
+        WHERE LOWER(TITULO) like '%" . $name ."%' 
       LIMIT ". $pager .", " . self::numberOfProductsByPage());  
       
     return $results;
@@ -137,6 +140,7 @@ ORDER BY csv.TITULOFAMILIA
       
       $name = self::makeFriendlier($name);
       
+      $name = str_replace(" ", "%", $name);$name=strtolower($name);
     $stock = 0;
       
       $filte = explode("/", $filters);
@@ -163,7 +167,7 @@ ORDER BY csv.TITULOFAMILIA
                 $results = \DB::select("
       SELECT count(*) as coun 
         FROM " . self::$productTableName . " 
-        WHERE TITULO like '%" . $name ."%' 
+        WHERE LOWER(TITULO) like '%" . $name ."%' 
         and  NOMFABRICANTE in ($inVariable)
       ");  
       
@@ -175,7 +179,7 @@ ORDER BY csv.TITULOFAMILIA
                             $results = \DB::select("
       SELECT count(*) as coun 
         FROM " . self::$productTableName . " 
-        WHERE TITULO like '%" . $name ."%' 
+        WHERE LOWER(TITULO) like '%" . $name ."%' 
         and STOCK > '0'");  
             
             
@@ -185,7 +189,7 @@ ORDER BY csv.TITULOFAMILIA
                                     $results = \DB::select("
       SELECT count(*) as coun 
         FROM " . self::$productTableName . " 
-        WHERE TITULO like '%" . $name ."%' 
+        WHERE LOWER(TITULO) like '%" . $name ."%' 
         and  NOMFABRICANTE in ($inVariable)
         and STOCK > '0' 
       ");  
@@ -285,10 +289,11 @@ ORDER BY csv.TITULOFAMILIA
       $name = self::makeFriendlier($name);
       
 
+      $name = str_replace(" ", "%", $name);$name=strtolower($name);
           $results = \DB::select("
       SELECT count(*) as coun 
         FROM " . self::$productTableName . " 
-        WHERE TITULO like '%" . $name ."%' 
+        WHERE LOWER(TITULO) like '%" . $name ."%' 
         ");  
       
     return $results[0]->coun;
