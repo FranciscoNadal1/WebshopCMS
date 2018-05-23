@@ -114,8 +114,9 @@ ORDER BY csv.TITULOFAMILIA
    }
  
      static function getSearchData($name, $page){
-      
+      /*
       $name = self::makeFriendlier($name);
+      */
       $pager = self::numberOfProductsByPage() * $page;
       
       $name = str_replace(" ", "%", $name);$name=strtolower($name);
@@ -137,9 +138,9 @@ ORDER BY csv.TITULOFAMILIA
    }
    
        static function countSearchDataPlusFilters($name, $filters){
-      
+      /*
       $name = self::makeFriendlier($name);
-      
+      */
       $name = str_replace(" ", "%", $name);$name=strtolower($name);
     $stock = 0;
       
@@ -209,8 +210,9 @@ ORDER BY csv.TITULOFAMILIA
 
 
        static function getSearchDataPlusFilters($name, $page, $filters){
-      
+      /*
       $name = self::makeFriendlier($name);
+      */
       $pager = self::numberOfProductsByPage() * $page;
       
     $stock = 0;
@@ -285,9 +287,9 @@ ORDER BY csv.TITULOFAMILIA
    
    
         static function countSearchData($name){
-      
+      /*
       $name = self::makeFriendlier($name);
-      
+      */
 
       $name = str_replace(" ", "%", $name);$name=strtolower($name);
           $results = \DB::select("

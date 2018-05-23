@@ -669,8 +669,7 @@ class infortisaApi implements ProvidersApiInterface
         	
         	flush();
         
-        
-
+$results = \DB::select(\DB::raw("UPDATE csv SET PRECIO = PRECIO * 1.22") );
 
 }
      }

@@ -16,22 +16,7 @@
 <script src={{ GetAsset::getAngularChart() }} ></script>
 
 
-       <script>
-           angular.module('myModule', ['chart.js']);
-        
-        (function (ChartJsProvider) {
-          ChartJsProvider.setOptions({ colors : [ '#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'] });
-        }); 
-       </script>
-    
-    <script>
-    
-      angular.module("app", ["chart.js"]).controller("PieCtrl", function ($scope) {
-      $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
-      $scope.data = [300, 500, 100];
-    });    
-      
-    </script>
+
 
     </head>
      

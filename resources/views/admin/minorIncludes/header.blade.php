@@ -4,9 +4,14 @@
 
 <style>
   
-    
+    #mySidenav{
+        display:block !important;
+        
+    }
     
 </style>
+
+
 
 
 <div class="header">
@@ -18,13 +23,8 @@
         
             </div>
      
-  <div class="col-sm-11">   
-                <div id="logoContainer">
-                    <a class="logo" href="/">
-                        <img width="250" height="100" src="{{ GetAsset::getLogo() }}">
-                    </a> 
-                </div>
-</div>
+
+ 
         
     </div>
 
@@ -36,25 +36,30 @@
   <div id="closeButton"><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></div>
   <div class="belowClose">
   
-  <div class="separator">Estadísticas</div>
-      <a href="/admin/productCallStatistics">Estadisticas de productos</a>
-      <a href="/admin/mail">Notificaciones - {{ \MailData::getNonReadCount() }}</a>
+  <div class="separator panel-heading">Estadísticas</div>
+      <div class="panel-body">
+          <a href="/admin/productCallStatistics">Estadisticas de productos</a>
+          <a href="/admin/mail">Notificaciones - {{ \MailData::getNonReadCount() }}</a>
+    </div>
+  
+  <div class="separator panel-heading ">Administración</div>
+      <div class="panel-body">
+          <a href="/admin/addpc">Añadir pc</a>
+          <a href="/admin/changeCategories">Cambiar enlace de menu de categorias</a>
+          <a href="/admin/updaterBenefits">Cambiar beneficios</a>
+          <a href="/admin/updater">Actualizador Automático</a>
+          <a href="/admin/settings">settings</a>
+          <a href="/admin/settings">Change style</a>
 
   
-  <div class="separator">Administración</div>
-  
-      <a href="/admin/addpc">Añadir pc</a>
-      <a href="/admin/changeCategories">Cambiar enlace de menu de categorias</a>
-      <a href="/admin/updaterBenefits">Cambiar beneficios</a>
-      <a href="/admin/updater">Actualizador Automático</a>
-      <a href="/admin/settings">settings</a>
-      <a href="/admin/settings">Change style</a>
-      
-  
-      <a href="/admin/cleanLocal">Borrar archivos locales</a>
-  
-  <div class="separator">Pruebas</div>
-     <a href="/admin/testChamber">Tests</a>
+          <a href="/admin/cleanLocal">Borrar archivos locales</a>
+    </div>  
+    
+    
+  <div class="separator panel-heading">Pruebas</div>
+        <div class="panel-body">
+             <a href="/admin/testChamber">Tests</a>
+         </div>
 </div>
     
     
@@ -71,4 +76,6 @@ function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
     document.getElementById("main").style.marginLeft= "0";
 }
+
+openNav();
 </script>

@@ -12,21 +12,34 @@
     
     background-color:white;
 }
-
+.ChartPanel{
+    padding:0px;
+    
+}
 #main #wrapper{
     top:0px;
+    margin:15px;
 }
 
 .productStatistic {
     
     border:1px solid black;
+    
 }
 
-#ProductStatisticcontainer{
-    margin:20px;
+#ProductStatisticcontainer >div{
+    
+    padding:0px !important;
+    margin:0px !important;
 }
 
+#mostViewedPanel{
+    display:table;    
+}
 
+#mostViewedTopDiv{
+    margin:15px;
+}
 
 .productStatistic {
     text-align:center;
@@ -76,7 +89,6 @@
     
     #main {
         transition: margin-left .5s;
-        padding: 16px;
     }
     
     @media screen and (max-height: 450px) {

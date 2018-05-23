@@ -20,7 +20,7 @@
 
 
 <form id="buscador" class="input-group input-group-lg" method="GET" action="/buscar/">
-    <input  onkeyup="doStuff(this.value)" id="query" 
+    <input  onkeyup="doStuff(this.value)" onkeydown="doStuff(this.value)" id="query" 
     name="query" 
     required="required" 
     class="form-control form-control" 
