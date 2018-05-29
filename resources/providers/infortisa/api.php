@@ -17,6 +17,43 @@ class infortisaApi implements ProvidersApiInterface
         mb_detect_encoding($content, 'UTF-8, ISO-8859-1', true));
     }
     
+    
+        static function getStock(){
+            
+             $apiUrl     = "http://recursos.infortisa.com";
+        $jsonHeader = array(
+            'Accept: application/json',
+            'Content-Type: application/json',
+            'Authorization-Token:EFD79BAA-1882-463D-8B44-168A117D4F32'
+        );
+        
+        $c = curl_init();
+        curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
+        
+        curl_setopt($c, CURLOPT_HTTPHEADER, $jsonHeader);
+        
+        curl_setopt($c, CURLOPT_URL, $apiUrl . "/api/Stock/Get");
+
+        
+        
+        
+        
+        
+        curl_setopt($c, CURLOPT_POSTFIELDS, null);
+        curl_setopt($c, CURLOPT_CUSTOMREQUEST, 'GET');
+        $contentResult = curl_exec($c);
+        curl_close($c);
+        print_R($contentResult);
+        $obj = json_decode($contentResult);
+        
+        $stock = $obj;
+        
+        self::calledApi();
+        return $stock;
+    }
+    
+    
+    
     private static function add_consulta()
     {
         

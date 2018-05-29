@@ -170,3 +170,20 @@ top: -15px;
   border-bottom:1px solid grey;
 }
 */
+
+.subCategoriesMenu{
+  color:red !important; 
+  border:100px solid black;
+}
+.dropdown-header{
+  padding-left:0px;
+}
+.subCategoriesMenu a {
+    color: grey !important;
+    padding-left:10px;
+}
+
+
+body .dropdown-header, .dropdown-menu > li > a{
+  padding:0px ;
+}

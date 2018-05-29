@@ -16,6 +16,9 @@
         -webkit-box-shadow: 0px 4px 2px 5px rgba(0,0,0,0.09);
         -moz-box-shadow: 0px 4px 2px 5px rgba(0,0,0,0.09);
         box-shadow: 0px 4px 2px 5px rgba(0,0,0,0.09);
+        
+        
+        
     }
     #CategoryHeader span{
         width:50%;
@@ -137,6 +140,26 @@
     /*    font-size:1vw;*/
         
     }
+    
+    @media only screen and (max-width: 992px ) {
+    .typeGrid .nombreProducto {
+        font-size: 20px;
+    }
+    .imagenProducto>img{
+        height:150px;
+        width:auto;
+    }
+    
+}
+
+    @media only screen and (max-width: 1200px ) {
+    .typeGrid .nombreProducto {
+        font-size: 15px;
+    }
+
+
+}
+
         .row {
           display: -webkit-box;
           display: -webkit-flex;

@@ -14,24 +14,35 @@ $( document ).ready(function() {
 
 	<nav class=" header">
 	  <div id="TopHeader">
-	    <div class="navbar-header">
-	      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".js-navbar-collapse">
-	        <span class="sr-only">Toggle navigation</span>
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>
-	      </button>
+	    
+	    
+	      <div class="col-md-3">
+      	    <div class="col-sm-1 navbar-header">
+      	      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".js-navbar-collapse">
+      	        <span class="sr-only">Toggle navigation</span>
+      	        <span class="icon-bar"></span>
+      	        <span class="icon-bar"></span>
+      	        <span class="icon-bar"></span>
+      	      </button>
+	       </div>
+	      
+	      
+	      <div class="col-md-3">
 	        <a class="logo navbar-brand" href="/">
 	           <img width="250" height="100" src="{{ GetAsset::getLogo() }}">
 	         </a> 
+	         </div>
 	    </div>
 	    
-           <div id="searchArea"  class=".col-sm-4">
+           <div id="searchArea"  class="col-md-6">
                 @section('search')
                     @include('commonIncludes/searchBar')
                 @show
             </div>
             
+            
+              <div id="searchArea"  class="col-md-3">
+            </div>         
             
             
             
@@ -53,7 +64,7 @@ $( document ).ready(function() {
 <!--------------------------------------------------------------------
                       Novedades
 ---------------------------------------------------------------------->
-                        	              <div class="novedadesMenu col-sm-2">
+                        	              <div class="novedadesMenu col-sm-2 hidden-xs ">
                         	              <ul>
                         	                <li class="dropdown-header">Novedades</li>
                         	                <div id="myCarousel" class="carousel slide" data-ride="carousel">

@@ -22,6 +22,10 @@
 
 
 <?php
+
+    echo infortisaApi::getStock();
+
+
     Charts::apiCalls("stocks-chart");
 ?>
 
