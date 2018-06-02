@@ -24,16 +24,21 @@
         
     <div id="ProductContainer" class="container">
     
-        <style>
-            
-        </style>
+    
+        <div id="DescriptionCategory" class="panel-body">{{ $results[0]->TITULOFAMILIA }} > 
+            <a href="/listado/{{  DBData::desAccentify($results[0]->TITULOSUBFAMILIA) }}">
+                {{ $results[0]->TITULOSUBFAMILIA }}
+            </a>
+        </div>
         
         
         <div class="boxes container row row-eq-height " id="containerDesc">
+            
+            
             <div class="imagenProductoContainer">
-                <div class="imagenProducto">
+                <div class="imagenProducto img-responsive">
 
-                    <a href="{{ $field::get_imagenesLarge($results[0]->CODIGOINTERNO) }} " data-lightbox="gallery" ><img width="65%" src={{ $field::getProductMainImage($results[0]->CODIGOINTERNO) }} /></a>
+                    <a href="{{ $field::get_imagenesLarge($results[0]->CODIGOINTERNO) }} " data-lightbox="gallery" ><img class="" width="65%" src={{ $field::getProductMainImage($results[0]->CODIGOINTERNO) }} /></a>
                 </div>
                 </div>
              <div class="productDataContainer">
@@ -93,6 +98,10 @@
                    
                    
                    </div>  
+                   
+                   
+                   
+                   
                 </div>
                    <div class="boxes" id="fichaProducto">
                        

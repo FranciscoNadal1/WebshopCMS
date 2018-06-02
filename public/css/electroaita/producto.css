@@ -52,6 +52,7 @@
        padding-right:20px;
     }
     .precioProducto{
+        font-family: Open Sans,arial,sans-serif;
  /*       
         background: -moz-linear-gradient(top, rgba(5,5,2,0) 1%, rgba(115,115,185,0.5) 3%, rgba(84,116,153,1) 100%) !important;
         background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,rgba(125,185,2,0)), color-stop(3%,rgba(125,185,232,0.02)), color-stop(100%,rgba(84,116,153,1))) !important;
@@ -209,8 +210,12 @@
     
     
     .typeGrid .stockProducto{
-    
+        
+        
 
+        /*
+        transform: rotate(45deg);
+        */
     }
     
     .loadMoreProducts{
