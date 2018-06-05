@@ -47,13 +47,36 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f6f8', end
 
 <div class="typeGrid ">
 
-           <div class="productWrapper row-eq-height col-xs-12 col-md-3 col-lg-3 article-block">
+           <div class="productWrapper row-eq-height col-xs-12 col-md-4 col-lg-3 article-block">
+             
+                                          
+
         <!--
               <div class="typeGrid productWrapper col-xs-4 col-md-3 col-lg-3 article-block">
         -->          
         <a href="/producto/{{ DBData::desAccentify($resu->TITULO) }}">
                   <div class="product">
-                          @if($resu->CICLOVIDA != "")
+
+
+{{--                    
+    @if($resu->STOCK == 0)
+                              <div class="progress parpadeo">
+                                <div class=" stock-bar progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="{{ "width: " . $resu->STOCK *2 . "%" }}">
+                              
+                              @else
+                              <div class="progress">
+                                <div class=" stock-bar progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="{{ "width: " . $resu->STOCK *2 . "%" }}">
+                              @endif  
+                              
+                              
+                            </div>
+                    </div>    
+  --}}                  
+                    
+                    
+                    
+                    
+              @if($resu->CICLOVIDA != "")
                           
                         <div class="cicloVida">
                               <div class="letreroProvisional">{{ $resu->CICLOVIDA }}</div>
@@ -65,25 +88,24 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f6f8', end
                     </div>
 
                     <div class="nombreProducto"> {{ $resu->TITULO }}</div>
-                
+                {{--
+                    <div class="descProductoInList"> {{  \DBData::getDescriptionForProductList($resu->CODIGOINTERNO, $field) }}</div>
+                    
+                    
+                    --}}
                             <div class="stockProducto"> 
                             
-                    <div class="priceAndStock">        
-                      <div class="precioProducto"> {{ round($resu->PRECIO,2) }} &euro;</div>
-                            
-                             
-                              @if($resu->STOCK == 0)
-                              <div class="progress parpadeo">
-                                <div class=" stock-bar progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="{{ "width: " . $resu->STOCK *2 . "%" }}">
-                              
-                              @else
-                              <div class="progress">
-                                <div class=" stock-bar progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="{{ "width: " . $resu->STOCK *2 . "%" }}">
-                              @endif  
-                              
-                              </div> 
-                            </div>
-                    </div>        
+                    <div class="priceAndStock row-eq-height row">        
+                      <div class="precioProducto col-sm-8 ">  
+                        <div>{{ number_format(round($resu->PRECIO,2) , 2, ',', '.') }} &euro;</div>
+                        <div>{{ number_format(round($resu->PRECIO,2) , 2, ',', '.') }} &euro;</div>
+                      </div>
+                      <div class="stockProducto col-sm-4 ">
+                        Stock : {{ $resu->STOCK }}
+                        
+                      </div>
+                          </div>   
+  
                         
                             
                             

@@ -18,7 +18,26 @@ class DBData{
     
 
 
-
+    static function getDescriptionForProductList($cod, $field){
+        
+        $limitCharacters = 100;
+        
+        if(($data = $field::get_comercial($cod)) == "Sin información"){
+            
+            $data ="";
+            
+        }
+        else{
+            $count = strlen($data);
+            $data = substr(strip_tags($field::get_comercial($cod)),0,$limitCharacters);
+            
+            if($count > $limitCharacters)
+                $data = $data . "...";
+            
+        }
+       
+       return $data;
+    }
 
     
     static function getAllCategories(){
@@ -134,6 +153,20 @@ ORDER BY csv.TITULOFAMILIA
         WHERE LOWER(TITULO) like '%" . $name ."%' 
       LIMIT ". $pager .", " . self::numberOfProductsByPage());  
       
+    return $results;
+   }
+   
+        static function getFilterSearchData($name){
+              
+              $name = str_replace(" ", "%", $name);
+              $name = strtolower($name);
+              
+        
+            $results = \DB::select("SELECT NOMFABRICANTE 
+                FROM " . self::$productTableName . " 
+                WHERE LOWER(TITULO) like '%" . $name ."%' 
+                GROUP BY NOMFABRICANTE
+              ");  
     return $results;
    }
    

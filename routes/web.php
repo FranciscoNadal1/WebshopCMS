@@ -154,17 +154,39 @@ Route::get('/listado/{id}', function ($id){
     
     
 });
-
+Route::post('/search/{id}', function ($id){
+    
+   //  $results =  DBData::getAllWhereTituloFamilia($id);  
+     $results   =  DBData::getSearchData($id, 0);  
+     $count     =  DBData::countSearchData($id);  
+     
+     if(!empty($results)){
+    return view('includes/search', ['name' => 'index', 
+    'categoria' => $id,
+    'countAllProducts' => $count,
+    'results' => $results
+    ]
+    
+    );
+     }
+     else{
+         return("No se han encontrado resultados");
+     }
+    
+});
 Route::get('/search/{id}', function ($id){
     
    //  $results =  DBData::getAllWhereTituloFamilia($id);  
      $results =  DBData::getSearchData($id, 0);  
      $count     =  DBData::countSearchData($id);  
+     
+     
      if(!empty($results)){
     return view('includes/search', ['name' => 'index', 
     'categoria' => $id,
     'countAllProducts' => $count,
-    'results' => $results]
+    'results' => $results
+    ]
     
     );
      }
@@ -179,6 +201,9 @@ Route::get('/buscador/{id}', function ($id){
    //  $results =  DBData::getAllWhereTituloFamilia($id);  
      $results =  DBData::getSearchData($id, 0);  
      $count     =  DBData::countSearchData($id);  
+     
+     
+     
      if(!empty($results)){
     return view('routes/productSearcher', ['name' => 'index', 
     'categoria' => $id,

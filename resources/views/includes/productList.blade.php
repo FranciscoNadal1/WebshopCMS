@@ -45,6 +45,7 @@
             <div class="row">    
                 <div id="filterBar" class="containerdiv hidden-sm hidden-xs hidden-md visible-lg-block col-lg-2">
                     
+                    
                      @include('includes/filter', array('subFamilia' => $results[0]->CODSUBFAMILIA))
                     
                     
@@ -52,12 +53,18 @@
             
                <div id="ProductContainer" class="container col-sm-12 col-md-12 col-lg-10">  
                
-                       <div id="CategoryHeader" class="{{ \DBData::desAccentify($results[0]->TITULOSUBFAMILIA) }}">{{ $results[0]->TITULOSUBFAMILIA }} ({{ $totalNumberProducts }})
-                           <span>
+                   <div id="CategoryAndArticleDiv">
+                       <div id="CategoryHeader" class="{{ \DBData::desAccentify($results[0]->TITULOSUBFAMILIA) }}">{{ $results[0]->TITULOSUBFAMILIA }} 
+                           
+                       </div>
+                       
+                        <div id="ArticleNumber">{{ $totalNumberProducts }} articulos
+                        
+                        <span>
                                <form id="myForm" action="" method="POST">
                                
                                     <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-                                    <select name="order" onchange="this.form.submit()">
+                                    <select class="" name="order" onchange="this.form.submit()">
                                         
                                       
                                       @if($_REQUEST['order'] == "caro")
@@ -97,8 +104,9 @@
                                     </select> 
                                </form>
                            </span>
-                       </div>
-                    
+                        
+                        </div>
+                    </div>
                             <div class="productBlock">
                       <!--   <div id="ProductContainer" class="">   -->
                                 

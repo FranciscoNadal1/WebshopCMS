@@ -51,7 +51,10 @@
               <div class="filterHeader">Marcas:</div>
               <div class="checkboxContainer">
 
-        @foreach ($results as $resul)
+
+
+        <?php $filter =  \DBData::getFilterSearchData($categoria);  ?>
+        @foreach ($filter as $resul)
         
                         <div class="checkbox">
                             

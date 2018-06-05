@@ -4,14 +4,15 @@
 
        @section('content')
 
-<div id="customPage" class="jumbotron well">
+<div id="customPage" class="contact" class="jumbotron well">
 
             
 <div align="left">
 
-<table id="contacto_formulario" border="1" width="55%" height="254" style="border-width: 0px">
-	<tr>
-		<td align="left" valign="top" style="border-style: none; border-width: medium">
+
+	<div class="col-sm-6">
+
+
 		<table border="1" width="96%" style="border-width: 0px">
 			<tr>
                                 <td bordercolor="#FFFFFF" valign="top" width="726" align="center" style="border-style:none; border-width:medium; "  >
@@ -31,7 +32,7 @@
                                 <td width="266" height="202"   class="separacion" style="PADDING-BOTTOM: 5px; PADDING-TOP: 5px; border-bottom-style:none; border-bottom-width:medium">
 								<p align="center">
 								<font size="4">
-								<img src="images/logo.png"  border="0"></font></td>
+								<img src="{{ GetAsset::getLogo() }}"  border="0"></font></td>
                                 </tr>
                                 <tr>
                                 <td bordercolor="#FFFFFF"   height="16" style="border-style: none; border-width: medium">
@@ -139,7 +140,12 @@
 									<!-- Final de contenido --></div></td>
                                 </tr>
 			<tr>
-				<td style="border-style: none; border-width: medium"><form action=# method=POST>
+				</table>
+				
+				
+				</div>
+				<div class="col-sm-6">
+					<td style="border-style: none; border-width: medium"><form action=# method=POST>
 				  <p>&nbsp;</p>
                   <p align="center">
 				  <font color="#0000FF">Email</font><br>
@@ -167,6 +173,7 @@
                     <input type=submit name=Enviar value=Enviar>
                   </p>
 			    </form></td>
+			    
 			</tr>
 			<tr>
 				<td style="border-style: none; border-width: medium">
@@ -195,12 +202,11 @@ echo "Has introducido el captcha mal";
 }
 */
 ?>	
+</div>
 	  </div>		
-			</tr>
-		</table>
-		</td>
-	</tr>
-</table>
+	  
+
+
 
 </div>
                 

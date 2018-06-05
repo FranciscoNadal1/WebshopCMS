@@ -25,11 +25,14 @@
             urlArray.forEach(function(entry) {
                 
                        success =  entry.replace(' ', '-');   
+                       
+                       success =  success.replace('%20', '-');   
+                       
+                console.log(success);
                 if(document.getElementById(success)){
                     
                     
                     
-                console.log(success);
                     document.getElementById(success).checked = true;
                 }
                 
@@ -79,6 +82,7 @@
                       ">
                      
                           {{ $resul->NOMFABRICANTE }}
+                          
                       </label>
                 </div>
                 

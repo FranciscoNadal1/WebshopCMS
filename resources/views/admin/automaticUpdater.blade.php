@@ -186,7 +186,7 @@ Warnings and errors                                                         -->
 	                  <td>
 	                    {{
 	                    
-	                        \DB::table('csv')
+	                        \DB::table($totalCsv)
 	                        ->where('CODSUBFAMILIA', $resule->code)
 	                        ->delete()
 	                        

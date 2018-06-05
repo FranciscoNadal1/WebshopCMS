@@ -213,20 +213,20 @@ font-size:20px;
 }
 
 .typeGrid .precioProducto{
-    
-    float:left;
-    width:70%;
-    font-size: 1.8vw;
-    padding-left:20px;
+    font-family: Impact,Haettenschweiler,Franklin Gothic Bold,Charcoal,Helvetica Inserat,Bitstream Vera Sans Bold,Arial Black,sans serif; 
+
+
+    font-size: 2.2vw;
     position:relative;
+    padding-bottom:5px;
 }
 
 .typeGrid .progress{
-    float:left;
+    
     width:30%;
     margin-top:7px;
-    left: -10px;
-    position:relative;
+    
+    
 }
 .productWrapper {
     padding:10px !important;
@@ -251,6 +251,7 @@ text-decoration:none !important;
     background-color:white;
     padding:50px;
     
+    
 }
 #customPage img{
     margin-bottom:30px;
@@ -261,3 +262,6 @@ text-decoration:none !important;
     color:blue;
 }
 
+.contact{
+    height: 100%;
+}
