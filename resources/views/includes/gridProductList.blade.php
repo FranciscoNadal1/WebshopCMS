@@ -55,6 +55,24 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f6f8', end
               <div class="typeGrid productWrapper col-xs-4 col-md-3 col-lg-3 article-block">
         -->          
         <a href="/producto/{{ DBData::desAccentify($resu->TITULO) }}">
+          
+                 @if($resu->CICLOVIDA != "")
+                          
+          <div class="novedad">
+                             @if($resu->CICLOVIDA == "Novedad")
+                                <img src="/img/novedades.png">
+                             @elseif($resu->CICLOVIDA == "Por encargo")   
+                                <img src="/img/porEncargo.png">  
+                             @elseif($resu->CICLOVIDA == "Próximamente")                 
+                                 <img src="/img/proximamente.png">
+                             @endif    
+          <div class="textCicloVida">{{--$resu->CICLOVIDA--}}</div>
+          
+          </div>
+
+                          @endif         
+          
+          
                   <div class="product">
 
 
@@ -74,36 +92,58 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f6f8', end
   --}}                  
                     
                     
-                    
+                {{--    
                     
               @if($resu->CICLOVIDA != "")
                           
-                        <div class="cicloVida">
+                        <div class="cicloVida resize">
                               <div class="letreroProvisional">{{ $resu->CICLOVIDA }}</div>
                               
                           </div>
                           @endif  
+                          
+                  --}}        
                     <div class="imagenProducto">
                         <img width="50%" src={{ $field::getProductMainImage($resu->CODIGOINTERNO) }} />
                     </div>
 
                     <div class="nombreProducto"> {{ $resu->TITULO }}</div>
+                          
+                          
+                          
+                          
+                <script>
+                   function myFunction{{ $resu->CODIGOINTERNO }}(){
+                        $('#scriptDiv').load("/put/{{ $resu->CODIGOINTERNO }}/{{ $resu->PROVIDER }}/{{ number_format(round($resu->PRECIO,2) , 2, ',', '.') }}/{{ $resu->TITULO }}", function() {
+                                        $("#forLater").fadeOut("slow");
+                                        $("#forLater").load(location.href + " #forLater");
+                                        $("#forLater").fadeIn("slow");
+                          });
+                          
+                      }
+                </script>
+      
+      
+      
+      
+                    <div class="añadir"> <a onclick="myFunction{{ $resu->CODIGOINTERNO }}()"                     >añadir</a></div>
                 {{--
                     <div class="descProductoInList"> {{  \DBData::getDescriptionForProductList($resu->CODIGOINTERNO, $field) }}</div>
                     
                     
                     --}}
-                            <div class="stockProducto"> 
+                            <div class=""> 
                             
-                    <div class="priceAndStock row-eq-height row">        
-                      <div class="precioProducto col-sm-8 ">  
-                        <div>{{ number_format(round($resu->PRECIO,2) , 2, ',', '.') }} &euro;</div>
-                        <div>{{ number_format(round($resu->PRECIO,2) , 2, ',', '.') }} &euro;</div>
-                      </div>
-                      <div class="stockProducto col-sm-4 ">
+                    <div class="priceAndStock">        
+                      <div class="stockProducto">
                         Stock : {{ $resu->STOCK }}
-                        
                       </div>
+                      
+                      <div class="precioProducto">  
+                        <div>{{ number_format(round($resu->PRECIO,2) , 2, ',', '.') }} &euro;</div>
+                        <div>{{ number_format(round($resu->PRECIO,2) , 2, ',', '.') }} &euro;</div>
+                      </div>
+
                           </div>   
   
                         

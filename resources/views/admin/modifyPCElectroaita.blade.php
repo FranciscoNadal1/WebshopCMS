@@ -1,8 +1,23 @@
-
-@if(isset($_REQUEST['submit']))
-   
+@if(isset($_REQUEST['code']))
+    <?php 
+        $code = $_REQUEST['code'];
+    ?>
+@endif
 
 <?php
+
+
+
+$result = \DB::select("SELECT * FROM home where CODIGOINTERNO ='" . $code . "'");
+$data = \DB::select("SELECT * FROM productData where code ='" . $code . "'");
+
+?>
+@if(isset($_REQUEST['submit']))
+   
+<?php
+/*
+
+$_REQUEST['code'] = $code;
 
     $target_dir = "../public/productImages/home/";
     $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
@@ -21,37 +36,45 @@
             $uploadOk = 0;
         }
         
-        
-                \DB::insert('insert into home (TITULO, CODIGOINTERNO,CODFAMILIA, TITULOFAMILIA,    CODSUBFAMILIA,TITULOSUBFAMILIA, CODFABRICANTE,NOMFABRICANTE,PRECIO,STOCK) 
-                values (?, ?, ?, ?, ?, ?, ?, ?,?,?)', 
-                [
-                    $_REQUEST['name'],$_REQUEST['code'],"PC","PC y TPV",    "ele" ,"PCs electroaita","electroaita","electroaita" ,$_REQUEST['precio'],$_REQUEST['stock']
-                ]);
-                
-                \DB::insert('insert into productData (code, description, specifications) values (?, ?, ?)', [$_REQUEST['code'],$_REQUEST['com'],$_REQUEST['tec']]);
-                
-               
-    }
-    // Check if file already exists
+    */    
+        try{
+        \DBData::insertProductSpecifications($code, $_REQUEST['tec']);
+        \DBData::insertProductDescription($code, $_REQUEST['com']);
+        \DB::table('home')->where('CODIGOINTERNO', $code)
+        ->update(['TITULO' => $_REQUEST['name'],
+        'STOCK' => $_REQUEST['stock'],
+        'PRECIO' => $_REQUEST['precio']
+        ]);
+         \MailData::addMail("Update","Information","El producto : " . $code . " ha sido modificado");
+        echo "Se ha realizado la modificación";
+echo "
+
+<meta http-equiv='refresh' content='0; URL=/admin/editPCs' />
+
+";
+}catch(\Exception $e){
+    echo "Ha fallado la actualización";
+}
+  
+    /*
     if (file_exists($target_file)) {
         echo "Sorry, file already exists.";
         $uploadOk = 0;
     }
-    // Check file size
     if ($_FILES["fileToUpload"]["size"] > 5000000) {
         echo "Sorry, your file is too large.";
         $uploadOk = 0;
     }
-    // Allow certain file formats
+    
     if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
     && $imageFileType != "gif" ) {
         echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
         $uploadOk = 0;
     }
-    // Check if $uploadOk is set to 0 by an error
+    
     if ($uploadOk == 0) {
         echo "Sorry, your file was not uploaded.";
-    // if everything is ok, try to upload file
+        
     } else {
         if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
             echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
@@ -59,6 +82,7 @@
             echo "Sorry, there was an error uploading your file.";
         }
     }
+    */
 ?>
 
 
@@ -75,7 +99,7 @@
     @section('content')
     
     
-    <form action="#" method="post" enctype="multipart/form-data">
+    <form action="./{{ $result[0]->CODIGOINTERNO }}" method="post" enctype="multipart/form-data">
     Select image to upload:
     
     
@@ -85,37 +109,37 @@
         
         
         Código:
-        <input type="text" name="code" id="code" value="{{ \Tools::hexadecimalAzar(10) }}">
+        <input type="text" disabled name="code" id="code" value="{{ $result[0]->CODIGOINTERNO }}">
         
         <br>
         
         Nombre:
-        <input type="text" name="name" id="name">
+                <input type="text" name="name" id="name" value="{{ $result[0]->TITULO }}">
         
         <br>
         
         Stock:
-        <input type="text" name="stock" id="stock">
+        <input type="text" name="stock" id="stock" value="{{ $result[0]->STOCK }}">
         
         <br>
         
         
         Precio:
-        <input type="text" name="precio" id="precio">
+        <input type="text" name="precio" id="precio" value="{{ $result[0]->PRECIO }}">
         
         <br>
         
         
         Ficha técnica:
-        <textarea name="tec" id="tec"></textarea>
+        <textarea name="tec" id="tec">{{$data[0]->specifications}}</textarea>
         
         <br>
         Ficha comercial:
-        <textarea name="com" id="com"></textarea>
+        <textarea name="com" id="com">{{$data[0]->description}}</textarea>
         
         <br>       
         
-        <input type="file" name="fileToUpload" id="fileToUpload">
+        <input disabled type="file" name="fileToUpload" id="fileToUpload">
         <input type="submit" value="Generar PC" name="submit">
     </form>
 

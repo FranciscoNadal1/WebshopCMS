@@ -41,11 +41,28 @@
           <a href="/admin/productCallStatistics">Estadisticas de productos</a>
           <a href="/admin/mail">Notificaciones - {{ \MailData::getNonReadCount() }}</a>
     </div>
-  
-  <div class="separator panel-heading ">Administración</div>
+    
+
+    
+    
+    
+    
+   <div class="separator panel-heading ">PCs Electroaita</div>
       <div class="panel-body">
           <a href="/admin/addpc">Añadir pc</a>
+          <a href="/admin/editPCs">Ver listado pcs</a>
+    </div>  
+    
+    
+    <div class="separator panel-heading">Layout</div>
+      <div class="panel-body">
           <a href="/admin/changeCategories">Cambiar enlace de menu de categorias</a>
+        <a href="/admin/orderCategories">Cambiar orden categorias</a>
+    </div>   
+    
+    
+  <div class="separator panel-heading ">Administración</div>
+      <div class="panel-body">
           <a href="/admin/updaterBenefits">Cambiar beneficios</a>
           <a href="/admin/updater">Actualizador Automático</a>
           <a href="/admin/settings">settings</a>

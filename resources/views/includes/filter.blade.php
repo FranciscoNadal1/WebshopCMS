@@ -11,7 +11,19 @@
 <script>
 
 
+
+
+
+
+
+
     $( document ).ready(function() {
+        
+
+
+                
+        
+        
         
          $(".filterHeader").click(function(){
             $(".checkboxContainer").slideToggle();

@@ -13,7 +13,7 @@ body .lightboxOverlay{
 }
 
 .lb-image{
-    width: 500px !important; 
-    height: 598px !important;
+  /*  width: 500px !important; */
+    /*height: 598px !important;*/
     
 }

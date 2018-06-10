@@ -16,7 +16,9 @@ $( document ).ready(function() {
 	  <div id="TopHeader">
 	    
 	    
-	      <div class="col-md-3">
+	      <div class="col-md-3" style="height: 100%;">
+	        {{--
+	        
       	    <div class="col-sm-1 navbar-header">
       	      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".js-navbar-collapse">
       	        <span class="sr-only">Toggle navigation</span>
@@ -26,13 +28,12 @@ $( document ).ready(function() {
       	      </button>
 	       </div>
 	      
+	      --}}
 	      
-	      <div class="col-md-3">
-	        <a class="logo navbar-brand" href="/">
-	           <img width="250" height="100" src="{{ GetAsset::getLogo() }}">
+	        <a class="logo" href="/">
+	           <img {{-- width="250" height="100" --}} src="{{ GetAsset::getLogo() }}">
 	         </a> 
 	         </div>
-	    </div>
 	    
            <div id="searchArea"  class="col-md-6">
                 @section('search')

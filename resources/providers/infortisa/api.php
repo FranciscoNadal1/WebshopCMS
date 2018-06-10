@@ -49,7 +49,7 @@ class infortisaApi implements ProvidersApiInterface
         $stock = $obj;
         
         self::calledApi();
-        return $stock;
+        print_r($stock);
     }
     
     

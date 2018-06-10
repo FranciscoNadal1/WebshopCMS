@@ -43,6 +43,8 @@
 
   <div>
             <div class="row">    
+            
+                <div class="hidden-sm hidden-xs hidden-md visible-lg-block col-lg-2"></div>
                 <div id="filterBar" class="containerdiv hidden-sm hidden-xs hidden-md visible-lg-block col-lg-2">
                     
                      @include('includes/searchFilter', array('subFamilia' => $results[0]->CODSUBFAMILIA))

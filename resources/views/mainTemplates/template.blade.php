@@ -47,6 +47,24 @@ function topFunction() {
 
 
 $(document).ready(function(){
+    
+    
+    
+    
+    $(function() {
+    while( $('.resize').height() > $('.resize').height() ) {
+        $('.resize').css('font-size', (parseInt($('.resize').css('font-size')) - 1) + "px" );
+    }
+});
+    
+    
+    
+    
+    
+    
+    
+    
+    
   var scrollTop = 0;
   $(window).scroll(function(){
     scrollTop = $(window).scrollTop();
@@ -71,13 +89,12 @@ $(document).ready(function(){
     </head>
     
     <body>
-        
+        <div id="loading"></div>
         @include('commonIncludes/dropDown')
 
 
 
 
- 
         
     <div id="wrapper">
         @section('sidebar')
@@ -100,6 +117,13 @@ $(document).ready(function(){
         
    </div>     
 
+
+
+
 <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-angle-up "></i></button>
+
+   @include('commonIncludes/forLater')
+
+<div id="scriptDiv"></div>
     </body>
 </html>

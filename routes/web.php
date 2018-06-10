@@ -218,6 +218,55 @@ Route::get('/buscador/{id}', function ($id){
     
 });
 
+Route::get('/buscador', function (){
+    
+    $id = $_REQUEST['query'];
+   //  $results =  DBData::getAllWhereTituloFamilia($id);  
+     $results =  DBData::getSearchData($id, 0);  
+     $count     =  DBData::countSearchData($id);  
+     
+     
+     
+     if(!empty($results)){
+    return view('routes/productSearcher', ['name' => 'index', 
+    'categoria' => $id,
+    'countAllProducts' => $count,
+    'results' => $results]
+    
+    );
+     }
+     else{
+         return("No se han encontrado resultados");
+     }
+    
+});
+
+Route::post('/buscador', function (){
+    
+    $id = $_REQUEST['query'];
+   //  $results =  DBData::getAllWhereTituloFamilia($id);  
+     $results =  DBData::getSearchData($id, 0);  
+     $count     =  DBData::countSearchData($id);  
+     
+     
+     
+     if(!empty($results)){
+    return view('routes/productSearcher', ['name' => 'index', 
+    'categoria' => $id,
+    'countAllProducts' => $count,
+    'results' => $results]
+    
+    );
+     }
+     else{
+         return("No se han encontrado resultados");
+     }
+    
+});
+
+
+
+
 
 
 Route::get('/buscador/{id}/{filters}', function ($id, $filters){
@@ -419,6 +468,11 @@ Route::get('/admin', function (){
     );
 });
 
+Route::get('/admin/editPCs', function (){
+    return view('admin/editPCs', ['name' => 'adminDashboard']
+    );
+});
+
 Route::get('/admin/addpc', function (){
     return view('admin/addPCElectroaita', ['name' => 'adminDashboard']
     );
@@ -428,6 +482,45 @@ Route::post('/admin/addpc', function (){
     return view('admin/addPCElectroaita', ['name' => 'adminDashboard']
     );
 });
+
+
+
+Route::get('/admin/modifypc/{code}', function ($code){
+    return view('admin/modifyPCElectroaita', ['name' => 'adminDashboard', 'code' => $code]
+    );
+});
+
+
+Route::get('/admin/changeOrder/{code}/{order}', function ($code, $order){
+    \DB::table('menuBuilder')
+            ->where('CODFAMILIA', $code)
+            ->update(['order' => $order]);
+});
+
+Route::get('/admin/deletepc/{code}', function ($code){
+    return view('admin/deletePCElectroaita', ['name' => 'adminDashboard', 'code' => $code]
+    );
+});
+
+Route::get('/admin/orderCategories', function (){
+    return view('admin/orderCategories', ['name' => 'adminDashboard']
+    );
+});
+
+Route::post('/admin/modifypc/{code}', function ($code){
+    return view('admin/modifyPCElectroaita', ['name' => 'adminDashboard', 'code' => $code]
+    );
+});
+
+Route::post('/admin/modifypc', function (){
+    return view('admin/modifyPCElectroaita', ['name' => 'adminDashboard']
+    );
+});
+
+
+
+
+
 
 
 Route::get('/admin/settings', function (){
@@ -511,6 +604,70 @@ Route::get('/admin/testChamber', function (){
     return view('admin/testChamber', ['name' => 'Product Call Statistics']
     );
 });
+
+
+
+
+
+Route::get('/forget', function (){
+    
+    
+    
+
+
+Session::forget('cart');
+
+
+
+    
+});
+
+
+
+
+
+Route::get('/put/{id}/{provider}/{price}/{name}', function ($id, $provider, $price, $name){
+    //  https://learninglaravel.net/how-to-use-session-in-laravel
+    
+    
+
+$item = [
+  'id' => $id,
+  'provider' => $provider,
+  'price' => $price,
+  'name' => $name,
+  
+];
+
+Session::push('cart', $item);
+
+
+
+    
+});
+
+
+Route::get('/get', function (){
+   // print_r(Session::get('key'));
+    
+    for($i = 0; $i != sizeOf(Session::get('cart')); $i++){
+        print_r( Session::get('cart')[$i] ['id']);
+    echo "<br>";
+}
+    
+});
+/*
+Route::get('session/get','SessionController@accessAllSessionData');
+Route::get('session/set','SessionController@storeSessionData');
+Route::get('session/remove','SessionController@deleteSessionData');
+
+
+
+Route::get('/session/set/{data}', ['uses' =>'SessionController@storeSessionData2', 'as'=>'routeName']);
+
+*/
+
+
 
 
 

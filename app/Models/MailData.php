@@ -12,6 +12,7 @@ static $mailsTable = "notification";
 
     case "Mail":
     case "Routine":
+    case "Information":
         break;
     case "Exception":
     default:

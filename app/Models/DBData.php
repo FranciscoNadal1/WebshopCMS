@@ -127,7 +127,7 @@ ORDER BY csv.TITULOFAMILIA
       
       $name = self::makeFriendlier($name);
       $pager = self::numberOfProductsByPage() * $page;
-      $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" group by CODIGOINTERNO LIMIT ". $pager .", " . self::numberOfProductsByPage());
+      $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" group by CODIGOINTERNO order by precio asc LIMIT ". $pager .", " . self::numberOfProductsByPage());
       
     return $results;
    }
@@ -274,11 +274,11 @@ ORDER BY csv.TITULOFAMILIA
                 $results = \DB::select("
       SELECT *
         FROM " . self::$productTableName . " 
-        WHERE TITULO like '%" . $name ."%' 
+        WHERE LOWER(TITULO)  like '%" . $name ."%' 
         and  NOMFABRICANTE in ($inVariable) 
       LIMIT ". $pager .", " . self::numberOfProductsByPage());  
       
-      
+     
     if($stock == 1){  
      if($inVariable=="")
      
@@ -286,7 +286,7 @@ ORDER BY csv.TITULOFAMILIA
                             $results = \DB::select("
       SELECT *
         FROM " . self::$productTableName . " 
-        WHERE TITULO like '%" . $name ."%' 
+        WHERE LOWER(TITULO)  like '%" . $name ."%' 
         
         and STOCK > '0' 
       LIMIT ". $pager .", " . self::numberOfProductsByPage());  
@@ -298,7 +298,7 @@ ORDER BY csv.TITULOFAMILIA
                                     $results = \DB::select("
       SELECT *
         FROM " . self::$productTableName . " 
-        WHERE TITULO like '%" . $name ."%' 
+        WHERE LOWER(TITULO)  like '%" . $name ."%' 
         and  NOMFABRICANTE in ($inVariable)
         and STOCK > '0' 
         
@@ -413,12 +413,12 @@ ORDER BY csv.TITULOFAMILIA
 //////////      SQL INJECTION PROBABLE VULNERABILITY, CHECK
 
     if($stock == 0)
-      $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and  NOMFABRICANTE in ($inVariable) group by CODIGOINTERNO LIMIT ". $pager .", " . self::numberOfProductsByPage());
+      $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and  NOMFABRICANTE in ($inVariable) group by CODIGOINTERNO order by precio asc LIMIT ". $pager .", " . self::numberOfProductsByPage());
     if($stock == 1){  
      if($inVariable=="")
-            $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and STOCK > '0' group by CODIGOINTERNO LIMIT ". $pager .", " . self::numberOfProductsByPage());
+            $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and STOCK > '0' group by CODIGOINTERNO  order by precio asc LIMIT ". $pager .", " . self::numberOfProductsByPage());
      else
-            $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and  NOMFABRICANTE in ($inVariable) and STOCK > '0' group by CODIGOINTERNO LIMIT ". $pager .", " . self::numberOfProductsByPage());
+            $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and  NOMFABRICANTE in ($inVariable) and STOCK > '0' group by CODIGOINTERNO  order by precio asc LIMIT ". $pager .", " . self::numberOfProductsByPage());
     
       
     }
@@ -666,11 +666,12 @@ ORDER BY CODSUBCATEGORIA DESC
               
             $results = \DB::select("
 
-                SELECT csv.TITULOFAMILIA, csv.TITULOFAMILIA as R   FROM categorias,menuBuilder," . self::$productTableName . " as csv
+                SELECT csv.TITULOFAMILIA, csv.TITULOFAMILIA as R,  menuBuilder.CODFAMILIA, menuBuilder.ORDER   FROM categorias,menuBuilder," . self::$productTableName . " as csv
                 where categorias.code = menuBuilder.CODSUBCATEGORIA and
                 menuBuilder.CODFAMILIA = csv.CODFAMILIA 
                 and categorias.name like \"$str\" 
                 group by csv.TITULOFAMILIA
+                ORDER BY IF(ISNULL(menuBuilder.ORDER),1,0),menuBuilder.ORDER 
                 
                                 
    ");

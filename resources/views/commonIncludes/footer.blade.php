@@ -11,16 +11,20 @@
 				</h3>
 
 				<p class="footer-links">
+					{{--
 					·
 					<a href="/condicionesVenta">Condiciones de venta</a></br>
 					·
 					<a href="/condicionesEmpresa">Condiciones de empresa</a></br>
+					--}}
 					·
 					<a href="/contacto">Contacto/Horarios</a></br>
 					·
 					<a href="/politicaPrivacidad">Política de privacidad</a></br>
+					{{--
 					·
 					<a href="/entregaTransporte">Entrega y transporte</a></br>
+					--}}
 				</p>
 
 				<p class="footer-company-name">{{ \GetSettings::companyName() }} &copy; {{ date("Y") }}</p>

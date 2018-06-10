@@ -37,12 +37,13 @@
     @endif
     
     @if(!isset($_REQUEST['order']))
-       <?php $_REQUEST['order'] ="relevancia"; ?>
+       <?php $_REQUEST['order'] ="barato"; ?>
     @endif
 
 
   <div>
             <div class="row">    
+                <div class="col-lg-2"></div>
                 <div id="filterBar" class="containerdiv hidden-sm hidden-xs hidden-md visible-lg-block col-lg-2">
                     
                     
@@ -51,7 +52,7 @@
                     
                 </div>
             
-               <div id="ProductContainer" class="container col-sm-12 col-md-12 col-lg-10">  
+               <div id="ProductContainer" class="container col-sm-12 col-md-12 col-lg-10 pull-right">  
                
                    <div id="CategoryAndArticleDiv">
                        <div id="CategoryHeader" class="{{ \DBData::desAccentify($results[0]->TITULOSUBFAMILIA) }}">{{ $results[0]->TITULOSUBFAMILIA }} 

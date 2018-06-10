@@ -54,6 +54,11 @@
         padding-right:10px;
 }
 
+.logo img{
+    
+    height:100%;
+    position:absolute;
+}
 
 #logoContainer{
     /*
