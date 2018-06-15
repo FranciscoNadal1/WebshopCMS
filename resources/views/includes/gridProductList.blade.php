@@ -54,6 +54,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f6f8', end
         <!--
               <div class="typeGrid productWrapper col-xs-4 col-md-3 col-lg-3 article-block">
         -->          
+                    <div class="añadir"> <button onclick="myFunction{{ $resu->CODIGOINTERNO }}()"                     >añadir</button></div>
         <a href="/producto/{{ DBData::desAccentify($resu->TITULO) }}">
           
                  @if($resu->CICLOVIDA != "")
@@ -114,7 +115,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f6f8', end
                           
                 <script>
                    function myFunction{{ $resu->CODIGOINTERNO }}(){
-                        $('#scriptDiv').load("/put/{{ $resu->CODIGOINTERNO }}/{{ $resu->PROVIDER }}/{{ number_format(round($resu->PRECIO,2) , 2, ',', '.') }}/{{ $resu->TITULO }}", function() {
+                        $('#scriptDiv').load("/put/{{ $resu->CODIGOINTERNO }}/{{ $resu->PROVIDER }}/{{ number_format(round($resu->PRECIO,2) , 2, ',', '.') }}/{{ DBData::desAccentify($resu->TITULO) }}", function() {
                                         $("#forLater").fadeOut("slow");
                                         $("#forLater").load(location.href + " #forLater");
                                         $("#forLater").fadeIn("slow");
@@ -126,7 +127,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f6f8', end
       
       
       
-                    <div class="añadir"> <a onclick="myFunction{{ $resu->CODIGOINTERNO }}()"                     >añadir</a></div>
                 {{--
                     <div class="descProductoInList"> {{  \DBData::getDescriptionForProductList($resu->CODIGOINTERNO, $field) }}</div>
                     

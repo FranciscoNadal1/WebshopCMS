@@ -100,12 +100,23 @@
             try{
                 \DB::insert('insert into benefits (code, benefit) values (?, ?)', [$resule->CODSUBFAMILIA,0]);
             
-            }catch(Exception $e){}
+            }catch(Exception $e){
+                
+                echo "<div style='display:none;'>";
+                echo "Fallo benefits";
+                echo $e;
+                echo "</div>";
+            }
             
             try{
                 \DB::insert('insert into excluded (code, excluded) values (?, ?)', [$resule->CODSUBFAMILIA,0]);
             
-            }catch(Exception $e){}
+            }catch(Exception $e){
+                echo "<div style='display:none;'>";
+                echo "Fallo excluded";
+                echo $e;
+                echo "</div>";
+            }
             
             //DB::table('benefits')->where('code', $resule->CODSUBFAMILIA)->update(['benefit' => 0]);
             ?>

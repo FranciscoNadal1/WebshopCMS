@@ -149,7 +149,21 @@ SettingsController1.prototype.clearContact = function(contact) {
 
 {{--    \MailData::addMail("Subject","","This is a message") --}}
 
-{{
-$value = $request->session()->get('key')
-}}
+{{-- infortisaApi::getIdFromSku("APTALT0016") --}}
+
+{{ infortisaApi::getSpecifications() }}
+{{ infortisaApi::getSpecificationAttribute() }}
+{{ infortisaApi::getAttributeOption() }}
+
+
+<?php
+
+$count = 0;
+
+
+
+  
+  
+
+?>
     @endsection

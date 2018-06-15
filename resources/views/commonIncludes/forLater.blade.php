@@ -36,11 +36,13 @@
                 
                 
                 
-                <div class="col-sm-2">
+                <div class="col-sm-1">
                 
                 
                     
                      <div class="imagenProducto">
+                         
+                         
                              <a href="/producto/{{ DBData::desAccentify($test['name']) }}">
                             <img width=100% src={{ $field::getProductMainImage($test['id']) }} />
                             </a>

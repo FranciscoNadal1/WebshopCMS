@@ -545,6 +545,50 @@ class infortisaApi implements ProvidersApiInterface
     }
     
     
+    
+    static function getIdFromSku($cod){
+            
+             $apiUrl     = "http://api.infortisa.com";
+        $jsonHeader = array(
+            'Accept: application/json',
+            'Content-Type: application/json',
+            'Authorization-Token:EFD79BAA-1882-463D-8B44-168A117D4F32'
+        );
+        
+        $c = curl_init();
+        curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
+        
+        curl_setopt($c, CURLOPT_HTTPHEADER, $jsonHeader);
+        
+        curl_setopt($c, CURLOPT_URL, $apiUrl . "/api/Product/GetProductBySku?Sku=" . $cod);
+
+        
+        
+        
+        
+        
+        curl_setopt($c, CURLOPT_POSTFIELDS, null);
+        curl_setopt($c, CURLOPT_CUSTOMREQUEST, 'GET');
+        $contentResult = curl_exec($c);
+        curl_close($c);
+        
+        $obj = json_decode($contentResult);
+        
+        $stock = $obj;
+        
+        self::calledApi();
+        
+        
+        
+        return $obj->Id;
+    }
+    
+    
+    
+    
+    
+    
+    
     static function updateDatabase(){
           
             $var_url = "http://api.infortisa.com/api/Tarifa/GetFile?user=EFD79BAA-1882-463D-8B44-168A117D4F32";
@@ -708,13 +752,310 @@ class infortisaApi implements ProvidersApiInterface
         
 $results = \DB::select(\DB::raw("UPDATE csv SET PRECIO = PRECIO * 1.22") );
 
+
+
+
+
+$results = \DB::select(\DB::raw("UPDATE csv SET PRECIO = PRECIO * 1.22") );
+
+$IdToSku = \DB::select("SELECT CODIGOINTERNO
+FROM csv
+WHERE CODIGOINTERNO NOT
+IN (
+
+SELECT SKU
+FROM infortisa_IdSku
+)");
+     
+     
+     $countNewId = 0;
+ foreach ($IdToSku as $var) {
+     //print_r($var);
+     
+     $sku = $var->CODIGOINTERNO;
+     $id = self::getIdFromSku($sku);
+        
+     
+      $affected = \DB::insert('insert into infortisa_IdSku (ID, SKU) values (?, ?)', [$id,$sku]);
+         
+    $countNewId++;
+     
+ }
+ echo $countNewId;
 }
+     
+try{
+    self::getSpecifications();
+    self::getSpecificationAttribute();
+    self::getAttributeOption();
+}catch(\Exception $e){
+    echo $e;    
+}
+
+
      }
      
      
      
      
-}
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        static function getSpecifications()    {
+            
+            $contenido ="";
+            
+        $tok   = "EFD79BAA-1882-463D-8B44-168A117D4F32";
+        $token = "Authorization-Token:$tok";
+        
+        $apiUrl     = "http://api.infortisa.com";
+        $jsonHeader = array(
+            'Accept: application/json',
+            'Content-Type: application/json',
+            $token
+        );
+                    try{   
+                
+                $ch      = curl_init();
+                $timeout = 500000;
+                
+                 
+                        $variable = "http://api.infortisa.com/api/ProductSpecification/Get";
+                        curl_setopt($ch, CURLOPT_URL, $variable);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                        
+                        curl_setopt($ch, CURLOPT_HTTPHEADER, $jsonHeader);
+                        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+    
+                        $contenido = curl_exec($ch);
+                        
+                        
+                $fp = fopen("productSpecification.txt", "wa+");
+                        fwrite($fp, $contenido);
+    
+                            fclose($fp);
+                    }catch(\Exception $e){
+                        return "";
+                    }finally{
+                        curl_close($ch);
+                        
+                    }
+            
+            
+  // PRODUCT SPECIFICATIONS
+  $someArray = json_decode(file_get_contents('productSpecification.txt'), true);
+  foreach($someArray as $item) { 
+        
+     $results = \DB::select("SELECT count(*) as coun FROM `infortisa_productSpecification` 
+     WHERE Id like '" . $item['Id'] . "' and
+      OptionId like '" . $item['OptionId'] . "' and
+      ProductId like '" . $item['ProductId'] . "'" );
+     
+     if($results[0]->coun == 0)
+        $affected = \DB::insert('insert into infortisa_productSpecification (Id, OptionId, ProductId) values (?, ?, ?)', [$item['Id'], $item['OptionId'], $item['ProductId']]);
+   
+    }
+  
+  
+  
+  
+  
+    }
+          /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        static function getSpecificationAttribute()    {
+            
+            $contenido ="";
+            
+        $tok   = "EFD79BAA-1882-463D-8B44-168A117D4F32";
+        $token = "Authorization-Token:$tok";
+        
+        $apiUrl     = "http://api.infortisa.com";
+        $jsonHeader = array(
+            'Accept: application/json',
+            'Content-Type: application/json',
+            $token
+        );
+                    try{   
+                
+                $ch      = curl_init();
+                $timeout = 500000;
+                
+                 
+                        $variable = "http://api.infortisa.com/api/SpecificationAttribute/Get";
+                        curl_setopt($ch, CURLOPT_URL, $variable);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                        
+                        curl_setopt($ch, CURLOPT_HTTPHEADER, $jsonHeader);
+                        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+    
+                        $contenido = curl_exec($ch);
+                        
+                $fp = fopen("specificationAtribute.txt", "wa+");
+                        fwrite($fp, $contenido);
+    
+                            fclose($fp);
+                    }catch(\Exception $e){
+                        return "";
+                    }finally{
+                        curl_close($ch);
+                        
+                    }
+                    
+// Specification Atributes
+  $someArray = json_decode(file_get_contents('specificationAtribute.txt'), true);
+  foreach($someArray as $item) { 
+        
+     $results = \DB::select("SELECT count(*) as coun FROM `infortisa_specificationAttribute` 
+     WHERE SpecificationAttributeId like '" . $item['SpecificationAttributeId'] . "' and
+       SpecificationAttributeName  like '" . $item['SpecificationAttributeName'] . "' and
+      DisplayOrder like '" . $item['DisplayOrder'] . "'" );
+     
+     if($results[0]->coun == 0)
+        $affected = \DB::insert('insert into infortisa_specificationAttribute (SpecificationAttributeId, SpecificationAttributeName, DisplayOrder) values (?, ?, ?)', 
+        [$item['SpecificationAttributeId'], $item['SpecificationAttributeName'], $item['DisplayOrder']]);
+           
+    }
 
+
+
+
+            
+    }
+          /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        static function getAttributeOption()    {
+            
+            $contenido ="";
+            
+        $tok   = "EFD79BAA-1882-463D-8B44-168A117D4F32";
+        $token = "Authorization-Token:$tok";
+        
+        $apiUrl     = "http://api.infortisa.com";
+        $jsonHeader = array(
+            'Accept: application/json',
+            'Content-Type: application/json',
+            $token
+        );
+                    try{   
+                
+                $ch      = curl_init();
+                $timeout = 500000;
+                
+                 
+                        $variable = "http://api.infortisa.com/api/SpecificationAttributeOption/Get";
+                        curl_setopt($ch, CURLOPT_URL, $variable);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                        
+                        curl_setopt($ch, CURLOPT_HTTPHEADER, $jsonHeader);
+                        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+    
+                        $contenido = curl_exec($ch);
+                        
+                $fp = fopen("specificationAttributeOption.txt", "wa+");
+                        fwrite($fp, $contenido);
+    
+                            fclose($fp);
+                    }catch(\Exception $e){
+                        return "";
+                    }finally{
+                        curl_close($ch);
+                        
+                    }
+                    
+                    
+  
+// Specification Atributes Options
+  $someArray = json_decode(file_get_contents('specificationAttributeOption.txt'), true);
+  foreach($someArray as $item) { 
+        
+     $results = \DB::select("SELECT count(*) as coun FROM `infortisa_specificationAttributeOption` 
+     WHERE OptionId  like '" . $item['OptionId'] . "' and
+       SpecificationAttributeId  like '" . $item['SpecificationAttributeId'] . "' and
+      DisplayOrder like '" . $item['DisplayOrder'] . "'" );
+     
+     if($results[0]->coun == 0)
+        $affected = \DB::insert('insert into infortisa_specificationAttributeOption (OptionId, SpecificationAttributeId, OptionName, DisplayOrder) values (?, ?, ?, ?)', 
+        [$item['OptionId'], $item['SpecificationAttributeId'], $item['OptionName'], $item['DisplayOrder']]);
+           
+    }
+
+
+            
+    }
+          /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        static function getProduct()    {
+            
+            $contenido ="";
+            
+        $tok   = "EFD79BAA-1882-463D-8B44-168A117D4F32";
+        $token = "Authorization-Token:$tok";
+        
+        $apiUrl     = "http://api.infortisa.com";
+        $jsonHeader = array(
+            'Accept: application/json',
+            'Content-Type: application/json',
+            $token
+        );
+                    try{   
+                
+                $ch      = curl_init();
+                $timeout = 500000;
+                
+                 
+                        $variable = "http://api.infortisa.com/api/Product/Get";
+                        curl_setopt($ch, CURLOPT_URL, $variable);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                        
+                        curl_setopt($ch, CURLOPT_HTTPHEADER, $jsonHeader);
+                        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+    
+                        $contenido = curl_exec($ch);
+                        
+                $fp = fopen("productGet.txt", "w");
+                        fwrite($fp, $contenido);
+    
+                    }catch(\Exception $e){
+                        return "";
+                    }finally{
+                        curl_close($ch);
+                        
+                            fclose($fp);
+                    }
+            
+    }   
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}
 ?>

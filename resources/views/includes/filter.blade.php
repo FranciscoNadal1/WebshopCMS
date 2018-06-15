@@ -101,7 +101,7 @@
         @endforeach
     </div>
     
-    {{--
+       {{--
     <button onclick="return false" >Filtrar</button>
     
 
@@ -166,3 +166,71 @@
 
 
 
+--------------------------------------------------------------------
+
+
+
+
+    <?php
+        $filters = \DB::select("
+    SELECT infortisa_specificationAttribute.SpecificationAttributeName
+    
+    
+FROM totalCsv, `infortisa_productSpecification` , infortisa_IdSku, infortisa_specificationAttributeOption, infortisa_specificationAttribute
+WHERE totalCsv.CODIGOINTERNO = infortisa_IdSku.SKU
+and infortisa_IdSku.ID = infortisa_productSpecification.ProductId
+and infortisa_productSpecification.OptionId = infortisa_specificationAttributeOption.OptionId
+and
+infortisa_specificationAttributeOption.SpecificationAttributeId =
+infortisa_specificationAttribute.SpecificationAttributeId
+and 
+totalCsv.CODSUBFAMILIA =  '". $subFamilia ."' 
+group by infortisa_specificationAttribute.SpecificationAttributeName");
+
+
+
+
+?>
+
+        @foreach ($filters as $fil)
+        
+              <div class="filterHeader">{{ $fil->SpecificationAttributeName }}:</div>
+            
+            <?php
+            
+                    $subFilters = \DB::select("
+    SELECT infortisa_specificationAttributeOption.OptionName
+    
+    
+FROM totalCsv, 
+`infortisa_productSpecification` , 
+infortisa_IdSku, 
+infortisa_specificationAttributeOption, 
+infortisa_specificationAttribute
+
+
+WHERE totalCsv.CODIGOINTERNO = infortisa_IdSku.SKU
+and infortisa_IdSku.ID = infortisa_productSpecification.ProductId
+and infortisa_productSpecification.OptionId = infortisa_specificationAttributeOption.OptionId
+and
+infortisa_specificationAttributeOption.SpecificationAttributeId =
+infortisa_specificationAttribute.SpecificationAttributeId
+and 
+totalCsv.CODSUBFAMILIA =  '". $subFamilia ."' 
+and infortisa_specificationAttribute.SpecificationAttributeName =  '".  $fil->SpecificationAttributeName  ."' 
+group by infortisa_specificationAttributeOption.OptionName");
+
+
+?>
+
+              <div class="checkboxContainer">
+        @foreach ($subFilters as $fil2)
+        
+            <div>{{ $fil2->OptionName }}</div>
+            
+            @endforeach
+            </div>
+            
+            
+        @endforeach
+ 

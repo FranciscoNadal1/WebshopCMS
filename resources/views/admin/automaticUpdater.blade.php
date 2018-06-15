@@ -6,12 +6,13 @@
 
 <?php
 
+try{
 		
 setlocale(LC_ALL, "en_US.utf8"); 
+error_reporting(E_ALL);
 
 
-
-	set_time_limit(500); 
+	set_time_limit(500000); 
 
 
 	echo "
@@ -146,26 +147,12 @@ $createTotal = DB::statement("
 ////////////////////////////////////////////////////////////////////////////////        
             $results3 = DBData::getAllSubfamiliaAndCodeBenefit();
             $excludedList = DBData::getAllExcludedCategories();
-            $numberNoBenefit = DBData::getNumberCategoriesNoBenefit();
             
             ?>
             
             
            
-<!-- -------------------------------------------------------------------------
-------------------------------------------------------------------------------
-Warnings and errors                                                         -->
 
-
-        @if($numberNoBenefit != 0)
-        
-            <div class="alert alert-warning">
-              <strong>Warning!</strong> Hay {{ $numberNoBenefit }} categorías que no tienen beneficio
-            </div>
-        
-        @endif
-        
-<!-- ------------------------------------------------------------------------- -->
 <div class="table-responsive">
     <table class="table table-hover table-responsive">
 	<h2>Borrados</h2>
@@ -201,6 +188,23 @@ Warnings and errors                                                         -->
 <!--
 //////////////////////////////////////////////
 -->
+
+<!-- -------------------------------------------------------------------------
+------------------------------------------------------------------------------
+Warnings and errors                                                         -->
+
+<?php
+      //  $numberNoBenefit = \DBData::getNumberCategoriesNoBenefit();
+
+     ?>   
+<!-- ------------------------------------------------------------------------- -->
+
+
+<?php
+$countNoBenefitUpdate = 0;
+?>
+
+
 <div class="table-responsive">
     <table class="table table-hover table-responsive">
 	<h2>Modificados</h2>
@@ -209,7 +213,9 @@ Warnings and errors                                                         -->
               <th>Beneficio</th>
               <th>Modificados</th>
             </tr>
-            
+                <?php
+        $results3 = DBData::getAllSubfamiliaAndCodeBenefit();
+        		?>
         @foreach ($results3 as $resule)
         
 	                <tr>
@@ -219,18 +225,30 @@ Warnings and errors                                                         -->
 	                  <td>
 	                  <?php
 	                  	
+	                  	///		Cambia los benefits nulos a 0
                 			\DB::table('benefits')->where('benefit', '')->update(['benefit' => 0]);
                 			if($resule->benefit == ""){
                 				$resule->benefit =0;
                 			}
-	                  	?>
-	                    {{
+	                  	
                 
-	                        \DB::table('totalCsv')
+                try{
+	                        $countBenefitUpdate = \DB::table('totalCsv')
 	                        ->where('CODSUBFAMILIA', $resule->CODSUBFAMILIA)
-	                        ->increment('PRECIO', $resule->benefit)
+	                        ->where('CODSUBFAMILIA', '!=', 'like')
+	                        ->increment('PRECIO', $resule->benefit);
 	                        
-	                    }}
+	                        echo $countBenefitUpdate;
+	                        
+	                        if($resule->benefit == 0)
+	                        	$countNoBenefitUpdate++;
+	                        
+                }catch(\Exception $e){
+                	echo "Fallo al actualizar los beneficios";
+                	echo $e;
+                }
+	                    
+	                    ?>
 	                  </td>
 	                </tr>
         @endforeach
@@ -242,12 +260,23 @@ Warnings and errors                                                         -->
                 			?>
 </div>
 
+        @if($countNoBenefitUpdate != 0)
+        
+            <div class="alert alert-warning">
+              <strong>Warning!</strong> Hay {{ $countNoBenefitUpdate }} categorías que no tienen beneficio
+            </div>
+        
+        @endif
 <?php
 	$contenido = ob_get_contents();
-	echo $contenido;
+	
     \MailData::addMail("Update","Routine",$contenido);
     
     }
+    
+}catch(\Exception $e){
+	echo "error found";
+}
 ?>
 
 @endsection
