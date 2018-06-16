@@ -11,6 +11,11 @@
           display:none;
       }
   </style>
+  
+
+
+
+
   <script>
   
         $.fn.parpadear = function()
@@ -42,12 +47,137 @@
 
 
   <div>
-            <div class="row">    
+
+
+
+<style>
+body {
+    font-family: "Lato", sans-serif;
+}
+
+.sidenavFilters {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    
+    top: 0;
+    
+    background-color: white;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    z-index:9999999999;
+    border-left:2px solid silver;
+}
+
+
+
+    @media only screen and (min-width: 1000px) {
+    .sidenavFilters {
+    left: 0;
+    }
+}
+    @media only screen and (max-width: 999px) {
+    .sidenavFilters {
+    right: 0;
+    }
+}
+
+
+.sidenavFilters a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenavFilters a:hover {
+    color: #f1f1f1;
+}
+
+.sidenavFilters .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenavFilters {padding-top: 15px;}
+  .sidenavFilters a {font-size: 18px;}
+}
+</style>
+</head>
+<body>
+
+<div id="mySidenav" class="sidenavFilters">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+{{--
+                     @include('includes/filter', array('subFamilia' => $results[0]->CODSUBFAMILIA))
+                     --}}
+      
+</div>
+
+
+
+<script>
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+    
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="row"> 
                 <div class="col-lg-2"></div>
                 <div id="filterBar" class="containerdiv hidden-sm hidden-xs hidden-md visible-lg-block col-lg-2">
                     
-                    
-                     @include('includes/filter', array('subFamilia' => $results[0]->CODSUBFAMILIA))
+                        
+     @include('includes/filter', array('subFamilia' => $results[0]->CODSUBFAMILIA))
+ 
                     
                     
                 </div>
@@ -57,6 +187,7 @@
                    <div id="CategoryAndArticleDiv">
                        <div id="CategoryHeader" class="{{ \DBData::desAccentify($results[0]->TITULOSUBFAMILIA) }}">{{ $results[0]->TITULOSUBFAMILIA }} 
                            
+<span style="font-size:30px;cursor:pointer;float:right" onclick="openNav()">Filtros &#9776; </span>
                        </div>
                        
                         <div id="ArticleNumber">{{ $totalNumberProducts }} articulos

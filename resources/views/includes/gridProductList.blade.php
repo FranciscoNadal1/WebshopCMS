@@ -47,7 +47,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f6f8', end
 
 <div class="typeGrid ">
 
-           <div class="productWrapper row-eq-height col-xs-12 col-md-4 col-lg-3 article-block">
+           <div class="productWrapper row-eq-height col-xs-6 col-md-3 col-lg-3 article-block">
              
                                           
 

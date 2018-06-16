@@ -44,8 +44,8 @@ Route::get('/listado/{id}/{category}', function ($id, $category) {
     
    //  $results =  DBData::getAllWhereTituloFamilia($id);  
    
-     	$results =  DBData::getAllWhereTituloFamiliaPagePlusFilters($id, 0, $category);  
-     	$count =  DBData::countAllWhereTituloFamiliaPagePlusFilters($id, 0, $category);  
+     	$results =  DBData::getAllWhereTituloFamiliaPagePlusFiltersNew($id, 0, $category);  
+     	$count =  DBData::countAllWhereTituloFamiliaPagePlusFiltersNew($id, 0, $category);  
      	
      
 	    return view('routes/productBrowser', [
@@ -58,12 +58,19 @@ Route::get('/listado/{id}/{category}', function ($id, $category) {
     );
 })->where('category', '.+');
 
+
+
+
+
+
+
+
 Route::post('/listado/{id}/{category}', function ($id, $category) {
     
    //  $results =  DBData::getAllWhereTituloFamilia($id);  
    
-     	$results =  DBData::getAllWhereTituloFamiliaPagePlusFiltersOrder($id, 0, $category, $_REQUEST['order']);  
-     	$count =  DBData::countAllWhereTituloFamiliaPagePlusFilters($id, 0, $category);  
+     	$results =  DBData::getAllWhereTituloFamiliaPagePlusFiltersOrderNew($id, 0, $category, $_REQUEST['order']);  
+     	$count =  DBData::countAllWhereTituloFamiliaPagePlusFiltersNew($id, 0, $category);  
      	
      
 	    return view('routes/productBrowser', [

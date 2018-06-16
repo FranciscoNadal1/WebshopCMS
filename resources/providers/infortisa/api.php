@@ -862,13 +862,20 @@ try{
   $someArray = json_decode(file_get_contents('productSpecification.txt'), true);
   foreach($someArray as $item) { 
         
+        
+        try{
      $results = \DB::select("SELECT count(*) as coun FROM `infortisa_productSpecification` 
      WHERE Id like '" . $item['Id'] . "' and
       OptionId like '" . $item['OptionId'] . "' and
       ProductId like '" . $item['ProductId'] . "'" );
      
-     if($results[0]->coun == 0)
+   //  if($results[0]->coun == 0){}
+     
+     
         $affected = \DB::insert('insert into infortisa_productSpecification (Id, OptionId, ProductId) values (?, ?, ?)', [$item['Id'], $item['OptionId'], $item['ProductId']]);
+        
+        
+        }catch(\Exception $e){}
    
     }
   

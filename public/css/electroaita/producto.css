@@ -234,8 +234,8 @@
           display: flex;
           flex-direction: column;
         }
-    .productBlock{
-        
+    body .productBlock{
+        padding:30px !important ;
     }
     .typeGrid .productWrapper .precioProducto{
         
@@ -266,7 +266,7 @@
     
     .typeGrid .productWrapper .imagenProducto{
         text-align:center;
-        height: 200px;
+    /*    height: 200px;    */
         overflow:hidden;
     }
     
@@ -402,3 +402,10 @@
     .loadMoreProducts{
         width:100%;
     }
+    
+    
+    @media only screen and (min-width: 1600px) {
+    .imagenProducto {
+        margin-bottom:50px;
+    }
+}

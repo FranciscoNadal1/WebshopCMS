@@ -384,8 +384,211 @@ ORDER BY csv.TITULOFAMILIA
       
     return $results;
    }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////                  Filtros nuevos                        //////////////////////////////////////////////////////////////////
+
+    static function getAllWhereTituloFamiliaPagePlusFiltersNew($name, $page, $filters){
+      
+      $name = self::makeFriendlier($name);
+      $pager = self::numberOfProductsByPage() * $page;
+      
+    $stock = 0;
+      
+      $filte = explode("/", $filters);
+      
+      $ids = join("','",$filte);   
+
+        
+        $inVariable = "";
+        
+        foreach($filte as $value) {
+            if($value != "stock")
+                $inVariable = $inVariable . "'" . $value . "'" . ",";
+            else
+                $stock = 1;
+                
+        }
+        $inVariable = rtrim($inVariable, ',');
+
+////////////////////////////////////////////////////////////////////////////////
+//////////      SQL INJECTION PROBABLE VULNERABILITY, CHECK
+/*
+    if($stock == 0)
+      $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and  NOMFABRICANTE in ($inVariable) group by CODIGOINTERNO order by precio asc LIMIT ". $pager .", " . self::numberOfProductsByPage());
+    if($stock == 1){  
+     if($inVariable=="")
+            $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and STOCK > '0' group by CODIGOINTERNO  order by precio asc LIMIT ". $pager .", " . self::numberOfProductsByPage());
+     else
+            $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and  NOMFABRICANTE in ($inVariable) and STOCK > '0' group by CODIGOINTERNO  order by precio asc LIMIT ". $pager .", " . self::numberOfProductsByPage());
+    */
+ $results = \DB::select("SELECT * 
+ FROM " . self::$productTableName . ", infortisa_IdSku, infortisa_productSpecification, infortisa_specificationAttributeOption
+ where TITULOSUBFAMILIA like \"$name\" and  infortisa_IdSku.SKU =  " . self::$productTableName . ".CODIGOINTERNO
+ and infortisa_productSpecification.ProductId = infortisa_IdSku.ID
+ and infortisa_productSpecification.OptionId = infortisa_specificationAttributeOption.OptionId
+ and infortisa_specificationAttributeOption.OptionId in ($inVariable) and STOCK > '0' 
+ group by CODIGOINTERNO  
+ order by precio asc LIMIT ". $pager .", " . self::numberOfProductsByPage());
+         
+    
+      
+    return $results;
+   } 
+                        ///////////////////////////////////////////////
+    static function getAllWhereTituloFamiliaPagePlusFiltersOrderNew($name, $page, $filters, $order){
+      
+      $name = self::makeFriendlier($name);
+      $pager = self::numberOfProductsByPage() * $page;
+      
+    $stock = 0;
+      
+      $filte = explode("/", $filters);
+      
+      $ids = join("','",$filte);   
+
+        
+        $inVariable = "";
+        
+        foreach($filte as $value) {
+            if($value != "stock")
+                $inVariable = $inVariable . "'" . $value . "'" . ",";
+            else
+                $stock = 1;
+                
+        }
+        $inVariable = rtrim($inVariable, ',');
+
+////////////////////////////////////////////////////////////////////////////////
+//////////      SQL INJECTION PROBABLE VULNERABILITY, CHECK
+
+     switch ($order) {
+            case "caro":
+                
+                
+   $results = \DB::select("SELECT *
+ FROM " . self::$productTableName . ", infortisa_IdSku, infortisa_productSpecification, infortisa_specificationAttributeOption
+ where TITULOSUBFAMILIA like \"$name\" and  infortisa_IdSku.SKU =  " . self::$productTableName . ".CODIGOINTERNO
+ and infortisa_productSpecification.ProductId = infortisa_IdSku.ID
+ and infortisa_productSpecification.OptionId = infortisa_specificationAttributeOption.OptionId
+ and infortisa_specificationAttributeOption.OptionId in ($inVariable) and ". self::$productTableName . ".STOCK > '0' 
+ group by ". self::$productTableName . ".CODIGOINTERNO  
+ order by ". self::$productTableName . ".PRECIO DESC LIMIT ". $pager .", " . self::numberOfProductsByPage());
+
+
+                break;
+            case "barato":
+
+
+   $results = \DB::select("SELECT *
+ FROM " . self::$productTableName . ", infortisa_IdSku, infortisa_productSpecification, infortisa_specificationAttributeOption
+ where TITULOSUBFAMILIA like \"$name\" and  infortisa_IdSku.SKU =  " . self::$productTableName . ".CODIGOINTERNO
+ and infortisa_productSpecification.ProductId = infortisa_IdSku.ID
+ and infortisa_productSpecification.OptionId = infortisa_specificationAttributeOption.OptionId
+ and infortisa_specificationAttributeOption.OptionId in ($inVariable) and ". self::$productTableName . ".STOCK > '0' 
+ group by ". self::$productTableName . ".CODIGOINTERNO  
+ order by ". self::$productTableName . ".PRECIO ASC LIMIT ". $pager .", " . self::numberOfProductsByPage());
+
+
+
+
+                     break;            
+                
+            case "alfa":
+       
+   $results = \DB::select("SELECT *
+ FROM " . self::$productTableName . ", infortisa_IdSku, infortisa_productSpecification, infortisa_specificationAttributeOption
+ where TITULOSUBFAMILIA like \"$name\" and  infortisa_IdSku.SKU =  " . self::$productTableName . ".CODIGOINTERNO
+ and infortisa_productSpecification.ProductId = infortisa_IdSku.ID
+ and infortisa_productSpecification.OptionId = infortisa_specificationAttributeOption.OptionId
+ and infortisa_specificationAttributeOption.OptionId in ($inVariable) and ". self::$productTableName . ".STOCK > '0' 
+ group by ". self::$productTableName . ".CODIGOINTERNO  
+  order by ". self::$productTableName . ".TITULO ASC LIMIT ". $pager .", " . self::numberOfProductsByPage());
+ 
+ 
+ 
+                break;
+                 
+            case "novedades":
+                
+     $results = \DB::select("SELECT *
+ FROM " . self::$productTableName . ", infortisa_IdSku, infortisa_productSpecification, infortisa_specificationAttributeOption
+ where TITULOSUBFAMILIA like \"$name\" and  infortisa_IdSku.SKU =  " . self::$productTableName . ".CODIGOINTERNO
+ and infortisa_productSpecification.ProductId = infortisa_IdSku.ID
+ and infortisa_productSpecification.OptionId = infortisa_specificationAttributeOption.OptionId
+ and infortisa_specificationAttributeOption.OptionId in ($inVariable) and ". self::$productTableName . ".STOCK > '0' 
+ group by ". self::$productTableName . ".CODIGOINTERNO  
+  order by 
+                case when ". self::$productTableName . ".CICLOVIDA like 'Nove%' then 0 else 1 end, ". self::$productTableName . ".CICLOVIDA desc LIMIT ". $pager .", " . self::numberOfProductsByPage());
+  
+                break;
+            default:
+                   $results = \DB::select("SELECT *
+ FROM " . self::$productTableName . ", infortisa_IdSku, infortisa_productSpecification, infortisa_specificationAttributeOption
+ where TITULOSUBFAMILIA like \"$name\" and  infortisa_IdSku.SKU =  " . self::$productTableName . ".CODIGOINTERNO
+ and infortisa_productSpecification.ProductId = infortisa_IdSku.ID
+ and infortisa_productSpecification.OptionId = infortisa_specificationAttributeOption.OptionId
+ and infortisa_specificationAttributeOption.OptionId in ($inVariable) and ". self::$productTableName . ".STOCK > '0' 
+ group by ". self::$productTableName . ".CODIGOINTERNO  
+  ");             
+                
+                
+                break;
+
+    }
+      
+    return $results;
+   } 
+                        ///////////////////////////////////////////////
+    static function countAllWhereTituloFamiliaPagePlusFiltersNew($name, $page, $filters){
+      
+      $name = self::makeFriendlier($name);
+      $pager = self::numberOfProductsByPage() * $page;
+      
+    $stock = 0;
+      
+      $filte = explode("/", $filters);
+      
+      $ids = join("','",$filte);   
+
+        
+        $inVariable = "";
+        
+        foreach($filte as $value) {
+            if($value != "stock")
+                $inVariable = $inVariable . "'" . $value . "'" . ",";
+            else
+                $stock = 1;
+                
+        }
+        $inVariable = rtrim($inVariable, ',');
+
+////////////////////////////////////////////////////////////////////////////////
+//////////      SQL INJECTION PROBABLE VULNERABILITY, CHECK
+
+   $results = \DB::select("SELECT count(". self::$productTableName . ".CODIGOINTERNO) as coun
+ FROM " . self::$productTableName . ", infortisa_IdSku, infortisa_productSpecification, infortisa_specificationAttributeOption
+ where TITULOSUBFAMILIA like \"$name\" and  infortisa_IdSku.SKU =  " . self::$productTableName . ".CODIGOINTERNO
+ and infortisa_productSpecification.ProductId = infortisa_IdSku.ID
+ and infortisa_productSpecification.OptionId = infortisa_specificationAttributeOption.OptionId
+ and infortisa_specificationAttributeOption.OptionId in ($inVariable) and STOCK > '0' 
+ group by CODIGOINTERNO  
+ order by precio asc LIMIT ". $pager .", " . self::numberOfProductsByPage());
+
+      
+    return $results[0]->coun;
+   } 
+                                                                                                    //////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
    
-   
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////                  Filtros antiguos                        //////////////////////////////////////////////////////////////////
+
     static function getAllWhereTituloFamiliaPagePlusFilters($name, $page, $filters){
       
       $name = self::makeFriendlier($name);
@@ -425,7 +628,7 @@ ORDER BY csv.TITULOFAMILIA
       
     return $results;
    } 
-   
+                        ///////////////////////////////////////////////
     static function getAllWhereTituloFamiliaPagePlusFiltersOrder($name, $page, $filters, $order){
       
       $name = self::makeFriendlier($name);
@@ -522,6 +725,7 @@ ORDER BY csv.TITULOFAMILIA
       
     return $results;
    } 
+                        ///////////////////////////////////////////////
     static function countAllWhereTituloFamiliaPagePlusFilters($name, $page, $filters){
       
       $name = self::makeFriendlier($name);
@@ -561,7 +765,8 @@ ORDER BY csv.TITULOFAMILIA
       
     return $results[0]->coun;
    } 
-    
+                                                                                                    //////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    
    
        

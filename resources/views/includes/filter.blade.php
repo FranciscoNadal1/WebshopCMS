@@ -8,57 +8,14 @@
     
 ?>
 
-<script>
 
 
 
-
-
-
-
-
-    $( document ).ready(function() {
-        
-
-
-                
-        
-        
-        
-         $(".filterHeader").click(function(){
-            $(".checkboxContainer").slideToggle();
-        });
-    
-
-        
-        var urlArray = window.location.href.split("/");
-        
-        
-            urlArray.forEach(function(entry) {
-                
-                       success =  entry.replace(' ', '-');   
-                       
-                       success =  success.replace('%20', '-');   
-                       
-                console.log(success);
-                if(document.getElementById(success)){
-                    
-                    
-                    
-                    document.getElementById(success).checked = true;
-                }
-                
-            
-            });
-            
-    });
-    
-</script>
-
-
-
+     {{--   
 <div id="filterBig" ng-app="filterApp" name="filterBig">
+    
     <div id ="test" ng-controller="mainController">
+
           <form>
               <div class="filterHeader">Marcas:</div>
               <div class="checkboxContainer">
@@ -101,72 +58,17 @@
         @endforeach
     </div>
     
-       {{--
-    <button onclick="return false" >Filtrar</button>
-    
-
-
-     {{ (int)($minPrice[0]->M) }}
-    
-    <br/>
-   
-    {{ (int)($maxPrice[0]->M) }}
-     --}}
-    </div>
-    
-   
-
-</form>
-
-          <form>
-              <div class="filterHeader">Disponibilidad:</div>
-              <div class="checkboxContainer">
-                  
-
-
-
-
-                <div class="checkbox">
-                    
-                  <label>
-                      
-                      <input name="stock" id="stock" type="checkbox" value="" 
-                      onClick="
-                      if (this.checked) 
-                      {     
-                          window.location = window.location.href  + '/' + this.name; 
-                      
-                      }else if(!this.checked)
-                      {
-                          var myString = null;
-                          var myString = window.location.href;
-                          
-                          var success = myString.replace(this.name, '');
-
-                           success = success.replace(' ', '_');                          
-                          
-                        
-                        window.location.replace(success);
-                      }
-                      
-                      
-                      ">
-                     
-                          En stock
-                      </label>
-                </div>
-                
-                
-    </div>
-
+            
 
     </div>
 
-</form>
+    </div>
+
+--}}
 
 
 
---------------------------------------------------------------------
+
 
 
 
@@ -185,21 +87,26 @@ infortisa_specificationAttributeOption.SpecificationAttributeId =
 infortisa_specificationAttribute.SpecificationAttributeId
 and 
 totalCsv.CODSUBFAMILIA =  '". $subFamilia ."' 
-group by infortisa_specificationAttribute.SpecificationAttributeName");
+group by infortisa_specificationAttribute.SpecificationAttributeName
+order by infortisa_specificationAttribute.DisplayOrder
 
 
+");
+
+  	
 
 
 ?>
 
         @foreach ($filters as $fil)
         
+    <div class="filterPan" ng-controller="mainController">
               <div class="filterHeader">{{ $fil->SpecificationAttributeName }}:</div>
             
             <?php
             
                     $subFilters = \DB::select("
-    SELECT infortisa_specificationAttributeOption.OptionName
+    SELECT infortisa_specificationAttributeOption.OptionName, infortisa_specificationAttributeOption.OptionId,  count(infortisa_IdSku.SKU) as coun
     
     
 FROM totalCsv, 
@@ -226,11 +133,78 @@ group by infortisa_specificationAttributeOption.OptionName");
               <div class="checkboxContainer">
         @foreach ($subFilters as $fil2)
         
-            <div>{{ $fil2->OptionName }}</div>
+            <div class="checkbox">
+                <label>
+                <input name="{{ $fil2->OptionId }}" id="{{ $fil2->OptionId }}" type="checkbox" value="" 
+                      onClick="
+                      if (this.checked) 
+                      {     
+                          window.location = window.location.href  + '/' + this.name; 
+                      
+                      }else if(!this.checked)
+                      {
+                          var myString = null;
+                          var myString = window.location.href;
+                          
+                          var success = myString.replace(this.name, '');
+
+                           success = success.replace(' ', '_');                          
+                          
+                        
+                        window.location.replace(success);
+                      }
+                      
+                      
+                      ">
+                
+                {{ $fil2->OptionName }} {{--     1fil2->coun    --}}
             
+                      </label></div>
             @endforeach
             </div>
             
             
+            
+            
+            
+             </div>
         @endforeach
+  <script>
+
+    $( document ).ready(function() {
+        
+
+        
+         $(".filterHeader").click(function(){
+            $(".checkboxContainer").slideToggle();
+        });
+    
+
+        
+        var urlArray = window.location.href.split("/");
+        
+        
+            urlArray.forEach(function(entry) {
+                
+                       success =  entry.replace(' ', '-');   
+                       
+                       success =  success.replace('%20', '-');   
+                       
+                console.log(success);
+                if(document.getElementById(success)){
+                    
+                    
+                    
+                    document.getElementById(success).checked = true;
+                }
+                
+            
+            });
+            
+    });
+    
+</script>
+ <div style="height:100px;"></div>
+ 
+ 
  
