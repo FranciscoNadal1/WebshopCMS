@@ -12,7 +12,7 @@ setlocale(LC_ALL, "en_US.utf8");
 error_reporting(E_ALL);
 
 
-	set_time_limit(500000); 
+	set_time_limit(0); 
 
 
 	echo "

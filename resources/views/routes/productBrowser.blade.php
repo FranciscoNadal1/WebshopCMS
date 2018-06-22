@@ -3,19 +3,7 @@
 
 
        @section('content')
-      
-            <?php
-            
-            
-            ///////                 Provisional
-            if(!isset($categoria)){
-                    $categoria = "AMD socket AM4";
-                    
-                    $results =  \DBData::getAllWhereTituloFamilia($categoria);  
-                
-            }
-            
-            ?>
+
 
 
             

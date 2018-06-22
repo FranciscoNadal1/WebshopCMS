@@ -1,7 +1,8 @@
 
                 
         @section('forLater')
-        
+
+            <div id="forLater">
             @if( ! empty(Session::get('cart') ))
             
             
@@ -22,7 +23,6 @@
                 
                 
                 
-            <div id="forLater">
                @foreach(Session::get('cart') as $test)
                
                <?php
@@ -55,9 +55,9 @@
                 @endforeach   
                 <a onclick="forget()">forget</a>
                 
-        </div>
                 @endif
 
+        </div>
     
         @show
         

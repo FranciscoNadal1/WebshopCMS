@@ -16,7 +16,7 @@ $( document ).ready(function() {
 	  <div id="TopHeader">
 	    
 	    
-	      <div class="col-md-3" style="height: 100%;">
+	      <div class="col-sm-3" style="height: 100%;">
 	        {{--
 	        
       	    <div class="col-sm-1 navbar-header">
@@ -35,14 +35,14 @@ $( document ).ready(function() {
 	         </a> 
 	         </div>
 	    
-           <div id="searchArea"  class="col-md-6">
+           <div id="searchArea"  class="col-sm-6">
                 @section('search')
                     @include('commonIncludes/searchBar')
                 @show
             </div>
             
             
-              <div id="searchArea"  class="col-md-3">
+              <div id="searchArea"  class="col-sm-3">
             </div>         
             
             

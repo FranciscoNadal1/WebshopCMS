@@ -1,6 +1,6 @@
   <?php
   //$totalNumberProducts = $results[0]->coun;
-  $totalNumberProducts = $countAllProducts;
+  $totalNumberProducts = sizeOf($results);
   ?>
   
 
@@ -134,6 +134,16 @@ function openNav() {
 function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
 }
+
+
+function addToLater(codigoInterno,provider,precio,titulo){
+                        $('#scriptDiv').load("/put/"+codigoInterno+"/"+provider+"/"+precio+"/"+titulo, function() {
+                                        $("#forLater").fadeOut("slow");
+                                        $("#forLater").load(location.href + " #forLater");
+                                        $("#forLater").fadeIn("slow");
+                          });
+                          
+                      }
 </script>
 
 
@@ -175,19 +185,22 @@ function closeNav() {
                 <div class="col-lg-2"></div>
                 <div id="filterBar" class="containerdiv hidden-sm hidden-xs hidden-md visible-lg-block col-lg-2">
                     
-                        
-     @include('includes/filter', array('subFamilia' => $results[0]->CODSUBFAMILIA))
- 
                     
                     
+                     @include('includes/filter', array('subFamilia' => \DBData::getCodesubfamiliaFromSubfamilia($categoria)))
+                     
+                     
                 </div>
             
+        @if(sizeOf($results) > 0) 
                <div id="ProductContainer" class="container col-sm-12 col-md-12 col-lg-10 pull-right">  
                
                    <div id="CategoryAndArticleDiv">
-                       <div id="CategoryHeader" class="{{ \DBData::desAccentify($results[0]->TITULOSUBFAMILIA) }}">{{ $results[0]->TITULOSUBFAMILIA }} 
+                       <div id="CategoryHeader" class="{{ \DBData::desAccentify($results[0]->TITULOSUBFAMILIA) }}">
                            
-<span style="font-size:30px;cursor:pointer;float:right" onclick="openNav()">Filtros &#9776; </span>
+                           {{ $results[0]->TITULOSUBFAMILIA }} 
+                
+<span class="hidden-lg" style="font-size:30px;cursor:pointer;float:right" onclick="openNav()">Filtros &#9776; </span>
                        </div>
                        
                         <div id="ArticleNumber">{{ $totalNumberProducts }} articulos
@@ -244,20 +257,29 @@ function closeNav() {
                                 
                                 <?php            $typeList = \GetSettings::getProductListType();            ?>
                                 
+                                @if($totalNumberProducts > 0)
                                 
-                            @foreach ($results as $resul)
-                                @if ($typeList == "grid")
-                                    @include('includes/gridProductList', array('resu' => $resul))
+                                    @foreach ($results as $resul)
+                                        
+                                            @if ($typeList == "grid")
+                                                @include('includes/gridProductList', array('resu' => $resul))
+                                            @endif
+                                            
+                                            @if ($typeList == "list")
+                                                @include('includes/listProductList', array('resu' => $resul))
+                                            @endif
+                                    @endforeach
+                               
                                 @endif
-                                
-                                @if ($typeList == "list")
-                                    @include('includes/listProductList', array('resu' => $resul))
-                                @endif
-                            @endforeach
+                        
                             </div>                    
                     
                 </div>
-
+        
+        @else
+                <div id="ProductContainer"><h2>No hay coincidencias</h2></div>
+        
+        @endif
 <div id="cuentaSiguente" style="display:none"></div>
 
 <script>var produ;

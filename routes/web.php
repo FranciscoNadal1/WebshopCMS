@@ -26,13 +26,12 @@ Route::get('/listado/{id}', function ($id) {
     
    //  $results =  DBData::getAllWhereTituloFamilia($id);  
      	$results =  DBData::getAllWhereTituloFamiliaPage($id, 0);  
-     	$count =  DBData::countAllWhereTituloFamiliaPage($id, 0);  
+    // 	$count =  DBData::countAllWhereTituloFamiliaPage($id, 0);  
      	
      	
 	    return view('routes/productBrowser', [
 		    'name' => 'index', 
 		    'categoria' => $id,
-		    'countAllProducts' => $count,
 		    'results' => $results
 	    ]
     );
@@ -45,14 +44,13 @@ Route::get('/listado/{id}/{category}', function ($id, $category) {
    //  $results =  DBData::getAllWhereTituloFamilia($id);  
    
      	$results =  DBData::getAllWhereTituloFamiliaPagePlusFiltersNew($id, 0, $category);  
-     	$count =  DBData::countAllWhereTituloFamiliaPagePlusFiltersNew($id, 0, $category);  
+     //	$count =  DBData::countAllWhereTituloFamiliaPagePlusFiltersNew($id, 0, $category);  
      	
      
 	    return view('routes/productBrowser', [
 		    'name' => 'index', 
 		    'categoria' => $id,
 		    'list' => $category,
-		    'countAllProducts' => $count,
 		    'results' => $results
 	    ]
     );
@@ -70,14 +68,13 @@ Route::post('/listado/{id}/{category}', function ($id, $category) {
    //  $results =  DBData::getAllWhereTituloFamilia($id);  
    
      	$results =  DBData::getAllWhereTituloFamiliaPagePlusFiltersOrderNew($id, 0, $category, $_REQUEST['order']);  
-     	$count =  DBData::countAllWhereTituloFamiliaPagePlusFiltersNew($id, 0, $category);  
+     	//$count =  DBData::countAllWhereTituloFamiliaPagePlusFiltersNew($id, 0, $category);  
      	
      
 	    return view('routes/productBrowser', [
 		    'name' => 'index', 
 		    'categoria' => $id,
 		    'list' => $category,
-		    'countAllProducts' => $count,
 		    'results' => $results
 	    ]
     );
