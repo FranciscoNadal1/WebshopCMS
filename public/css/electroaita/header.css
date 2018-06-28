@@ -47,7 +47,9 @@
     */
     padding-top:30px;
 }
-
+#savedProducts .dropdown-toggle{
+    border:1px solid black;
+}
 #auth li{
         list-style:none;
         float:right;

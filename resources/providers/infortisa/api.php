@@ -9,7 +9,7 @@ use Providers\ProvidersApi\ProvidersApiInterface as ProvidersApiInterface;
 class infortisaApi implements ProvidersApiInterface
 {
     
-    static $downloadImage = 0;
+    static $downloadImage = 1;
     
     static function file_get_contents_utf8($fn) {
         $content = file_get_contents($fn);
@@ -784,13 +784,7 @@ FROM infortisa_IdSku
  echo $countNewId;
 }
      
-try{
-    self::getSpecifications();
-    self::getSpecificationAttribute();
-    self::getAttributeOption();
-}catch(\Exception $e){
-    echo $e;    
-}
+
 
 
      }

@@ -122,7 +122,7 @@ $(document).ready(function(){
 
 <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-angle-up "></i></button>
 
-   @include('commonIncludes/forLater')
+ {{--  @include('commonIncludes/forLater')    --}}
 
 <div id="scriptDiv"></div>
     </body>

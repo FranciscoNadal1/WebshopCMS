@@ -423,7 +423,6 @@ ORDER BY csv.TITULOFAMILIA
         }
         $inVariable = rtrim($inVariable, ',');
         
-// echo "<div class='testText'>";
 
 $results = \DB::select("SELECT infortisa_specificationAttribute.SpecificationAttributeId from infortisa_specificationAttribute, infortisa_specificationAttributeOption 
 
@@ -435,12 +434,10 @@ $results = \DB::select("SELECT infortisa_specificationAttribute.SpecificationAtt
 if(sizeOf($results) == 0)
 return;
 
-//print_r($results);
 $dinamicQuery = "";
 
     foreach($results as $value){
         
-   //     echo $value->SpecificationAttributeId;
         
         $results2 = \DB::select("SELECT infortisa_specificationAttributeOption.OptionId from infortisa_specificationAttribute, infortisa_specificationAttributeOption 
  where infortisa_specificationAttribute.SpecificationAttributeId = infortisa_specificationAttributeOption.SpecificationAttributeId
@@ -448,17 +445,6 @@ $dinamicQuery = "";
  and infortisa_specificationAttributeOption.OptionId in ($inVariable)
 ");
 
-/*
-SELECT infortisa_IdSku.SKU FROM `infortisa_specificationAttributeOption`,infortisa_productSpecification, infortisa_IdSku WHERE 
-(infortisa_specificationAttributeOption.OptionId ='1136' or infortisa_specificationAttributeOption.OptionId ='1234')
-and
-infortisa_productSpecification.OptionID = infortisa_specificationAttributeOption.OptionId
-and
-infortisa_productSpecification.ProductID =
-infortisa_IdSku.ID
-
-
-*/
 
 
 
@@ -466,10 +452,8 @@ $dinamicQuery = $dinamicQuery .  "CODIGOINTERNO IN (";
 
                 $dinamicQuery = $dinamicQuery . 
                 "SELECT infortisa_IdSku.SKU FROM infortisa_IdSku 
-                
                 INNER JOIN infortisa_productSpecification ON infortisa_productSpecification.ProductId = infortisa_IdSku.ID
 INNER JOIN infortisa_specificationAttributeOption ON infortisa_specificationAttributeOption.OptionId = infortisa_productSpecification.OptionId
-                
                 WHERE (";
         for($i = 0; $i != sizeof($results2);$i++){
             
@@ -477,9 +461,6 @@ INNER JOIN infortisa_specificationAttributeOption ON infortisa_specificationAttr
             
             
                 $dinamicQuery = $dinamicQuery .  "infortisa_specificationAttributeOption.OptionId ='" . $results2[$i]->OptionId . "'";
-                //echo ;
-               // print_r($results2[$i]);
-               
                
                 if($i == sizeof($results2)-1)
                 {
@@ -495,58 +476,11 @@ INNER JOIN infortisa_specificationAttributeOption ON infortisa_specificationAttr
                     $dinamicQuery = $dinamicQuery .  " or ";
             }
         }
-        /*
-            foreach($results2 as $valueIn){
-            }
-            */
             if ($value === end($results)){}
             
             else
                 $dinamicQuery = $dinamicQuery .  " and ";
     }
-/*
-      echo $dinamicQuery;
-echo "</div>";
-*/
-
-////////////////////////////////////////////////////////////////////////////////
-//////////      SQL INJECTION PROBABLE VULNERABILITY, CHECK
-/*
-    if($stock == 0)
-      $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and  NOMFABRICANTE in ($inVariable) group by CODIGOINTERNO order by precio asc LIMIT ". $pager .", " . self::numberOfProductsByPage());
-    if($stock == 1){  
-     if($inVariable=="")
-            $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and STOCK > '0' group by CODIGOINTERNO  order by precio asc LIMIT ". $pager .", " . self::numberOfProductsByPage());
-     else
-            $results = \DB::select("SELECT * FROM " . self::$productTableName . " where TITULOSUBFAMILIA like \"$name\" and  NOMFABRICANTE in ($inVariable) and STOCK > '0' group by CODIGOINTERNO  order by precio asc LIMIT ". $pager .", " . self::numberOfProductsByPage());
-    */
-    
-    /*
- $results = \DB::select("SELECT * 
- FROM " . self::$productTableName . ", infortisa_IdSku, infortisa_productSpecification, infortisa_specificationAttributeOption
- where TITULOSUBFAMILIA like \"$name\" and  infortisa_IdSku.SKU =  " . self::$productTableName . ".CODIGOINTERNO
- and infortisa_productSpecification.ProductId = infortisa_IdSku.ID
- and infortisa_productSpecification.OptionId = infortisa_specificationAttributeOption.OptionId
- and infortisa_specificationAttributeOption.OptionId in ($inVariable) and STOCK > '0' 
- group by CODIGOINTERNO  
- order by precio asc LIMIT ". $pager .", " . self::numberOfProductsByPage());
-         */
-         /*
-echo("SELECT " . self::$productTableName . ".*
- FROM " . self::$productTableName . ", infortisa_IdSku
- 
- 
- 
- 
- where TITULOSUBFAMILIA like \"$name\" 
- and infortisa_IdSku.SKU =  " . self::$productTableName . ".CODIGOINTERNO
- 
- and " . $dinamicQuery . "
- group by CODIGOINTERNO  
- order by precio asc LIMIT ". $pager .", " . self::numberOfProductsByPage());
- 
- */
- 
          
      $results = \DB::select("SELECT " . self::$productTableName . ".*
  FROM " . self::$productTableName . ", infortisa_IdSku
@@ -564,7 +498,7 @@ echo("SELECT " . self::$productTableName . ".*
    } 
                         ///////////////////////////////////////////////
     static function getAllWhereTituloFamiliaPagePlusFiltersOrderNew($name, $page, $filters, $order){
-      
+          
       $name = self::makeFriendlier($name);
       $pager = self::numberOfProductsByPage() * $page;
       
@@ -585,6 +519,84 @@ echo("SELECT " . self::$productTableName . ".*
                 
         }
         $inVariable = rtrim($inVariable, ',');
+        
+
+$results = \DB::select("SELECT infortisa_specificationAttribute.SpecificationAttributeId from infortisa_specificationAttribute, infortisa_specificationAttributeOption 
+
+ where infortisa_specificationAttribute.SpecificationAttributeId = infortisa_specificationAttributeOption.SpecificationAttributeId
+ and infortisa_specificationAttributeOption.OptionId in ($inVariable)
+ group by infortisa_specificationAttribute.SpecificationAttributeId
+");
+
+if(sizeOf($results) == 0)
+return;
+
+$dinamicQuery = "";
+
+    foreach($results as $value){
+        
+        
+        $results2 = \DB::select("SELECT infortisa_specificationAttributeOption.OptionId from infortisa_specificationAttribute, infortisa_specificationAttributeOption 
+ where infortisa_specificationAttribute.SpecificationAttributeId = infortisa_specificationAttributeOption.SpecificationAttributeId
+ and infortisa_specificationAttributeOption.SpecificationAttributeId in ($value->SpecificationAttributeId)
+ and infortisa_specificationAttributeOption.OptionId in ($inVariable)
+");
+
+
+
+
+$dinamicQuery = $dinamicQuery .  "CODIGOINTERNO IN (";
+
+                $dinamicQuery = $dinamicQuery . 
+                "SELECT infortisa_IdSku.SKU FROM infortisa_IdSku 
+                INNER JOIN infortisa_productSpecification ON infortisa_productSpecification.ProductId = infortisa_IdSku.ID
+INNER JOIN infortisa_specificationAttributeOption ON infortisa_specificationAttributeOption.OptionId = infortisa_productSpecification.OptionId
+                WHERE (";
+        for($i = 0; $i != sizeof($results2);$i++){
+            
+            
+            
+            
+                $dinamicQuery = $dinamicQuery .  "infortisa_specificationAttributeOption.OptionId ='" . $results2[$i]->OptionId . "'";
+               
+                if($i == sizeof($results2)-1)
+                {
+                
+                    $dinamicQuery = $dinamicQuery . ") group by infortisa_IdSku.SKU";
+
+                    $dinamicQuery = $dinamicQuery .  ")";
+                    break;
+                }
+                    
+                else{
+                    
+                    $dinamicQuery = $dinamicQuery .  " or ";
+            }
+        }
+            if ($value === end($results)){}
+            
+            else
+                $dinamicQuery = $dinamicQuery .  " and ";
+    }
+         
+     $resultsString = "SELECT " . self::$productTableName . ".*
+ FROM " . self::$productTableName . ", infortisa_IdSku
+ where TITULOSUBFAMILIA like \"$name\" 
+ and infortisa_IdSku.SKU =  " . self::$productTableName . ".CODIGOINTERNO
+ 
+ and " . $dinamicQuery . "
+  group by CODIGOINTERNO 
+";
+ 
+
+
+
+
+
+
+
+
+
 
 ////////////////////////////////////////////////////////////////////////////////
 //////////      SQL INJECTION PROBABLE VULNERABILITY, CHECK
@@ -593,29 +605,13 @@ echo("SELECT " . self::$productTableName . ".*
             case "caro":
                 
                 
-   $results = \DB::select("SELECT *
- FROM " . self::$productTableName . ", infortisa_IdSku, infortisa_productSpecification, infortisa_specificationAttributeOption
- where TITULOSUBFAMILIA like \"$name\" and  infortisa_IdSku.SKU =  " . self::$productTableName . ".CODIGOINTERNO
- and infortisa_productSpecification.ProductId = infortisa_IdSku.ID
- and infortisa_productSpecification.OptionId = infortisa_specificationAttributeOption.OptionId
- and infortisa_specificationAttributeOption.OptionId in ($inVariable) and ". self::$productTableName . ".STOCK > '0' 
- group by ". self::$productTableName . ".CODIGOINTERNO  
- order by ". self::$productTableName . ".PRECIO DESC LIMIT ". $pager .", " . self::numberOfProductsByPage());
-
+$resultsString = $resultsString . " order by ". self::$productTableName . ".PRECIO DESC LIMIT ". $pager .", " . self::numberOfProductsByPage();
 
                 break;
             case "barato":
 
 
-   $results = \DB::select("SELECT *
- FROM " . self::$productTableName . ", infortisa_IdSku, infortisa_productSpecification, infortisa_specificationAttributeOption
- where TITULOSUBFAMILIA like \"$name\" and  infortisa_IdSku.SKU =  " . self::$productTableName . ".CODIGOINTERNO
- and infortisa_productSpecification.ProductId = infortisa_IdSku.ID
- and infortisa_productSpecification.OptionId = infortisa_specificationAttributeOption.OptionId
- and infortisa_specificationAttributeOption.OptionId in ($inVariable) and ". self::$productTableName . ".STOCK > '0' 
- group by ". self::$productTableName . ".CODIGOINTERNO  
- order by ". self::$productTableName . ".PRECIO ASC LIMIT ". $pager .", " . self::numberOfProductsByPage());
-
+$resultsString = $resultsString . "  order by ". self::$productTableName . ".PRECIO ASC LIMIT ". $pager .", " . self::numberOfProductsByPage();
 
 
 
@@ -623,46 +619,23 @@ echo("SELECT " . self::$productTableName . ".*
                 
             case "alfa":
        
-   $results = \DB::select("SELECT *
- FROM " . self::$productTableName . ", infortisa_IdSku, infortisa_productSpecification, infortisa_specificationAttributeOption
- where TITULOSUBFAMILIA like \"$name\" and  infortisa_IdSku.SKU =  " . self::$productTableName . ".CODIGOINTERNO
- and infortisa_productSpecification.ProductId = infortisa_IdSku.ID
- and infortisa_productSpecification.OptionId = infortisa_specificationAttributeOption.OptionId
- and infortisa_specificationAttributeOption.OptionId in ($inVariable) and ". self::$productTableName . ".STOCK > '0' 
- group by ". self::$productTableName . ".CODIGOINTERNO  
-  order by ". self::$productTableName . ".TITULO ASC LIMIT ". $pager .", " . self::numberOfProductsByPage());
- 
+$resultsString = $resultsString . "  order by ". self::$productTableName . ".TITULO ASC LIMIT ". $pager .", " . self::numberOfProductsByPage();
  
  
                 break;
                  
             case "novedades":
                 
-     $results = \DB::select("SELECT *
- FROM " . self::$productTableName . ", infortisa_IdSku, infortisa_productSpecification, infortisa_specificationAttributeOption
- where TITULOSUBFAMILIA like \"$name\" and  infortisa_IdSku.SKU =  " . self::$productTableName . ".CODIGOINTERNO
- and infortisa_productSpecification.ProductId = infortisa_IdSku.ID
- and infortisa_productSpecification.OptionId = infortisa_specificationAttributeOption.OptionId
- and infortisa_specificationAttributeOption.OptionId in ($inVariable) and ". self::$productTableName . ".STOCK > '0' 
- group by ". self::$productTableName . ".CODIGOINTERNO  
-  order by 
-                case when ". self::$productTableName . ".CICLOVIDA like 'Nove%' then 0 else 1 end, ". self::$productTableName . ".CICLOVIDA desc LIMIT ". $pager .", " . self::numberOfProductsByPage());
-  
+$resultsString = $resultsString . "   order by  case when ". self::$productTableName . ".CICLOVIDA like 'Nove%' then 0 else 1 end, ". self::$productTableName . ".CICLOVIDA desc LIMIT ". $pager .", " . self::numberOfProductsByPage();
                 break;
             default:
-                   $results = \DB::select("SELECT *
- FROM " . self::$productTableName . ", infortisa_IdSku, infortisa_productSpecification, infortisa_specificationAttributeOption
- where TITULOSUBFAMILIA like \"$name\" and  infortisa_IdSku.SKU =  " . self::$productTableName . ".CODIGOINTERNO
- and infortisa_productSpecification.ProductId = infortisa_IdSku.ID
- and infortisa_productSpecification.OptionId = infortisa_specificationAttributeOption.OptionId
- and infortisa_specificationAttributeOption.OptionId in ($inVariable) and ". self::$productTableName . ".STOCK > '0' 
- group by ". self::$productTableName . ".CODIGOINTERNO  
-  ");             
-                
+                 echo $resultsString;  
                 
                 break;
 
     }
+    
+        $results = \DB::select($resultsString);
       
     return $results;
    } 
@@ -689,20 +662,81 @@ echo("SELECT " . self::$productTableName . ".*
                 
         }
         $inVariable = rtrim($inVariable, ',');
+        
 
-////////////////////////////////////////////////////////////////////////////////
-//////////      SQL INJECTION PROBABLE VULNERABILITY, CHECK
+$results = \DB::select("SELECT infortisa_specificationAttribute.SpecificationAttributeId from infortisa_specificationAttribute, infortisa_specificationAttributeOption 
 
-   $results = \DB::select("SELECT count(". self::$productTableName . ".CODIGOINTERNO) as coun
- FROM " . self::$productTableName . ", infortisa_IdSku, infortisa_productSpecification, infortisa_specificationAttributeOption
- where TITULOSUBFAMILIA like \"$name\" and  infortisa_IdSku.SKU =  " . self::$productTableName . ".CODIGOINTERNO
- and infortisa_productSpecification.ProductId = infortisa_IdSku.ID
- and infortisa_productSpecification.OptionId = infortisa_specificationAttributeOption.OptionId
- and infortisa_specificationAttributeOption.OptionId in ($inVariable) and STOCK > '0' 
- group by CODIGOINTERNO  
- order by precio asc LIMIT ". $pager .", " . self::numberOfProductsByPage());
+ where infortisa_specificationAttribute.SpecificationAttributeId = infortisa_specificationAttributeOption.SpecificationAttributeId
+ and infortisa_specificationAttributeOption.OptionId in ($inVariable)
+ group by infortisa_specificationAttribute.SpecificationAttributeId
+");
 
+if(sizeOf($results) == 0)
+return;
+
+$dinamicQuery = "";
+
+    foreach($results as $value){
+        
+        
+        $results2 = \DB::select("SELECT infortisa_specificationAttributeOption.OptionId from infortisa_specificationAttribute, infortisa_specificationAttributeOption 
+ where infortisa_specificationAttribute.SpecificationAttributeId = infortisa_specificationAttributeOption.SpecificationAttributeId
+ and infortisa_specificationAttributeOption.SpecificationAttributeId in ($value->SpecificationAttributeId)
+ and infortisa_specificationAttributeOption.OptionId in ($inVariable)
+");
+
+
+
+
+$dinamicQuery = $dinamicQuery .  "CODIGOINTERNO IN (";
+
+                $dinamicQuery = $dinamicQuery . 
+                "SELECT infortisa_IdSku.SKU FROM infortisa_IdSku 
+                INNER JOIN infortisa_productSpecification ON infortisa_productSpecification.ProductId = infortisa_IdSku.ID
+INNER JOIN infortisa_specificationAttributeOption ON infortisa_specificationAttributeOption.OptionId = infortisa_productSpecification.OptionId
+                WHERE (";
+        for($i = 0; $i != sizeof($results2);$i++){
+            
+            
+            
+            
+                $dinamicQuery = $dinamicQuery .  "infortisa_specificationAttributeOption.OptionId ='" . $results2[$i]->OptionId . "'";
+               
+                if($i == sizeof($results2)-1)
+                {
+                
+                    $dinamicQuery = $dinamicQuery . ") group by infortisa_IdSku.SKU";
+
+                    $dinamicQuery = $dinamicQuery .  ")";
+                    break;
+                }
+                    
+                else{
+                    
+                    $dinamicQuery = $dinamicQuery .  " or ";
+            }
+        }
+            if ($value === end($results)){}
+            
+            else
+                $dinamicQuery = $dinamicQuery .  " and ";
+    }
+         
+     $results = \DB::select("SELECT count(*) as coun 
+ FROM " . self::$productTableName . ", infortisa_IdSku
+ where TITULOSUBFAMILIA like \"$name\" 
+ and infortisa_IdSku.SKU =  " . self::$productTableName . ".CODIGOINTERNO
+ 
+ and " . $dinamicQuery . "
+ order by precio asc");
       
+      
+      
+      
+ 
+ 
+ 
+ 
     return $results[0]->coun;
    } 
                                                                                                     //////////////////////////////////////////////////////////////////

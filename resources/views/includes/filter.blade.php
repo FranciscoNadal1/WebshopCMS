@@ -11,96 +11,11 @@
 
 
 
-     {{--   
-<div id="filterBig" ng-app="filterApp" name="filterBig">
-    
-    <div id ="test" ng-controller="mainController">
 
-          <form>
-              <div class="filterHeader">Marcas:</div>
-              <div class="checkboxContainer">
-        @foreach ($results as $resul)
-
-
-
-
-                <div class="checkbox">
-                    
-                  <label>
-                      
-                      <input name="{{ $resul->NOMFABRICANTE }}" id="{{ str_replace(' ', '-', $resul->NOMFABRICANTE)  }}" type="checkbox" value="" 
-                      onClick="
-                      if (this.checked) 
-                      {     
-                          window.location = window.location.href  + '/' + this.name; 
-                      
-                      }else if(!this.checked)
-                      {
-                          var myString = null;
-                          var myString = window.location.href;
-                          
-                          var success = myString.replace(this.name, '');
-
-                           success = success.replace(' ', '_');                          
-                          
-                        
-                        window.location.replace(success);
-                      }
-                      
-                      
-                      ">
-                     
-                          {{ $resul->NOMFABRICANTE }}
-                          
-                      </label>
-                </div>
-                
-        @endforeach
-    </div>
-    
-            
-
-    </div>
-
-    </div>
-
---}}
-
-
-
-
-
-
-
-
-    <?php
-        $filters = \DB::select("
-    SELECT infortisa_specificationAttribute.SpecificationAttributeName
-    
-    
-FROM totalCsv, `infortisa_productSpecification` , infortisa_IdSku, infortisa_specificationAttributeOption, infortisa_specificationAttribute
-WHERE totalCsv.CODIGOINTERNO = infortisa_IdSku.SKU
-and infortisa_IdSku.ID = infortisa_productSpecification.ProductId
-and infortisa_productSpecification.OptionId = infortisa_specificationAttributeOption.OptionId
-and
-infortisa_specificationAttributeOption.SpecificationAttributeId =
-infortisa_specificationAttribute.SpecificationAttributeId
-and 
-totalCsv.CODSUBFAMILIA =  '". $subFamilia ."' 
-group by infortisa_specificationAttribute.SpecificationAttributeName
-order by infortisa_specificationAttribute.DisplayOrder
-
-
-");
-
-  	
-
-
-?>
-
+                  
         @foreach ($filters as $fil)
         
-    <div class="filterPan" ng-controller="mainController">
+    <div class="filterPan " ng-controller="mainController">
               <div class="filterHeader">{{ $fil->SpecificationAttributeName }}:</div>
             
             <?php
@@ -114,16 +29,12 @@ FROM totalCsv,
 infortisa_IdSku, 
 infortisa_specificationAttributeOption, 
 infortisa_specificationAttribute
-
-
 WHERE totalCsv.CODIGOINTERNO = infortisa_IdSku.SKU
 and infortisa_IdSku.ID = infortisa_productSpecification.ProductId
 and infortisa_productSpecification.OptionId = infortisa_specificationAttributeOption.OptionId
-and
-infortisa_specificationAttributeOption.SpecificationAttributeId =
+and infortisa_specificationAttributeOption.SpecificationAttributeId =
 infortisa_specificationAttribute.SpecificationAttributeId
-and 
-totalCsv.CODSUBFAMILIA =  '". $subFamilia ."' 
+and totalCsv.CODSUBFAMILIA =  '". $subFamilia ."' 
 and infortisa_specificationAttribute.SpecificationAttributeName =  '".  $fil->SpecificationAttributeName  ."' 
 group by infortisa_specificationAttributeOption.OptionName");
 
@@ -131,6 +42,10 @@ group by infortisa_specificationAttributeOption.OptionName");
 ?>
 
               <div class="checkboxContainer">
+                  
+
+                  
+                  
         @foreach ($subFilters as $fil2)
         
             <div class="checkbox">

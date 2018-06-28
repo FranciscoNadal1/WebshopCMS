@@ -26,12 +26,13 @@ Route::get('/listado/{id}', function ($id) {
     
    //  $results =  DBData::getAllWhereTituloFamilia($id);  
      	$results =  DBData::getAllWhereTituloFamiliaPage($id, 0);  
-    // 	$count =  DBData::countAllWhereTituloFamiliaPage($id, 0);  
+     	$count =  DBData::countAllWhereTituloFamiliaPage($id, 0);  
      	
      	
 	    return view('routes/productBrowser', [
 		    'name' => 'index', 
 		    'categoria' => $id,
+		    'coun' => $count,
 		    'results' => $results
 	    ]
     );
@@ -44,20 +45,17 @@ Route::get('/listado/{id}/{category}', function ($id, $category) {
    //  $results =  DBData::getAllWhereTituloFamilia($id);  
    
      	$results =  DBData::getAllWhereTituloFamiliaPagePlusFiltersNew($id, 0, $category);  
-     //	$count =  DBData::countAllWhereTituloFamiliaPagePlusFiltersNew($id, 0, $category);  
+     	$count =  DBData::countAllWhereTituloFamiliaPagePlusFiltersNew($id, 0, $category);  
      	
-     
 	    return view('routes/productBrowser', [
 		    'name' => 'index', 
 		    'categoria' => $id,
 		    'list' => $category,
+		    'coun' => $count,
 		    'results' => $results
 	    ]
     );
 })->where('category', '.+');
-
-
-
 
 
 
@@ -68,13 +66,13 @@ Route::post('/listado/{id}/{category}', function ($id, $category) {
    //  $results =  DBData::getAllWhereTituloFamilia($id);  
    
      	$results =  DBData::getAllWhereTituloFamiliaPagePlusFiltersOrderNew($id, 0, $category, $_REQUEST['order']);  
-     	//$count =  DBData::countAllWhereTituloFamiliaPagePlusFiltersNew($id, 0, $category);  
+     	$count =  DBData::countAllWhereTituloFamiliaPagePlusFiltersNew($id, 0, $category);  
      	
-     
 	    return view('routes/productBrowser', [
 		    'name' => 'index', 
 		    'categoria' => $id,
 		    'list' => $category,
+		    'coun' => $count,
 		    'results' => $results
 	    ]
     );
@@ -432,7 +430,7 @@ Route::post('/sampleProductList/{page}/{name}/filters', function ($page, $name){
 
 Route::get('/sampleProductList/{page}/{name}/filters/{category}', function ($page, $name, $category){
     
-     $results =  DBData::getAllWhereTituloFamiliaPagePlusFilters($name, $page, $category);  
+     $results =  DBData::getAllWhereTituloFamiliaPagePlusFiltersNew($name, $page, $category);  
     return view('includes/gridProductListPage', ['name' => 'sample', 'results' => $results]
     );
 })->where('category', '.+');
@@ -441,7 +439,7 @@ Route::post('/sampleProductList/{page}/{name}/filters/{category}', function ($pa
     
 
 
-     $results =  DBData::getAllWhereTituloFamiliaPagePlusFiltersOrder($name, $page, $category, $_REQUEST['order']);  
+     $results =  DBData::getAllWhereTituloFamiliaPagePlusFiltersOrderNew($name, $page, $category, $_REQUEST['order']);  
     return view('includes/gridProductListPage', ['name' => 'sample', 'results' => $results]
     );
 })->where('category', '.+');
@@ -598,6 +596,24 @@ Route::get('/admin/updater', function (){
     return view('admin/automaticUpdater', ['name' => 'Updater']
     );
 });
+
+
+
+Route::get('/admin/updater/filters', function (){
+        try{
+            infortisaApi::getSpecifications();
+            infortisaApi::getSpecificationAttribute();
+            self::getAttributeOption();
+        }catch(\Exception $e){
+            echo $e;    
+        }
+
+
+
+});
+
+
+
 
 Route::get('/admin/cleanLocal', function (){
     \Tools::cleanLocalFiles();

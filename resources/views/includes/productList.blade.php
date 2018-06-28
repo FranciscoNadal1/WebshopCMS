@@ -1,6 +1,12 @@
   <?php
   //$totalNumberProducts = $results[0]->coun;
-  $totalNumberProducts = sizeOf($results);
+  
+  if(isset($coun))
+    $totalNumberProducts = $coun;
+  else if(isset($countAllProducts))
+    $totalNumberProducts = $countAllProducts;
+  else
+    $totalNumberProducts = sizeOf($results);
   ?>
   
 
@@ -12,12 +18,17 @@
       }
   </style>
   
+  @endif
 
 
 
 
   <script>
   
+  
+  
+
+
         $.fn.parpadear = function()
         {
         	this.each(function parpadear()
@@ -34,7 +45,6 @@
         });
         
 </script>
-  @endif
       @if(isset($list))
         <div style='display:none' id='filtersJavascript'>{{ $list }}</div>
     @else
@@ -113,14 +123,36 @@ body {
 </style>
 </head>
 <body>
+    
+    
+<?php
+
+$mainSubFamilia = \DBData::getCodesubfamiliaFromSubfamilia($categoria);
+$mainFilters = \DB::select("
+    SELECT infortisa_specificationAttribute.SpecificationAttributeName
+FROM totalCsv, `infortisa_productSpecification` , infortisa_IdSku, infortisa_specificationAttributeOption, infortisa_specificationAttribute
+WHERE totalCsv.CODIGOINTERNO = infortisa_IdSku.SKU
+and infortisa_IdSku.ID = infortisa_productSpecification.ProductId
+and infortisa_productSpecification.OptionId = infortisa_specificationAttributeOption.OptionId
+and
+infortisa_specificationAttributeOption.SpecificationAttributeId =
+infortisa_specificationAttribute.SpecificationAttributeId
+and 
+totalCsv.CODSUBFAMILIA =  '". $mainSubFamilia ."' 
+group by infortisa_specificationAttribute.SpecificationAttributeName
+order by infortisa_specificationAttribute.DisplayOrder
+");
+
+?>
+
+
 
 <div id="mySidenav" class="sidenavFilters">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
 {{--
-                     @include('includes/filter', array('subFamilia' => $results[0]->CODSUBFAMILIA))
-                     --}}
-      
+                     @include('includes/filter', array('subFamilia' => $mainSubFamilia, 'filters' => $mainFilters ))
+      --}}
 </div>
 
 
@@ -136,19 +168,8 @@ function closeNav() {
 }
 
 
-function addToLater(codigoInterno,provider,precio,titulo){
-                        $('#scriptDiv').load("/put/"+codigoInterno+"/"+provider+"/"+precio+"/"+titulo, function() {
-                                        $("#forLater").fadeOut("slow");
-                                        $("#forLater").load(location.href + " #forLater");
-                                        $("#forLater").fadeIn("slow");
-                          });
-                          
-                      }
+
 </script>
-
-
-
-
 
 
 
@@ -185,22 +206,31 @@ function addToLater(codigoInterno,provider,precio,titulo){
                 <div class="col-lg-2"></div>
                 <div id="filterBar" class="containerdiv hidden-sm hidden-xs hidden-md visible-lg-block col-lg-2">
                     
-                    
-                    
-                     @include('includes/filter', array('subFamilia' => \DBData::getCodesubfamiliaFromSubfamilia($categoria)))
+                     @include('includes/filter', array('subFamilia' => $mainSubFamilia, 'filters' => $mainFilters ))
+                     
                      
                      
                 </div>
             
         @if(sizeOf($results) > 0) 
-               <div id="ProductContainer" class="container col-sm-12 col-md-12 col-lg-10 pull-right">  
+        
+        
+        
+                              @if(count($mainFilters) == 0)
+                                   <div id="ProductContainer" class="container col-sm-12 col-md-12 col-lg-12 pull-right">  
+                              @else
+                                   <div id="ProductContainer" class="container col-sm-12 col-md-12 col-lg-10 pull-right">  
+                              @endif
                
                    <div id="CategoryAndArticleDiv">
                        <div id="CategoryHeader" class="{{ \DBData::desAccentify($results[0]->TITULOSUBFAMILIA) }}">
                            
                            {{ $results[0]->TITULOSUBFAMILIA }} 
                 
-<span class="hidden-lg" style="font-size:30px;cursor:pointer;float:right" onclick="openNav()">Filtros &#9776; </span>
+                
+                              @if(!count($mainFilters) == 0)
+                                <span class="hidden-lg" style="font-size:30px;cursor:pointer;float:right" onclick="openNav()">Filtros &#9776; </span>
+                              @endif
                        </div>
                        
                         <div id="ArticleNumber">{{ $totalNumberProducts }} articulos

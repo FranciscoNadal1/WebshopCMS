@@ -54,7 +54,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f6f8', end
         <!--
               <div class="typeGrid productWrapper col-xs-4 col-md-3 col-lg-3 article-block">
         -->          
-                    <div class="añadir"> <button onclick="addToLater('{{ $resu->CODIGOINTERNO }}','{{ $resu->PROVIDER }}','{{ number_format(round($resu->PRECIO,2) , 2, ',', '.') }}','{{ DBData::desAccentify($resu->TITULO) }}')"                     >añadir</button></div>
         <a href="/producto/{{ DBData::desAccentify($resu->TITULO) }}">
           
                  @if($resu->CICLOVIDA != "")
@@ -135,15 +134,18 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f6f8', end
                       </div>
 
                           </div>   
-  
+                          </a> 
+                      
                         
                             
                             
                             
                             
                             </div>
+                            <div class="addToLaterButton"> <button onclick="addToLater('{{ $resu->CODIGOINTERNO }}','{{ $resu->PROVIDER }}','{{ number_format(round($resu->PRECIO,2) , 2, ',', '.') }}','{{ DBData::desAccentify($resu->TITULO) }}')"                     >Guardar para luego</button></div>
+
                         </div>
-         </a>                       
+                               
                 </div>
 
     

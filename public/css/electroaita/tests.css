@@ -355,3 +355,64 @@ body {
   .sidenavFilters {padding-top: 15px;}
   .sidenavFilters a {font-size: 18px;}
 }
+
+
+
+
+
+
+
+
+
+
+
+.addToLaterButton button{
+    width:100%;
+    
+     background-color: #E6AF2E;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin-top:10px;
+    cursor: pointer;
+}
+
+.addToLaterButton button:hover{
+    background-color:#D59E1F;
+
+}
+.addToLaterButton{
+    position:relative;
+    
+    background-color:white;
+    height:30px;
+    padding-top:10px;
+    
+}
+
+.typeGrid{
+    position:relative;
+    
+}
+.productWrapper {
+    padding-bottom:80px;
+}
+.typeGrid button{
+    display:none;
+    top:0;
+    left:0;
+    
+    z-index:800;
+    top:-10;
+    overflow:none;
+    position:absolute;
+}
+
+
+.typeGrid:hover button {
+    display: block;
+}
