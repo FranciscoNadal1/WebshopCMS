@@ -33,7 +33,7 @@
 
 <div class="row row-eq-height">
           @foreach ($results as $resul)
-              <div class="col-xs-4 category"> 
+              <div class="col-xs-6 category"> 
                 <div class="category2">
                     <div class="title">{{ $resul->TITULOFAMILIA }}</div>
 

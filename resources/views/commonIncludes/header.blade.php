@@ -9,12 +9,12 @@
     
     <div class="row">
         
-        <div class="row-eq-height col-xs-4 col-md-4 col-lg-4" id="logoContainer">
+        <div class="row-eq-height col-xs-6 col-md-4 col-lg-4" id="logoContainer">
             <a class="logo" href="/">
                 <img width="250" height="100" src="{{ GetAsset::getLogo() }}">
             </a> 
         </div>
-        <div class="row-eq-height col-xs-4 col-md-4 col-lg-4" id="searchAnduser">
+        <div class="row-eq-height col-xs-6 col-md-4 col-lg-4" id="searchAnduser">
             @if($dropdownYesOrSideBar == "dropdown")
                 @include('commonIncludes/dropDown')
             @endif

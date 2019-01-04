@@ -63,10 +63,14 @@
     
   <div class="separator panel-heading ">Administración</div>
       <div class="panel-body">
+          
+          <a href="/admin/bannerInicial">Banner inicial</a>
           <a href="/admin/updaterBenefits">Cambiar beneficios</a>
           <a href="/admin/updater">Actualizador Automático</a>
+          <a href="/admin/updater/filters">Actualizador filtros</a>
           <a href="/admin/settings">settings</a>
-          <a href="/admin/settings">Change style</a>
+<!--          <a href="/admin/settings">Change style</a>
+-->
 
   
           <a href="/admin/cleanLocal">Borrar archivos locales</a>

@@ -142,7 +142,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f6f8', end
                             
                             
                             </div>
-                            <div class="addToLaterButton"> <button onclick="addToLater('{{ $resu->CODIGOINTERNO }}','{{ $resu->PROVIDER }}','{{ number_format(round($resu->PRECIO,2) , 2, ',', '.') }}','{{ DBData::desAccentify($resu->TITULO) }}')"                     >Guardar para luego</button></div>
+                            <div class="addToLaterButton"> <button onclick="addToLater('{{ $resu->CODIGOINTERNO }}','{{ $resu->PROVIDER }}','{{ number_format(round($resu->PRECIO,2) , 2, ',', '.') }}','{{ DBData::desAccentify($resu->TITULO) }}')"                     >Guardar para comparar</button></div>
 
                         </div>
                                

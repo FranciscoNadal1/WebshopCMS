@@ -571,16 +571,20 @@ class infortisaApi implements ProvidersApiInterface
         curl_setopt($c, CURLOPT_CUSTOMREQUEST, 'GET');
         $contentResult = curl_exec($c);
         curl_close($c);
-        
-        $obj = json_decode($contentResult);
-        
+		
+		try{
+        $obj = json_decode($contentResult, TRUE);        
         $stock = $obj;
         
+		$toReturn = $obj->Id;
         self::calledApi();
+        }
+		catch(\Exception $e){
+			return "";
+		}
         
-        
-        
-        return $obj->Id;
+			return $toReturn;
+			
     }
     
     
@@ -593,32 +597,45 @@ class infortisaApi implements ProvidersApiInterface
           
             $var_url = "http://api.infortisa.com/api/Tarifa/GetFile?user=EFD79BAA-1882-463D-8B44-168A117D4F32";
             $var_url = trim($var_url);
-            $contenido = self::file_get_contents_utf8("$var_url");
+            $contenido = self::file_get_contents_utf8($var_url);
+        
         
         	if($contenido == ""){
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
         		echo "Se ha encontrado un problema con la base de datos de infortisa, la web no ha podido actualizarse automáticamente";
         
+                \MailData::addMail("Update","Se ha encontrado un problema con la base de datos de infortisa, la web no ha podido actualizarse automáticamente");
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
         	}else{
         		
         		
         	
         	
-        
+        try{
             $var_url = mb_convert_encoding($var_url, "UTF-8");
         
-            file_put_contents("csv.csv", self::file_get_contents_utf8("$var_url"));
+            file_put_contents("./csv/csv.csv", self::file_get_contents_utf8("$var_url"));
         	flush();
+        }catch(\Exception $e){
+                echo "Error creating csv";
+                \MailData::addMail("Update","Exception",$e);
+        }
           $total = "";  
         
-            $fh = fopen('csv.csv','r');
-        	
+        try{
+            $fh = fopen('./csv/csv.csv','r');
+        }catch(\Exception $e){
+            
+                echo "Error opening csv";
+                \MailData::addMail("Update","Exception",$e);
+        }
+        
+        
         	while ($line = fgets($fh)) {
         
         		$line = str_replace("'", "", $line);		
           
-        
+       // echo $line;
         $total = $total . $line;
         
         
@@ -634,7 +651,7 @@ class infortisaApi implements ProvidersApiInterface
         		$text = str_replace("''", "", $text);		
         		$text = str_replace("\\'", "", $text);
         		
-        		   $fp = fopen("csv_bueno.csv","wb");
+        		   $fp = fopen("./csv/csv_bueno.csv","wb");
         			fwrite($fp,$text);
         			fclose($fp);
         		fclose($fh);
@@ -680,10 +697,8 @@ class infortisaApi implements ProvidersApiInterface
         $create = \DB::statement("
         CREATE TABLE `csv` (
           `REFFABRICANTE` char(27) collate utf8_bin default NULL,
-        
           `TITULO` char(50) collate utf8_bin default NULL,
           `CODIGOINTERNO` char(50) collate utf8_bin default NULL,
-        
           `EAN/UPC` char(15) collate utf8_bin default NULL,
           `CODFAMILIA` char(50) collate utf8_bin default NULL,
           `TITULOFAMILIA` char(28) collate utf8_bin default NULL,
@@ -691,9 +706,7 @@ class infortisaApi implements ProvidersApiInterface
           `TITULOSUBFAMILIA` char(30) collate utf8_bin default NULL,
           `CODFABRICANTE` char(70) collate utf8_bin default NULL,
           `NOMFABRICANTE` char(21) collate utf8_bin default NULL,  
-          
           `PRECIO` double collate utf8_bin default NULL,
-          
           `STOCK` char(7) collate utf8_bin default NULL,
           `PESO` char(8) collate utf8_bin default NULL,
           `PROXIMA_LLEGADA` char(90) collate utf8_bin default NULL,
@@ -701,7 +714,6 @@ class infortisaApi implements ProvidersApiInterface
           `PLAZOENTREGA` char(131) collate utf8_bin default NULL,  
           `CANONLPI` char(131) collate utf8_bin default NULL,  
           `PRECIOSINCANON` char(131) collate utf8_bin default NULL,  
-          
           PRIMARY KEY  (`CODIGOINTERNO`)
         ) ENGINE=innoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=17801 ;
         	")  or die("e".mysql_error());
@@ -722,6 +734,7 @@ class infortisaApi implements ProvidersApiInterface
         				
         					foreach($data_row as $data_value)	
         					{
+        					  
         						if($value_counter != count($data_row)-1 || (preg_match('/;/', $counter)) ){
         							$value_counter++;
         							
@@ -732,31 +745,40 @@ class infortisaApi implements ProvidersApiInterface
         							
         							$first = false;
         						}
+        						        					  
+        					  
+        			//	        $individualQuery = $base_query .$value_query .";";
+        						
+        				//		echo "$individualQuery";
+        				//		echo "</br>";
+        						
         					}
         				$value_query .= ")";
-        
+        			//		    echo "<br>";
         				$query = $base_query .$value_query .";";
         				
         
         		$text = $query ;
         
-        			
         
         
-        		$format = \DB::statement("$text");
+        //		$format = \DB::statement("$text");
+       // echo "$text";
+        
+        try{
+        	$format = \DB::statement("$text");
+        }catch(\Exception $e){
+            echo $text . "---- FAILED";
+            \MailData::addMail("Update","Ha fallado uno de los INSERT : -----<br>" . $text ." ------<\br>" , $e);
+        }
         
         
-        			}
-        	
+        }
+                                 
         	flush();
         
 $results = \DB::select(\DB::raw("UPDATE csv SET PRECIO = PRECIO * 1.22") );
 
-
-
-
-
-$results = \DB::select(\DB::raw("UPDATE csv SET PRECIO = PRECIO * 1.22") );
 
 $IdToSku = \DB::select("SELECT CODIGOINTERNO
 FROM csv
@@ -765,8 +787,7 @@ IN (
 
 SELECT SKU
 FROM infortisa_IdSku
-)");
-     
+)");     
      
      $countNewId = 0;
  foreach ($IdToSku as $var) {
@@ -774,16 +795,47 @@ FROM infortisa_IdSku
      
      $sku = $var->CODIGOINTERNO;
      $id = self::getIdFromSku($sku);
-        
-     
-      $affected = \DB::insert('insert into infortisa_IdSku (ID, SKU) values (?, ?)', [$id,$sku]);
+	 
+     try{
+	       $affected = \DB::insert('insert into infortisa_IdSku (ID, SKU) values (?, ?)', [$id,$sku]);
          
     $countNewId++;
+    
+     }catch(\Throwable $e){
+       echo "ha fallado la obtención del código SKU de : " . $sku . "</br";
+       \MailData::addMail("Update","Se ha encontrado un problema con la obtención del sku : " . $sku ." \br" , $e);
+       continue;
+     }
+     
+
      
  }
- echo $countNewId;
+ 
+ echo "Nuevos productos : " . $countNewId;
+ 
 }
      
+     #########################################################
+     ########           MENU BUILDER
+
+
+/*
+ ob_start();
+     self::getSpecifications();
+        ob_end_clean();
+     
+ ob_start();
+    self::getSpecificationAttribute();
+       ob_end_clean();
+    
+ ob_start();
+     self::getAttributeOption();
+        ob_end_clean();
+     
+     
+     */
+     
+     #########################################################
 
 
 
@@ -854,22 +906,26 @@ FROM infortisa_IdSku
             
   // PRODUCT SPECIFICATIONS
   $someArray = json_decode(file_get_contents('productSpecification.txt'), true);
+  
+  flush();
   foreach($someArray as $item) { 
         
         
         try{
+            /*
      $results = \DB::select("SELECT count(*) as coun FROM `infortisa_productSpecification` 
      WHERE Id like '" . $item['Id'] . "' and
       OptionId like '" . $item['OptionId'] . "' and
       ProductId like '" . $item['ProductId'] . "'" );
-     
-   //  if($results[0]->coun == 0){}
-     
-     
+     */
+   //  if($results[0]->coun == 0)
         $affected = \DB::insert('insert into infortisa_productSpecification (Id, OptionId, ProductId) values (?, ?, ?)', [$item['Id'], $item['OptionId'], $item['ProductId']]);
         
         
-        }catch(\Exception $e){}
+        }catch(\Exception $e){
+            ob_clean();
+            
+        }
    
     }
   
@@ -877,7 +933,155 @@ FROM infortisa_IdSku
   
   
   
+     flush();
     }
+    
+    
+    
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        static function getSpecificationsLimitedNumber($startNumber, $cuantity)    {
+            
+            $contenido ="";
+            
+        $tok   = "EFD79BAA-1882-463D-8B44-168A117D4F32";
+        $token = "Authorization-Token:$tok";
+        
+        $apiUrl     = "http://api.infortisa.com";
+        $jsonHeader = array(
+            'Accept: application/json',
+            'Content-Type: application/json',
+            $token
+        );
+                    try{   
+                
+                $ch      = curl_init();
+                $timeout = 500000;
+                
+                 
+                        $variable = "http://api.infortisa.com/api/ProductSpecification/Get";
+                        curl_setopt($ch, CURLOPT_URL, $variable);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                        
+                        curl_setopt($ch, CURLOPT_HTTPHEADER, $jsonHeader);
+                        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+    
+                        $contenido = curl_exec($ch);
+                        
+                        
+                $fp = fopen("productSpecification.txt", "wa+");
+                        fwrite($fp, $contenido);
+    
+                            fclose($fp);
+                    }catch(\Exception $e){
+                        return "";
+                    }finally{
+                        curl_close($ch);
+                        
+                    }
+            
+            
+  // PRODUCT SPECIFICATIONS
+  $someArray = json_decode(file_get_contents('productSpecification.txt'), true);
+  
+  flush();
+  $number = 0;
+  $numberOfProcessed = 0;
+  foreach($someArray as $item) { 
+    //   echo $number . " - ";
+       
+        $number++;
+        if($number < $startNumber)continue;
+        
+        if($numberOfProcessed==$cuantity){
+            
+        echo $numberOfProcessed . " - " . $cuantity . "</br>";
+            break;
+            
+        }
+       echo "processed number : " . $numberOfProcessed . "</br>";
+        $numberOfProcessed++;
+        
+        try{
+            /*
+     $results = \DB::select("SELECT count(*) as coun FROM `infortisa_productSpecification` 
+     WHERE Id like '" . $item['Id'] . "' and
+      OptionId like '" . $item['OptionId'] . "' and
+      ProductId like '" . $item['ProductId'] . "'" );
+     */
+   //  if($results[0]->coun == 0)
+        $affected = \DB::insert('insert into infortisa_productSpecification (Id, OptionId, ProductId) values (?, ?, ?)', [$item['Id'], $item['OptionId'], $item['ProductId']]);
+        echo $affected;
+        
+        }catch(\Exception $e){
+        }
+   
+    }
+  
+  echo $startNumber . " to  " . $number . "</br>";
+  
+  
+  
+  
+     flush();
+    }
+           static function getSpecificationsNumberOfItems()    {
+            
+            $contenido ="";
+            
+        $tok   = "EFD79BAA-1882-463D-8B44-168A117D4F32";
+        $token = "Authorization-Token:$tok";
+        
+        $apiUrl     = "http://api.infortisa.com";
+        $jsonHeader = array(
+            'Accept: application/json',
+            'Content-Type: application/json',
+            $token
+        );
+                    try{   
+                
+                $ch      = curl_init();
+                $timeout = 500000;
+                
+                 
+                        $variable = "http://api.infortisa.com/api/ProductSpecification/Get";
+                        curl_setopt($ch, CURLOPT_URL, $variable);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                        
+                        curl_setopt($ch, CURLOPT_HTTPHEADER, $jsonHeader);
+                        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+    
+                        $contenido = curl_exec($ch);
+                        
+                        
+                $fp = fopen("productSpecification.txt", "wa+");
+                        fwrite($fp, $contenido);
+    
+                            fclose($fp);
+                    }catch(\Exception $e){
+                        return "";
+                    }finally{
+                        curl_close($ch);
+                        
+                    }
+            
+            
+  // PRODUCT SPECIFICATIONS
+  $someArray = json_decode(file_get_contents('productSpecification.txt'), true);
+  
+  $number = 0;
+  foreach($someArray as $item) { 
+        $number++;
+   
+    }
+    
+    return $number;
+  
+  
+    }
+    
+    
           /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         static function getSpecificationAttribute()    {
             
@@ -921,21 +1125,42 @@ FROM infortisa_IdSku
 // Specification Atributes
   $someArray = json_decode(file_get_contents('specificationAtribute.txt'), true);
   foreach($someArray as $item) { 
-        
+
+/*        
      $results = \DB::select("SELECT count(*) as coun FROM `infortisa_specificationAttribute` 
      WHERE SpecificationAttributeId like '" . $item['SpecificationAttributeId'] . "' and
        SpecificationAttributeName  like '" . $item['SpecificationAttributeName'] . "' and
       DisplayOrder like '" . $item['DisplayOrder'] . "'" );
-     
+    */ 
+ //    if($results[0]->coun == 0){
+         
+         try{
+             
+                  $results = \DB::select("SELECT count(*) as coun FROM `infortisa_specificationAttribute` 
+     WHERE SpecificationAttributeId like '" . $item['SpecificationAttributeId'] . "' and
+       SpecificationAttributeName  like '" . $item['SpecificationAttributeName'] . "' and
+      DisplayOrder like '" . $item['DisplayOrder'] . "'" );
+    
      if($results[0]->coun == 0)
         $affected = \DB::insert('insert into infortisa_specificationAttribute (SpecificationAttributeId, SpecificationAttributeName, DisplayOrder) values (?, ?, ?)', 
         [$item['SpecificationAttributeId'], $item['SpecificationAttributeName'], $item['DisplayOrder']]);
+        
+        
+        
+         
+         }catch(\Exception $e){
+             flush;
+         }
+        
+        
+ //    }
            
     }
 
 
 
 
+     flush();
             
     }
           /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -984,20 +1209,32 @@ FROM infortisa_IdSku
 // Specification Atributes Options
   $someArray = json_decode(file_get_contents('specificationAttributeOption.txt'), true);
   foreach($someArray as $item) { 
-        
+       /* 
      $results = \DB::select("SELECT count(*) as coun FROM `infortisa_specificationAttributeOption` 
      WHERE OptionId  like '" . $item['OptionId'] . "' and
        SpecificationAttributeId  like '" . $item['SpecificationAttributeId'] . "' and
       DisplayOrder like '" . $item['DisplayOrder'] . "'" );
+    */ 
+     //if($results[0]->coun == 0){
      
-     if($results[0]->coun == 0)
+     try{
+         
         $affected = \DB::insert('insert into infortisa_specificationAttributeOption (OptionId, SpecificationAttributeId, OptionName, DisplayOrder) values (?, ?, ?, ?)', 
         [$item['OptionId'], $item['SpecificationAttributeId'], $item['OptionName'], $item['DisplayOrder']]);
+        
+        
+        
+        
+     }catch(\Exception $e){
+         
+     }  
            
+     //}
     }
 
 
             
+     flush();
     }
           /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         static function getProduct()    {

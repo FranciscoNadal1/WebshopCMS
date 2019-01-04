@@ -39,6 +39,52 @@ Route::get('/listado/{id}', function ($id) {
 });
 
 
+Route::post('/form', function () {
+    
+    $email;$comment;$captcha;
+        if(isset($_POST['email'])){
+          $email=$_POST['email'];
+        }if(isset($_POST['comment'])){
+          $email=$_POST['comment'];
+        }if(isset($_POST['g-recaptcha-response'])){
+          $captcha=$_POST['g-recaptcha-response'];
+        }
+        if(!$captcha){
+          echo '<h2>Please check the the captcha form.</h2>';
+          exit;
+        }
+        $secretKey = "6Lc7HWIUAAAAANVoDtPLWzDDm9NueBxNxTMDxHvy";
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$captcha."&remoteip=".$ip);
+        $responseKeys = json_decode($response,true);
+        $mailSent = 0;
+        if(intval($responseKeys["success"]) !== 1) {
+          $mailSent = 'Has enviado demasiados mensajes';
+        } else {
+          $mailSent =  'Se ha enviado el mail';
+        }
+        
+        
+    return view('routes/contact', ['name' => 'index', 'mailSent' => $mailSent]);
+        
+});
+
+
+
+Route::get('/image', function () {
+    
+    header("Content-type: image/png");
+    //$string = $_GET['text'];
+    $im     = imagecreatefrompng();
+    $orange = imagecolorallocate($im, 220, 210, 60);
+    $px     = (imagesx($im) - 7.5 * strlen($string)) / 2;
+    imagestring($im, 3, $px, 9, $string, $orange);
+    imagepng($im);
+    imagedestroy($im);
+    
+});
+
+
 
 Route::get('/listado/{id}/{category}', function ($id, $category) {
     
@@ -374,7 +420,9 @@ Route::get('/test', function (){
 });
 
 
-
+Route::get('/hello', function (){
+    echo "how do you do";
+});
 
 
 
@@ -521,6 +569,25 @@ Route::post('/admin/modifypc', function (){
 
 
 
+Route::get('/admin/bannerInicial', function (){
+    return view('admin/bannerInicial', ['name' => 'adminDashboard']
+    );
+});
+
+Route::post('/admin/bannerInicial', function (){
+    return view('admin/bannerInicial', ['name' => 'adminDashboard']
+    );
+});
+
+Route::get('/borrarBanner/{id}', function($id){
+    
+
+    
+       $deleted = \DB::delete("delete from initialBanner where Code = $id");
+           return redirect('/admin/bannerInicial');
+    
+});
+
 
 
 
@@ -547,7 +614,7 @@ Route::get('/admin/mail/{id}', function ($id){
     */
     \MailData::setMailIsRead($id); 
     
-    return((string)MailData::getMail($id));
+    return(MailData::getMail($id));
 });
 
 
@@ -600,19 +667,52 @@ Route::get('/admin/updater', function (){
 
 
 Route::get('/admin/updater/filters', function (){
+    
+    ini_set('max_execution_time', 0);
+ 
+            $time_start = microtime(true); 
         try{
-            infortisaApi::getSpecifications();
+       //     infortisaApi::getSpecifications();
             infortisaApi::getSpecificationAttribute();
-            self::getAttributeOption();
+            infortisaApi::getAttributeOption();
+            
         }catch(\Exception $e){
             echo $e;    
         }
+        
+        try{
+          //  infortisaApi::getSpecificationsLimitedNumber(0,180000);
+          
+        echo "<meta http-equiv='refresh' content=\"0; url=/admin/updater/filters/0/30000\" />";
+        //    infortisaApi::getSpecificationAttribute();
+        //    infortisaApi::getAttributeOption();
+            
+        }catch(\Exception $e){
+            echo $e;    
+        }
+        
+            echo "</br>Total number" .  infortisaApi::getSpecificationsNumberOfItems();
+        
+            $time_end = microtime(true);
+        
+        //dividing with 60 will give the execution time in minutes otherwise seconds
+        $execution_time = ($time_end - $time_start)/60;
+        
+        //execution time of the script
+        echo '<b>Total Execution Time:</b> '.$execution_time.' Mins';
 
 
 
 });
 
+Route::get('/admin/updater/filters/{startNumber}/{cuantity}', function ($startNumber, $cuantity){
+    
+ infortisaApi::getSpecificationsLimitedNumber($startNumber,$cuantity);
+ $startPlusCuantity = $startNumber+$cuantity;
+ if(($startNumber) < infortisaApi::getSpecificationsNumberOfItems())
+echo "<meta http-equiv='refresh' content=\"0; url=/admin/updater/filters/$startPlusCuantity/$cuantity\" />";
 
+});
 
 
 Route::get('/admin/cleanLocal', function (){
@@ -644,6 +744,35 @@ Session::forget('cart');
 
 
 
+Route::get('/deleteOne/{id}', function($id){
+    
+
+        $cola = array();
+        
+        
+    for($i = 0; $i != sizeOf(Session::get('cart')); $i++){
+        
+        if(!(Session::get('cart')[$i] ['id'] == $id)){
+            
+            
+                     $item = [
+                  'id' => Session::get('cart')[$i] ['id'],
+                  'provider' => Session::get('cart')[$i] ['provider'],
+                  'price' => Session::get('cart')[$i] ['price'],
+                  'name' => Session::get('cart')[$i] ['name'],
+                ];
+        
+                array_push($cola, $item);
+            }
+    }
+    
+    Session::forget('cart');
+        
+        foreach ($cola as $valor){
+            Session::push('cart', $valor);
+        }
+    
+});
 
 
 Route::get('/put/{id}/{provider}/{price}/{name}', function ($id, $provider, $price, $name){

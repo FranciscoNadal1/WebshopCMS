@@ -147,13 +147,7 @@ order by infortisa_specificationAttribute.DisplayOrder
 
 
 
-<div id="mySidenav" class="sidenavFilters">
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
-{{--
-                     @include('includes/filter', array('subFamilia' => $mainSubFamilia, 'filters' => $mainFilters ))
-      --}}
-</div>
 
 
 
@@ -184,28 +178,22 @@ function closeNav() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             <div class="row"> 
                 <div class="col-lg-2"></div>
-                <div id="filterBar" class="containerdiv hidden-sm hidden-xs hidden-md visible-lg-block col-lg-2">
-                    
+                        <div id="mySidenav" class="sidenavFilters">
+                          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                        
+                        {{--
+                                             @include('includes/filter', array('subFamilia' => $mainSubFamilia, 'filters' => $mainFilters ))
+                        --}}
+                        </div>
+
+
+
+<!-- visible-lg-block 
+                <div id="filterBar" class="containerdiv  col-md-2 col-xs-4 col-sm-4 pull-left">
+    -->                
+                <div id="filterBar" class="containerdiv  col-lg-2 pull-left">
                      @include('includes/filter', array('subFamilia' => $mainSubFamilia, 'filters' => $mainFilters ))
                      
                      
@@ -217,9 +205,12 @@ function closeNav() {
         
         
                               @if(count($mainFilters) == 0)
-                                   <div id="ProductContainer" class="container col-sm-12 col-md-12 col-lg-12 pull-right">  
+                              <style>
+                                  #filterBar{display:none !important;}
+                              </style>
+                                   <div id="ProductContainer" class="container col-sm-8 col-md-12 col-lg-12 pull-right">  
                               @else
-                                   <div id="ProductContainer" class="container col-sm-12 col-md-12 col-lg-10 pull-right">  
+                                   <div id="ProductContainer" class="container col-sm-8 col-md-9 col-lg-10 pull-right">  
                               @endif
                
                    <div id="CategoryAndArticleDiv">
@@ -229,7 +220,9 @@ function closeNav() {
                 
                 
                               @if(!count($mainFilters) == 0)
-                                <span class="hidden-lg" style="font-size:30px;cursor:pointer;float:right" onclick="openNav()">Filtros &#9776; </span>
+                              <!--
+                              <span class="hidden-lg" style="font-size:30px;cursor:pointer;float:right" onclick="openNav()">Filtros &#9776; </span>
+                              -->
                               @endif
                        </div>
                        

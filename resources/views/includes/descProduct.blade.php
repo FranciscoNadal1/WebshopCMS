@@ -75,7 +75,8 @@
                     <span class="categoryText">      {{ $results[0]->STOCK }}</span>
                     </div> 
                    
-                   
+                   <div class="addToLaterButton description"> <button onclick="addToLater('{{ $results[0]->CODIGOINTERNO }}','{{ $results[0]->PROVIDER }}','{{ number_format(round($results[0]->PRECIO,2) , 2, ',', '.') }}','{{ DBData::desAccentify($results[0]->TITULO) }}')"                     >Guardar para luego</button></div>
+
                    </div>
                    
                    
@@ -104,34 +105,52 @@
                    
                 </div>
                    <div class="boxes" id="fichaProducto">
+                       <?php
                        
                        
+                       
+                                $fichaComercial = $field::get_comercial($results[0]->CODIGOINTERNO); 
+                                $fichaTecnica = $field::get_tecnica($results[0]->CODIGOINTERNO); 
+                                
+                       ?>
 		<div class="">		
 			<div class="">
 					<ul id="myTab" class="nav nav-tabs nav_tabs">
 						
-						<li class="active"><a href="#service-one" data-toggle="tab">DESCRIPCION</a></li>
-						<li><a href="#service-two" data-toggle="tab">FICHA TÉCNICA</a></li>
+						@if(strlen($fichaComercial) > 20)
+						    <li class="active"><a href="#service-one" data-toggle="tab">DESCRIPCION</a></li>
+						@endif
 						
+						@if(strlen($fichaTecnica) > 20)
+						    <li><a href="#service-two" data-toggle="tab">FICHA TÉCNICA</a></li>
+						@endif
 						
 					</ul>
 				<div id="myTabContent" class="tab-content">
-						<div class="tab-pane fade in active" id="service-one">
-							<section class="container jumbotron productDescriptionBox description">
-							    
-                                <?php   
-                                echo $field::get_comercial($results[0]->CODIGOINTERNO); 
-                                ?>
-							</section>
-						</div>
-					<div class="tab-pane fade" id="service-two">
+				    
+						@if(strlen($fichaComercial) > 20)
+    						<div class="tab-pane fade in active" id="service-one">
+    							<section class="container jumbotron productDescriptionBox description">
+                                    {!! $fichaComercial !!}
+    							</section>
+    						</div>
+						@endif
 						
-    						<section class="container jumbotron productDescriptionBox specifications">
-                                <?php
-                                echo $field::get_tecnica($results[0]->CODIGOINTERNO); 
-                                ?>
-    						</section>
-					</div>
+						
+						@if(strlen($fichaTecnica) > 20 and strlen($fichaComercial) > 20)
+    					    <div class="tab-pane fade" id="service-two">
+        						<section class="container jumbotron productDescriptionBox specifications">
+                                    {!! $fichaTecnica !!}
+        						</section>
+    					    </div>
+    					@else
+     					    <div class="tab-pane fade in active" id="service-two">
+        						<section class="container jumbotron productDescriptionBox specifications">
+                                    {!! $fichaTecnica !!}
+        						</section>
+    					    </div> 
+					    @endif
+					    
 				</div>
 				<hr>
 			</div>

@@ -30,7 +30,7 @@ class getSettings{
     }
     
    static function getContactPhone(){
-            return "962201410 - 617696647";
+            return "962201460 - 617696647";
     }
    
    static function getStreet(){

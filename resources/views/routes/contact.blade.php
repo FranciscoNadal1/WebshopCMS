@@ -144,25 +144,26 @@
 				
 				
 				</div>
+				
+<script src='https://www.google.com/recaptcha/api.js'></script>
 				<div class="col-sm-6">
-					<td style="border-style: none; border-width: medium"><form action=# method=POST>
-				  <p>&nbsp;</p>
-                  <p align="center">
+					<!--
+					<td style="border-style: none; border-width: medium">
+
+
+
+
+
+						<form action="" method=POST>
 				  <font color="#0000FF">Email</font><br>
-				    <input type=text name=maile>
+				    <input type="text" name="maile">
                   </p>
                   <p align="center">                    <font color="#0000FF">Asunto</font><font color="#FFFF00"><br>
                   </font>
                     <input type=text name=asunto>
 					<br><br>
-<!-- <div >Captcha</div> -->
-<!--
-<img id="captcha" src="./securimage/securimage_show.php" alt="CAPTCHA Image" /><br>
-<input type="text" name="captcha_code" size="10" maxlength="6" /><font color="#0000FF">
-					</font>
-<a href="#" onclick="document.getElementById('captcha').src = './securimage/securimage_show.php?' + Math.random(); return false">[ Cargar otra imagen ]</a><font color="#0000FF">
-					</font>
--->
+
+
 <br>			
 
 
@@ -170,9 +171,62 @@
                     <font color="#0000FF">Mensaje</font><br>
                     <textarea cols=50 rows=5 name=texto ></textarea>
                     <br>
-                    <input type=submit name=Enviar value=Enviar>
+                    
+                    <input type="submit" name="Enviar" value="Enviar">
                   </p>
 			    </form></td>
+			    -->
+			    
+			    @if(isset($mailSent))
+			    
+			    	{{ $mailSent }}
+			    @endif
+			    
+			    
+			        <form id="comment_form" action="/form" method="post">
+			        	
+					  <input type="hidden" name="_token" value="{!! csrf_token() !!}">
+				      <input type="email" placeholder="mail" size="40"><br><br>
+				      <textarea name="comment" rows="8" cols="39"></textarea><br><br>
+				      <div class="g-recaptcha" data-sitekey="6Lc7HWIUAAAAANVoDtPLWzDDm9NueBxNxTMDxHvy"></div>
+				      <input type="submit" name="submit" value="Enviar correo"><br><br>
+				    </form>
+			    
+			  
+			    
+			    
+			    
+			    
+			    <?php
+			    /*
+			    if(($_POST['Enviar'] == "Enviar")){
+				        $captcha;
+				        if(isset($_POST['maile'])){
+				          $email=$_POST['maile'];
+				        }if(isset($_POST['texto'])){
+				          $email=$_POST['texto'];
+				        }if(isset($_POST['g-recaptcha-response'])){
+				          $captcha=$_POST['g-recaptcha-response'];
+				        }
+				        if(!$captcha){
+				          echo '<h2>Please check the the captcha form.</h2>';
+				          exit;
+				        }
+				        $secretKey = "Put your secret key here";
+				        $ip = $_SERVER['REMOTE_ADDR'];
+				        $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$captcha."&remoteip=".$ip);
+				        $responseKeys = json_decode($response,true);
+				        if(intval($responseKeys["success"]) !== 1) {
+				          echo '<h2>You are spammer ! Get the @$%K out</h2>';
+				        } else {
+				          echo '<h2>Thanks for posting comment.</h2>';
+				        }
+			    }
+			    */
+			    ?>
+			    
+			    
+			    
 			    
 			</tr>
 			<tr>

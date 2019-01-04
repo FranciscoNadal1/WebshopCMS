@@ -612,7 +612,7 @@ ul {
                                  
                                 <td class="view-message  dont-show">
                                     
-                                    <a  onclick="myFunction()" href="/admin/mail/{{ $mail->code }}">
+                                    <a id="{{ $mail->code }}" onclick="loadMail(this.id)">
                                       {{ \MailData::formatMessage($mail)  }}
                                       </span>
                                     </a>

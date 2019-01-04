@@ -560,7 +560,7 @@ header {
     border-top-right-radius: 5px;
 /*Main CSS*/
 
-
+/*
 
 
 
@@ -660,6 +660,10 @@ header {
 }
 }
 
+
+
+
+*/
 @media only screen and (max-device-width: 992px) {
     header .header-top li {
         padding-left: 20px !important;

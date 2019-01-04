@@ -14,13 +14,22 @@ $( document ).ready(function() {
 
 
                 
+           
+
                 
                 
 	<nav class=" header">
 	  <div id="TopHeader">
+	      
+	       <div class="col-xs-1 hamburgerDiv">
+	            <button type="button" class="hamburger is-closed" data-toggle="offcanvas">
+                    <span class="hamb-top"></span>
+                  	<span class="hamb-middle"></span>
+              		<span class="hamb-bottom"></span>
+                </button>
+	        </div>
 	    
-	    
-	      <div class="col-sm-3" style="height: 100%;">
+	    <div class="col-md-3 col-xs-6 col-sm-6" style="height: 100%;">
 	        {{--
 	        
       	    <div class="col-sm-1 navbar-header">
@@ -39,14 +48,14 @@ $( document ).ready(function() {
 	         </a> 
 	         </div>
 	    
-        <div id="searchArea"  class=" col-sm-6">
+        <div id="searchArea"  class=" col-md-6 col-xs-2 col-sm-2">
                 @section('search')
                     @include('commonIncludes/searchBar')
                 @show
             </div>
             
             
-        <div id="savedProducts"  class="col-sm-3">
+        <div id="savedProducts"  class="col-md-3 col-xs-3 col-sm-3">
                <ul id="savedProductsUl" class="nav navbar-nav ">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> 
@@ -90,7 +99,7 @@ $( document ).ready(function() {
                         </div>
                     </span>
                     <span class="item-right">
-                        <button class="btn btn-xs btn-danger pull-right">x</button>
+                        <button onclick ="deleteOne('{{$test['id']}}')" class="btn btn-xs btn-danger pull-right">x</button>
                     </span>
                 </span>
               </li>
@@ -115,6 +124,7 @@ $( document ).ready(function() {
 <div class="menuLinks">
   
   @foreach ($categories as $cat)
+  
         @if($cat->code != 1)
           	
               <ul class="nav navbar-nav">
@@ -179,8 +189,10 @@ $( document ).ready(function() {
 ---------------------------------------------------------------------->       
                         
                                   <div class="categoriesMenu col-sm-10">
+         <!--      <div class="{{$cat->code}}Pointer"><img src="http://www.itcancun.edu.mx/wp-content/uploads/2016/05/flecha-1.jpg"/>fdffgsdg</div>-->
                                     <div class="row">
                           		@foreach ($results as $resul)	
+                          		
                                   <?php 
                                   $contador++; 
                                   ?>
@@ -250,6 +262,19 @@ $( document ).ready(function() {
                       
                     function addToLater(codigoInterno,provider,precio,titulo){
                         $('#scriptDiv').load("/put/"+codigoInterno+"/"+provider+"/"+precio+"/"+titulo, function() {
+
+                                  $("#savedProducts").fadeOut("fast");
+                                     $("#savedProducts").load(location.href + " #savedProductsUl");
+                                  $("#savedProducts").fadeOut("fast");
+                        
+                                        
+                          });
+                          
+                      }         
+                      
+                      
+                    function deleteOne(codigoInterno){
+                        $('#scriptDiv').load("/deleteOne/"+codigoInterno, function() {
 
                                   $("#savedProducts").fadeOut("fast");
                                      $("#savedProducts").load(location.href + " #savedProductsUl");

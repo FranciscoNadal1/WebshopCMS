@@ -2,7 +2,7 @@
 		<footer class="footer-distributed container-fluid">
 
         
-			<div class="footer-left col1 col-xs-3 col-md-3 col-lg-3">
+			<div class="footer-left col1 col-xs-6 col-md-6 col-lg-6">
 
 				<h3>
 					{{ ucfirst ( \GetSettings::companyName()) }}
@@ -30,7 +30,7 @@
 				<p class="footer-company-name">{{ \GetSettings::companyName() }} &copy; {{ date("Y") }}</p>
 			</div>
 
-			<div class="footer-center col1 col-xs-3 col-md-3 col-lg-3">
+			<div class="footer-center col1 col-xs-6 col-md-6 col-lg-6">
 
 				<div>
 					<i class="fa fa-map-marker"></i>
@@ -48,7 +48,7 @@
 				</div>
 
 			</div>
-
+{{--
 			<div class="footer-right col1 col-xs-3 col-md-3 col-lg-3">
 
 				<p class="footer-company-about">
@@ -67,7 +67,7 @@
 				</div>
 
 			</div>
-
+--}}
 		</footer>
 
 	</body>

@@ -11,7 +11,40 @@
 
 
 
+    <div class="filterPan " ng-controller="mainController">
+         <div class="filterHeader">Disponibilidad:</div>
+              <div class="checkboxContainer">
+                <div class="checkbox">
+                    
+                  <label>
+                      
+                      <input name="stock" id="stock" type="checkbox" value="" 
+                      onClick="
+                      if (this.checked) 
+                      {     
+                          window.location = window.location.href  + '/' + this.name; 
+                      
+                      }else if(!this.checked)
+                      {
+                          var myString = null;
+                          var myString = window.location.href;
+                          
+                          var success = myString.replace(this.name, '');
+                           success = success.replace(' ', '_');                          
+                          
+                        
+                        window.location.replace(success);
+                      }
+                      
+                      
+                      ">
+                     
+                          En stock
+                      </label>
+                </div>
 
+                </div>
+    </div>
                   
         @foreach ($filters as $fil)
         
@@ -75,7 +108,7 @@ group by infortisa_specificationAttributeOption.OptionName");
                 {{ $fil2->OptionName }} {{--     1fil2->coun    --}}
             
                       </label></div>
-            @endforeach
+        @endforeach
             </div>
             
             
@@ -84,6 +117,10 @@ group by infortisa_specificationAttributeOption.OptionName");
             
              </div>
         @endforeach
+         
+         
+
+
   <script>
 
     $( document ).ready(function() {

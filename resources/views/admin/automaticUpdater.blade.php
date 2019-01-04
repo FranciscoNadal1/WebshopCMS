@@ -102,10 +102,8 @@ try{
 $createTotal = DB::statement("
 CREATE TABLE `totalCsv` (
   `REFFABRICANTE` char(27) collate utf8_bin default NULL,
-
   `TITULO` char(50) collate utf8_bin default NULL,
   `CODIGOINTERNO` char(50) collate utf8_bin default NULL,
-
   `EAN/UPC` char(15) collate utf8_bin default NULL,
   `CODFAMILIA` char(50) collate utf8_bin default NULL,
   `TITULOFAMILIA` char(28) collate utf8_bin default NULL,
@@ -113,9 +111,7 @@ CREATE TABLE `totalCsv` (
   `TITULOSUBFAMILIA` char(30) collate utf8_bin default NULL,
   `CODFABRICANTE` char(70) collate utf8_bin default NULL,
   `NOMFABRICANTE` char(21) collate utf8_bin default NULL,  
-  
   `PRECIO` double collate utf8_bin default NULL,
-  
   `STOCK` char(7) collate utf8_bin default NULL,
   `PESO` char(8) collate utf8_bin default NULL,
   `PROXIMA_LLEGADA` char(90) collate utf8_bin default NULL,
@@ -125,9 +121,7 @@ CREATE TABLE `totalCsv` (
   PRIMARY KEY  (`CODIGOINTERNO`)
 ) ENGINE=innoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=17801 ;
 	")  or die("e".mysql_error());
-}catch(\Exception $e){
-	
-}
+
 
 $deleteTotal = DB::statement("DELETE FROM ".$totalCsv."");
 $createTotal = DB::statement("
@@ -141,6 +135,9 @@ $createTotal = DB::statement("
     FROM home
     ");   
     
+}catch(\Exception $e){
+	
+}
     
 
     
@@ -255,9 +252,11 @@ $countNoBenefitUpdate = 0;
         
     </table>
 </div>
-<?php
-                			\DB::table('totalCsv')->where('CICLOVIDA', 'Encargo')->update(['CICLOVIDA' => 'Por encargo'])
-                			?>
+		<?php
+                			\DB::table('totalCsv')->where('CICLOVIDA', 'Encargo')->update(['CICLOVIDA' => 'Por encargo']);
+                			
+                			\DB::statement("update totalCsv set PRECIO = round(PRECIO,2)");
+		?>
 </div>
 
         @if($countNoBenefitUpdate != 0)
@@ -276,6 +275,8 @@ $countNoBenefitUpdate = 0;
     
 }catch(\Exception $e){
 	echo "error found";
+	
+    \MailData::addMail("Update","Exception",$e);
 }
 ?>
 

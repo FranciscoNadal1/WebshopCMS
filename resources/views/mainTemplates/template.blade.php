@@ -100,9 +100,9 @@ $(document).ready(function(){
         @section('sidebar')
         
         @if(!$dropdownYesOrSideBar == "dropdown")
-            @include('commonIncludes/sideMenu')
+            
         @endif
-        
+        @include('commonIncludes/sideMenu')
         @show
         
         

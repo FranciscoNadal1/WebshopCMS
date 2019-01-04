@@ -42,7 +42,7 @@ class DBData{
     
     static function getAllCategories(){
             //  $results = \DB::select("SELECT * FROM " . self::$categoryTableName . " where name not like '-%'");
-             $results = \DB::select("SELECT * FROM " . self::$categoryTableName . " where code order by code");
+             $results = \DB::select("SELECT * FROM " . self::$categoryTableName . " where name not like '%sincategoria%' order by code");
     
     return $results;
     }
@@ -143,7 +143,17 @@ ORDER BY csv.TITULOFAMILIA
       
     return $results;
    }
- 
+    static function getAllWhereTituloFamiliaPageStock($name, $page){
+      
+      $name = self::makeFriendlier($name);
+      $pager = self::numberOfProductsByPage() * $page;
+      $results = \DB::select("SELECT * FROM " . self::$productTableName . " where STOCK > 0 and TITULOSUBFAMILIA like \"$name\" group by CODIGOINTERNO order by precio asc LIMIT ". $pager .", " . self::numberOfProductsByPage());
+      
+    return $results;
+   }
+   
+   
+   
      static function getSearchData($name, $page){
       /*
       $name = self::makeFriendlier($name);
@@ -359,6 +369,17 @@ ORDER BY csv.TITULOFAMILIA
       
     return $results[0]->coun;
    }
+   
+    static function countAllWhereTituloFamiliaPageStock($name, $page){
+      
+      $name = self::makeFriendlier($name);
+      $pager = self::numberOfProductsByPage() * $page;
+      $results = \DB::select("SELECT count(*) as coun FROM " . self::$productTableName . " where STOCK > 0 and TITULOSUBFAMILIA like \"$name\"");
+      
+    return $results[0]->coun;
+   }
+   
+   
     static function getAllWhereTituloFamiliaPageOrder($name, $page, $order){
       
       
@@ -397,6 +418,44 @@ ORDER BY csv.TITULOFAMILIA
     return $results;
    }
 
+
+    static function getAllWhereTituloFamiliaPageOrderStock($name, $page, $order){
+      
+      
+      $name = self::makeFriendlier($name);
+      $pager = self::numberOfProductsByPage() * $page;
+      
+      switch ($order) {
+            case "caro":
+                $results = \DB::select("SELECT * FROM " . self::$productTableName . " where STOCK > 0 and TITULOSUBFAMILIA like \"$name\" group by CODIGOINTERNO order by PRECIO DESC LIMIT ". $pager .", " . self::numberOfProductsByPage());
+                break;
+            case "barato":
+                $results = \DB::select("SELECT * FROM " . self::$productTableName . " where STOCK > 0 and  TITULOSUBFAMILIA like \"$name\" group by CODIGOINTERNO order by PRECIO ASC LIMIT ". $pager .", " . self::numberOfProductsByPage());
+                break;            
+            case "alfa":
+                $results = \DB::select("SELECT * FROM " . self::$productTableName . " where STOCK > 0 and TITULOSUBFAMILIA like \"$name\" group by CODIGOINTERNO order by TITULO ASC LIMIT ". $pager .", " . self::numberOfProductsByPage());
+                break;
+                 
+            case "novedades":
+                $results = \DB::select("SELECT * FROM " . self::$productTableName . " where STOCK > 0 and  TITULOSUBFAMILIA like \"$name\" group by CODIGOINTERNO 
+                
+                order by 
+                case when CICLOVIDA like 'Nove%' then 0 else 1 end, CICLOVIDA desc
+                LIMIT
+                ". $pager .", " . self::numberOfProductsByPage());
+                break;
+            default:
+                $results = \DB::select("SELECT * FROM " . self::$productTableName . " where  STOCK > 0 and TITULOSUBFAMILIA like \"$name\" group by CODIGOINTERNO LIMIT ". $pager .", " . self::numberOfProductsByPage());
+                break;
+}
+      
+       
+      
+      
+      
+      
+    return $results;
+   }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////                  Filtros nuevos                        //////////////////////////////////////////////////////////////////
 
@@ -406,6 +465,7 @@ ORDER BY csv.TITULOFAMILIA
       $pager = self::numberOfProductsByPage() * $page;
       
     $stock = 0;
+    $StringStock ="";
       
       $filte = explode("/", $filters);
       
@@ -417,13 +477,18 @@ ORDER BY csv.TITULOFAMILIA
         foreach($filte as $value) {
             if($value != "stock")
                 $inVariable = $inVariable . "'" . $value . "'" . ",";
-            else
+            else{
                 $stock = 1;
+                $StringStock = " and ".self::$productTableName . ".STOCK > 0  ";   
+            }
                 
         }
         $inVariable = rtrim($inVariable, ',');
         
-
+        if(strlen($inVariable) == 0){
+            return self::getAllWhereTituloFamiliaPageStock($name, $page); 
+        }
+ 
 $results = \DB::select("SELECT infortisa_specificationAttribute.SpecificationAttributeId from infortisa_specificationAttribute, infortisa_specificationAttributeOption 
 
  where infortisa_specificationAttribute.SpecificationAttributeId = infortisa_specificationAttributeOption.SpecificationAttributeId
@@ -486,7 +551,7 @@ INNER JOIN infortisa_specificationAttributeOption ON infortisa_specificationAttr
  FROM " . self::$productTableName . ", infortisa_IdSku
  where TITULOSUBFAMILIA like \"$name\" 
  and infortisa_IdSku.SKU =  " . self::$productTableName . ".CODIGOINTERNO
- 
+   " . $StringStock  . " 
  and " . $dinamicQuery . "
  group by CODIGOINTERNO  
  order by precio asc LIMIT ". $pager .", " . self::numberOfProductsByPage());
@@ -503,7 +568,8 @@ INNER JOIN infortisa_specificationAttributeOption ON infortisa_specificationAttr
       $pager = self::numberOfProductsByPage() * $page;
       
     $stock = 0;
-      
+    $StringStock = "";
+    
       $filte = explode("/", $filters);
       
       $ids = join("','",$filte);   
@@ -514,13 +580,19 @@ INNER JOIN infortisa_specificationAttributeOption ON infortisa_specificationAttr
         foreach($filte as $value) {
             if($value != "stock")
                 $inVariable = $inVariable . "'" . $value . "'" . ",";
-            else
+            else{
                 $stock = 1;
+                $StringStock = " and ".self::$productTableName . ".STOCK > 0  ";   
+            }
                 
         }
         $inVariable = rtrim($inVariable, ',');
         
-
+        if(strlen($inVariable) == 0){
+            return self::getAllWhereTituloFamiliaPageOrderStock($name, $page, $order); 
+        }
+        
+        
 $results = \DB::select("SELECT infortisa_specificationAttribute.SpecificationAttributeId from infortisa_specificationAttribute, infortisa_specificationAttributeOption 
 
  where infortisa_specificationAttribute.SpecificationAttributeId = infortisa_specificationAttributeOption.SpecificationAttributeId
@@ -583,7 +655,7 @@ INNER JOIN infortisa_specificationAttributeOption ON infortisa_specificationAttr
  FROM " . self::$productTableName . ", infortisa_IdSku
  where TITULOSUBFAMILIA like \"$name\" 
  and infortisa_IdSku.SKU =  " . self::$productTableName . ".CODIGOINTERNO
- 
+ " . $StringStock . "
  and " . $dinamicQuery . "
   group by CODIGOINTERNO 
 ";
@@ -645,8 +717,9 @@ $resultsString = $resultsString . "   order by  case when ". self::$productTable
       $name = self::makeFriendlier($name);
       $pager = self::numberOfProductsByPage() * $page;
       
-    $stock = 0;
-      
+    $stock = false;
+    $StringStock ="";
+            
       $filte = explode("/", $filters);
       
       $ids = join("','",$filte);   
@@ -657,12 +730,18 @@ $resultsString = $resultsString . "   order by  case when ". self::$productTable
         foreach($filte as $value) {
             if($value != "stock")
                 $inVariable = $inVariable . "'" . $value . "'" . ",";
-            else
-                $stock = 1;
+            else{
+                $stock = true;
+                $StringStock = " and ".self::$productTableName . ".STOCK > 0 ";   
+                
+            }
                 
         }
         $inVariable = rtrim($inVariable, ',');
         
+        if(strlen($inVariable) == 0){
+            return self::countAllWhereTituloFamiliaPageStock($name, $page); 
+        }
 
 $results = \DB::select("SELECT infortisa_specificationAttribute.SpecificationAttributeId from infortisa_specificationAttribute, infortisa_specificationAttributeOption 
 
@@ -726,7 +805,7 @@ INNER JOIN infortisa_specificationAttributeOption ON infortisa_specificationAttr
  FROM " . self::$productTableName . ", infortisa_IdSku
  where TITULOSUBFAMILIA like \"$name\" 
  and infortisa_IdSku.SKU =  " . self::$productTableName . ".CODIGOINTERNO
- 
+  " . $StringStock . " 
  and " . $dinamicQuery . "
  order by precio asc");
       
